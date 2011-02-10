@@ -1,9 +1,6 @@
 /**
  * Includes any data structures required for ray-tracing.
  * Currently supports points, rays, and vectors
- * 
- * Author: Tyler Goeringer
- * Last Modified: 2/9/11
  */
  
 #include <cmath>

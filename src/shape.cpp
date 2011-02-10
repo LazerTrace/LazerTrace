@@ -1,8 +1,5 @@
 /**
  * Provides an implementation for all objects present in the scene.
- *
- * Author: Tyler Goeringer
- * Last Modified: 2/9/11
  */
 
 #include <utility>
