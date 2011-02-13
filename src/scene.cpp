@@ -1,12 +1,13 @@
 #include <set>
 #include <string>
+#include <fstream>
+#include <iostream>
 
 class Scene {
 
 protected:
     // Storage for shapes in scene
     set<Shape> shapes;
-
     set<Light> lights;
 
 public:
@@ -23,7 +24,10 @@ public:
     }n
 
     Scene(string fileName) {
-	// Load file info blah blah
+	ifstream input_scene (fileName);
+	// Read the file and add specified shapes.
+	// We need to figure out what our syntax/grammar is first though.
+	input_scene.close();
     }
 
     
