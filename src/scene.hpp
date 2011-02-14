@@ -9,11 +9,8 @@ protected:
     std::set<Light> lights;
 
 public:
-    
     Scene();
-
     Scene(std::string fileName);
-    
-    ~Scene() ;
-    
-}
+    ~Scene();
+
+};

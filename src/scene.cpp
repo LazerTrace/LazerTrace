@@ -8,7 +8,7 @@
 using std::set;
 using std:fstream;
 
-    
+
 /*
  * In the case of an empty constructor, Scene will generate a predefined
  * scene for rendering.
