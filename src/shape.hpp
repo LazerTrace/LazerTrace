@@ -1,5 +1,7 @@
 #include <utility>
+
 #include "data_structures.hpp"
+#include "bounding_shape.hpp"
 
 /**
  * Provides an implementation for all objects present in the scene.
@@ -41,7 +43,7 @@ public:
      * @param index_of_refraction Index of refraction, specific to the
      * material of the sphere.
      */
-    Sphere(Point center, float radius, float index_of_refraction) const;
+    Sphere(Point center, float radius, float index_of_refraction);
 
     std::pair<Point, float> getIntersection(Ray ray) const;
 };
