@@ -12,7 +12,8 @@
 class Shape {
 protected:
     float index_of_refraction;
-    BoundingShape boundary;
+    BoundingShape *boundary;
+    Shape(float index_of_refraction);
 public:
     /**
      * @return Returns the index of refraction.
@@ -23,19 +24,19 @@ public:
      * Calculates the intersection between a ray and the object.
      *
      * @param ray The ray in question.
-     * @return A pair containing the point of intersection and the angle 
-     * between the ray and the object.
+     * @return A unit normal ray at the point of intersection, or FIXME
+     * null.
      */
-    virtual std::pair<Point, float> getIntersection(Ray ray) const;
+    virtual Ray getIntersection(const Ray& ray) const = 0;
 };
 
 /**
  * Represents a sphere primitive.
  */
-class Sphere: public Shape {
+class Sphere : public Shape {
 private:
-    float radius;
     Point center;
+    float radius;
 public:
 
     /**
@@ -48,7 +49,7 @@ public:
      */
     Sphere(Point center, float radius, float index_of_refraction);
 
-    std::pair<Point, float> getIntersection(Ray ray) const;
+    virtual Ray getIntersection(const Ray& ray) const;
 };
 
 /**
@@ -69,8 +70,8 @@ public:
      * material of the plane.
      */
     Plane(Point center, Vector normal, float index_of_refraction);
-    
-    Ray getIntersection(Ray ray) const;
+
+    virtual Ray getIntersection(const Ray& ray) const;
 };
 
 #endif

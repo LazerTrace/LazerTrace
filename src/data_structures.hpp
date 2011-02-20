@@ -65,10 +65,10 @@ public:
   * Represents a ray, which includes a point and a vector.
   */
 class Ray {
-private:
+public:
     Point origin;
     Vector dir;
-public:
+
     /**
      * Constructor for objects of class Ray.
      *
