@@ -1,23 +1,27 @@
 //possibly move the color class to tylers data structurs file
 class Color{
     public:
-        int r, g, b;
+        unsigned char alpha, red, green, blue;
 };
 
 class LightSource{
     protected:
         Color c;
     public:
-        int getR(){
-            return c.r;
+        char getRed(){
+            return c.red;
         }
 
-        int getG(){
-            return c.g;
+        char getGreen(){
+            return c.green;
         }
 
-        int getB(){
-            return c.b;
+        char getBlue(){
+            return c.blue;
+        }
+
+        char getAlpha(){
+            return c.alpha;
         }
 
         Color getColor(){
