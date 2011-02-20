@@ -2,14 +2,6 @@
 
 #include "data_structures.hpp"
 
-/**
- * Represents a color in RGBA format
- */
-class Color{
-    public:
-        unsigned char alpha, red, green, blue;
-};
-
 Vector::Vector(float i_, float j_, float k_): i(i_), j(j_), k(k_) {
 }
 
