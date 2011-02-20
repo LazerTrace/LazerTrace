@@ -25,9 +25,11 @@ include src/Makefile
 # on that.
 
 
-deps := $(sources:.cpp=.dep)
-objects := $(sources:.cpp=.o)
-targets := $(sources:.cpp=$(bin_suffix))
+deps := $(shared_sources:.cpp=.dep) $(main_sources:.cpp=.dep)
+shared_objects := $(shared_sources:.cpp=.o)
+main_objects := $(main_sources:.cpp=.o)
+objects := $(shared_objects) $(main_objects)
+targets := bin/main
 
 all: $(deps) $(targets)
 
@@ -36,10 +38,10 @@ clean: clean-deps
 
 .SUFFIXES:
 
-.PHONY: all clean clean-deps
+.PHONY: all clean clean-deps targets deps shared_objects main_objects
 
-%$(bin_suffix): %.o
-	g++ -o $@ $< $(make_ldflags) `$(LIBPNG_CONFIG) --ldflags`
+bin/main: $(shared_objects) $(main_objects)
+	g++ -o $@ $^ $(make_ldflags) `$(LIBPNG_CONFIG) --ldflags`
 
 %.o: %.cpp
 	g++ -c -o $@ $< $(make_cflags) `$(LIBPNG_CONFIG) --cflags`
