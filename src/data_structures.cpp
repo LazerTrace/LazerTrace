@@ -12,6 +12,10 @@ void Vector::normalize() {
     k = k/length;
 }
 
+float Vector::dotProduct(Vector v) const {
+    return (i * v.i) + (j * v.j) + (k * v.k);
+}
+
 Point::Point(float x_, float y_, float z_): x(x_), y(y_), z(z_) {
 }
 

@@ -23,6 +23,14 @@ public:
      * Normalizes the vector to a unit vector.
      */
     void normalize();
+
+    /**
+     * Compute the dot product when dotted with the given Vector.
+     *
+     * @param v a normalized vector.
+     * @return the dot product of this vector with v.
+     */
+    float dotProduct(Vector v) const;
 };
 
 /**
