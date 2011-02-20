@@ -1,5 +1,5 @@
-#include "other.hpp"
+#include "scene.hpp"
 
 int main(void) {
-    other();
+    Scene the_scene;
 }

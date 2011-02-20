@@ -54,4 +54,4 @@ bin/main: $(shared_objects) $(main_objects)
 clean-deps:
 	rm -f $(deps)
 
-include $(deps)
+-include $(deps)
