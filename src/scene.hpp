@@ -1,3 +1,6 @@
+#ifndef _SCENE_HPP
+#define _SCENE_HPP
+
 #include <set>
 #include <string>
 
@@ -17,3 +20,5 @@ public:
     ~Scene();
 
 };
+
+#endif

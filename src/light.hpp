@@ -1,3 +1,6 @@
+#ifndef _LIGHT_HPP
+#define _LIGHT_HPP
+
 #include "data_structures.hpp"
 
 /**
@@ -44,3 +47,5 @@ public:
     float getTheta() const;
     Point getPoint() const;
 };
+
+#endif

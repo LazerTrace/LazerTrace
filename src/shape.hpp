@@ -1,3 +1,6 @@
+#ifndef _SHAPE_HPP
+#define _SHAPE_HPP
+
 #include <utility>
 
 #include "data_structures.hpp"
@@ -70,3 +73,4 @@ public:
     Ray getIntersection(Ray ray) const;
 };
 
+#endif
