@@ -4,7 +4,15 @@
  */
  
 #include <cmath>
- 
+
+/**
+ * Represents a color in RGBA format
+ */
+class Color{
+    public:
+        unsigned char alpha, red, green, blue;
+};
+
 /**
  * Represents a 3-dimensional vector.
  */

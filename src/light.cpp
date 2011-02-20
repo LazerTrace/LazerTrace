@@ -1,26 +1,26 @@
-//possibly move the color class to tylers data structurs file
-class Color{
-    public:
-        unsigned char alpha, red, green, blue;
-};
-
+#include "data_structures.hpp"
+/*
+ *Main light source class
+ *Not to actually be implemented
+ *Instead used derived classes below
+ */    
 class LightSource{
     protected:
         Color c;
     public:
-        char getRed(){
+        unsigned char getRed(){
             return c.red;
         }
 
-        char getGreen(){
+        unsigned char getGreen(){
             return c.green;
         }
 
-        char getBlue(){
+        unsigned char getBlue(){
             return c.blue;
         }
 
-        char getAlpha(){
+        unsigned char getAlpha(){
             return c.alpha;
         }
 
