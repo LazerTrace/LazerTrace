@@ -1,75 +1,57 @@
 #include "data_structures.hpp"
-/*
- *Main light source class
- *Not to actually be implemented
- *Instead used derived classes below
- */    
-class LightSource{
-    protected:
-        Color c;
-    public:
-        unsigned char getRed(){
-            return c.red;
-        }
+#include "light.hpp"
 
-        unsigned char getGreen(){
-            return c.green;
-        }
+unsigned char LightSource::getRed() const {
+    return c.red;
+}
 
-        unsigned char getBlue(){
-            return c.blue;
-        }
+unsigned char LightSource::getGreen() const {
+    return c.green;
+}
 
-        unsigned char getAlpha(){
-            return c.alpha;
-        }
+unsigned char LightSource::getBlue() const {
+    return c.blue;
+}
 
-        Color getColor(){
-            return c;
-        }
+unsigned char LightSource::getAlpha() const {
+    return c.alpha;
+}
 
-};
+Color LightSource::getColor() const {
+    return c;
+}
 
-class pointLight : public lightSource{
-    protected:
-        Point p;
-        float intensity;
-    public:
-        float getIntensity(){
-            return intensity;
-        }
-        Point getPoint(){
-            return p;
-        }
-};
 
-class directionalLight : public lightSource{
-    protected:
-        Vector v;
-    public:
-        float getI(){
-            return v.i;
-        }
-        float getJ(){
-            return v.j;
-        }
-        float getK(){
-            return v.k;
-        }
-        DVector getVector{
-            return v;
-        }
-};
+float PointLight::getIntensity() const {
+    return intensity;
+}
 
-class spotLight : public directionalLight{
-    protected:
-        float theta;
-        Point p;
-    public:
-        float getTheta(){
-            return theta;
-        }
-        Point getPoint(){
-            Point p;
-        }
-};
+Point PointLight::getPoint() const {
+    return p;
+}
+
+
+float DirectionalLight::getI() const {
+    return v.i;
+}
+
+float DirectionalLight::getJ() const {
+    return v.j;
+}
+
+float DirectionalLight::getK() const {
+    return v.k;
+}
+
+Vector DirectionalLight::getVector() const {
+    return v;
+}
+
+
+float SpotLight::getTheta() const {
+    return theta;
+}
+
+Point SpotLight::getPoint() const {
+    return p;
+}
