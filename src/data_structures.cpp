@@ -36,7 +36,7 @@ class Vector {
             j = j/length;
             k = k/length;
         }
-}
+};
  
  /**
   * Represents a 3-dimensional point in space.
@@ -59,7 +59,7 @@ class Point {
             this.y = y;
             this.z = z;
         }
-}
+};
  
  /**
   * Represents a ray, which includes a point and a vector.
@@ -107,4 +107,4 @@ class Ray {
             dir.j = dir.j/length;
             dir.k = dir.k/length;
         }
-}
+};
