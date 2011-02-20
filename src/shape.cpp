@@ -3,6 +3,7 @@
  */
 
 #include <utility>
+#include "shape.hpp"
 
 /**
  * @return Returns the index of refraction.
@@ -44,10 +45,13 @@ Sphere::pair<Point, float> getIntersection(Ray ray) {
  */
 Plane::Plane(Point center, Vector normal, float index_of_refraction) {
     this.center = center;
-    this.normal = normal;
+    this.normal = normal.normalize();
     this.index_of_refraction = index_of_refraction;
+
+    
 }
 
 Plane::pair<Point, float> getIntersection(Ray ray) {
-    return make_pair(center, 0.0); // Placeholder
+    
+    //return make_pair(center, 0.0); // Placeholder
 }
