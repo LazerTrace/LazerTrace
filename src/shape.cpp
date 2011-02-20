@@ -1,57 +1,48 @@
-/**
- * Provides an implementation for all objects present in the scene.
- */
-
 #include <utility>
+#include <cmath>
+
 #include "shape.hpp"
+#include "data_structures.hpp"
 
-/**
- * @return Returns the index of refraction.
- */
-float Shape::getIndexOfRefraction()
-{ return index_of_refraction; }
-
-
-/**
- * Creates a sphere primitive with the given parameters.
- *
- * @param center The origin of the sphere.
- * @param radius The radius of the sphere.
- * @param index_of_refraction Index of refraction, specific to the
- * material of the sphere.
- */
-Shere::Sphere(Point center, float radius, float index_of_refraction) {
-    this.center = center;
-    this.radius = radius;
-    this.index_of_refraction = index_of_refraction;
+Shape::Shape(float index_of_refraction_)
+    : index_of_refraction(index_of_refraction_)
+{
 }
 
-Sphere::pair<Point, float> getIntersection(Ray ray) {
-    return make_pair(center, 0.0); // Placeholder
+float Shape::getIndexOfRefraction() const {
+    return index_of_refraction;
 }
 
 
-/**
- * Represents an infinite plane.
- */
-
-/**
- * Creates a plane primitive with the given parameters.
- *
- * @param center The origin of the plane (any point on the plane.
- * @param normal The vector normal to the plane.
- * @param index_of_refraction Index of refraction, specific to the
- * material of the plane.
- */
-Plane::Plane(Point center, Vector normal, float index_of_refraction) {
-    this.center = center;
-    this.normal = normal.normalize();
-    this.index_of_refraction = index_of_refraction;
-
-
+Sphere::Sphere(Point center_, float radius_, float index_of_refraction_)
+    : Shape(index_of_refraction),
+    center(center_), radius(radius_)
+{
 }
 
-Plane::pair<Point, float> getIntersection(Ray ray) {
-
-    //return make_pair(center, 0.0); // Placeholder
+Ray Sphere::getIntersection(const Ray& ray) const {
+    // XXX Placeholder
 }
+
+Plane::Plane(Point center_, Vector normal_, float index_of_refraction_)
+    : Shape(index_of_refraction_),
+    center(center_), normal(normal_)
+{
+}
+
+Ray Plane::getIntersection(const Ray& ray) const {
+    Vector v(center.x - ray.origin.x,
+             center.y - ray.origin.y,
+             center.z - ray.origin.z);
+    float d = normal.dotProduct(v) / normal.dotProduct(ray.dir);
+
+    if (fabsf(d) < 0.0000001) {
+        Point p(ray.dir.i * d + ray.origin.x,
+                ray.dir.j * d + ray.origin.y,
+                ray.dir.k * d + ray.origin.z);
+        return Ray(p, normal);
+    } else { // we have no collision
+        // TODO
+    }
+ }
+

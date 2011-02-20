@@ -1,7 +1,18 @@
+#ifndef _DATA_STRUCTURES_HPP
+#define _DATA_STRUCTURES_HPP
+
 /**
  * Includes any data structures required for ray-tracing.
  * Currently supports points, rays, and vectors
  */
+
+/**
+ * Represents a color in RGBA format
+ */
+class Color{
+    public:
+        unsigned char alpha, red, green, blue;
+};
 
 /**
  * Represents a 3-dimensional vector.
@@ -54,10 +65,10 @@ public:
   * Represents a ray, which includes a point and a vector.
   */
 class Ray {
-private:
+public:
     Point origin;
     Vector dir;
-public:
+
     /**
      * Constructor for objects of class Ray.
      *
@@ -85,3 +96,5 @@ public:
      */
     void normalize();
 };
+
+#endif

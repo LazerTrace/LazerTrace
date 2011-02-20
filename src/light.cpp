@@ -1,71 +1,57 @@
-//possibly move the color class to tylers data structurs file
-class Color{
-    public:
-        int r, g, b;
-};
+#include "data_structures.hpp"
+#include "light.hpp"
 
-class LightSource{
-    protected:
-        Color c;
-    public:
-        int getR(){
-            return c.r;
-        }
+unsigned char LightSource::getRed() const {
+    return c.red;
+}
 
-        int getG(){
-            return c.g;
-        }
+unsigned char LightSource::getGreen() const {
+    return c.green;
+}
 
-        int getB(){
-            return c.b;
-        }
+unsigned char LightSource::getBlue() const {
+    return c.blue;
+}
 
-        Color getColor(){
-            return c;
-        }
+unsigned char LightSource::getAlpha() const {
+    return c.alpha;
+}
 
-};
+Color LightSource::getColor() const {
+    return c;
+}
 
-class pointLight : public lightSource{
-    protected:
-        Point p;
-        float intensity;
-    public:
-        float getIntensity(){
-            return intensity;
-        }
-        Point getPoint(){
-            return p;
-        }
-};
 
-class directionalLight : public lightSource{
-    protected:
-        Vector v;
-    public:
-        float getI(){
-            return v.i;
-        }
-        float getJ(){
-            return v.j;
-        }
-        float getK(){
-            return v.k;
-        }
-        DVector getVector{
-            return v;
-        }
-};
+float PointLight::getIntensity() const {
+    return intensity;
+}
 
-class spotLight : public directionalLight{
-    protected:
-        float theta;
-        Point p;
-    public:
-        float getTheta(){
-            return theta;
-        }
-        Point getPoint(){
-            Point p;
-        }
-};
+Point PointLight::getPoint() const {
+    return p;
+}
+
+
+float DirectionalLight::getI() const {
+    return v.i;
+}
+
+float DirectionalLight::getJ() const {
+    return v.j;
+}
+
+float DirectionalLight::getK() const {
+    return v.k;
+}
+
+Vector DirectionalLight::getVector() const {
+    return v;
+}
+
+
+float SpotLight::getTheta() const {
+    return theta;
+}
+
+Point SpotLight::getPoint() const {
+    return p;
+}
