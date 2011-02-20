@@ -6,7 +6,7 @@ ifndef PNGPP
 PNGPP := vendor/png++
 endif
 
-make_cflags := -Wall -Wextra -pedantic -O -Weffc++ $(CFLAGS) -I$(PREFIX)/include -I$(PNGPP)
+make_cflags := -Wall -Wextra -pedantic -O -Weffc++ $(CFLAGS) -I$(PREFIX)/include -I$(PNGPP) -Ivendor/tut
 make_ldflags := $(LDFLAGS) -L$(PREFIX)/lib
 
 ifndef NDEBUG
@@ -21,6 +21,7 @@ endif
 
 # Include your subdirectory Makefiles here!
 include src/Makefile
+include test/Makefile
 # XXX Although png++ doesn't require building, other vendors might. Get
 # on that.
 
@@ -28,8 +29,9 @@ include src/Makefile
 deps := $(shared_sources:.cpp=.dep) $(main_sources:.cpp=.dep)
 shared_objects := $(shared_sources:.cpp=.o)
 main_objects := $(main_sources:.cpp=.o)
-objects := $(shared_objects) $(main_objects)
-targets := bin/main
+test_objects := $(test_sources:.cpp=.o)
+objects := $(shared_objects) $(main_objects) $(test_objects)
+targets := bin/main bin/test
 
 all: $(deps) $(targets)
 
@@ -38,9 +40,12 @@ clean: clean-deps
 
 .SUFFIXES:
 
-.PHONY: all clean clean-deps targets deps shared_objects main_objects
+.PHONY: all clean clean-deps targets deps
 
 bin/main: $(shared_objects) $(main_objects)
+	g++ -o $@ $^ $(make_ldflags) `$(LIBPNG_CONFIG) --ldflags`
+
+bin/test: $(shared_objects) $(test_objects)
 	g++ -o $@ $^ $(make_ldflags) `$(LIBPNG_CONFIG) --ldflags`
 
 %.o: %.cpp
