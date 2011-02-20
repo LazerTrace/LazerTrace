@@ -4,5 +4,5 @@
 
 class BoundingShape {
     public:
-        virtual boolean intersects() = 0;
+        virtual bool intersects() = 0;
 };
