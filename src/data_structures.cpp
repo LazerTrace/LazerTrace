@@ -6,7 +6,7 @@ Vector::Vector(float i_, float j_, float k_): i(i_), j(j_), k(k_) {
 }
 
 void Vector::normalize() {
-    float length = math.sqrt(i*i + j*j + k*k);
+    float length = sqrt(i*i + j*j + k*k);
     i = i/length;
     j = j/length;
     k = k/length;
@@ -31,7 +31,7 @@ Vector Ray::getDir() const {
 }
 
 void Ray::normalize() {
-    float length = math.sqrt(dir.i*dir.i + dir.j*dir.j + dir.k*dir.k);
+    float length = sqrt(dir.i*dir.i + dir.j*dir.j + dir.k*dir.k);
     dir.i = dir.i/length;
     dir.j = dir.j/length;
     dir.k = dir.k/length;
