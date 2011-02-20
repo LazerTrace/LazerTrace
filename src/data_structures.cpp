@@ -1,110 +1,38 @@
-/**
- * Includes any data structures required for ray-tracing.
- * Currently supports points, rays, and vectors
- */
- 
 #include <cmath>
- 
-/**
- * Represents a 3-dimensional vector.
- */
-class Vector {
-    public:
-        float i = 0.0;
-        float j = 0.0;
-        float k = 0.0;
-        
-        /**
-         * Constructor for objects of class Vector.
-         *
-         * @param i The x-direction
-         * @param j The y-direction
-         * @param k The z-direction
-         */
-        Vector(float i, float j, float k) {
-            this.i = i;
-            this.j = j;
-            this.k = k;
-        }
-    
-        /**
-         * Normalizes the vector to a unit vector.
-         */
-        void normalize() {
-            float length = math.sqrt(i*i + j*j + k*k);
-            i = i/length;
-            j = j/length;
-            k = k/length;
-        }
-};
- 
- /**
-  * Represents a 3-dimensional point in space.
-  */
-class Point {
-    public:
-        float x = 0.0;
-        float y = 0.0;
-        float z = 0.0;
-        
-        /**
-         * Constructor for objects of class Point.
-         *
-         * @param x The x-coordinate
-         * @param y The y-coordinate
-         * @param z The z-coordinate
-         */
-        Point(float x, float y, float z) {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-        }
-};
- 
- /**
-  * Represents a ray, which includes a point and a vector.
-  */
-class Ray {
-    private:
-        Point origin;
-        Vector dir;
-    public:
-        /**
-         * Constructor for objects of class Ray.
-         *
-         * @param origin The origin of the ray.
-         * @param dir The direction vector of the ray.
-         */
-        Ray(Point origin, Vector dir) {
-            this.origin = origin;
-            this.dir = dir;
-        }
-    
-        /**
-         * Accessor method for the origin.
-         *
-         * @return The point representing the origin of the ray.
-         */
-        Point getOrigin() {
-            return origin;
-        }
-        
-        /**
-         * Accessor method for the direction vector.
-         *
-         * @return The vector representing the direction of the ray.
-         */
-        Vector getDir() {
-            return dir;
-        }
-    
-        /**
-         * Normalizes the vector portion to a unit vector.
-         */
-        void normalize() {
-            float length = math.sqrt(dir.i*dir.i + dir.j*dir.j + dir.k*dir.k);
-            dir.i = dir.i/length;
-            dir.j = dir.j/length;
-            dir.k = dir.k/length;
-        }
-};
+
+#include "data_structures.hpp"
+
+Vector::Vector(float i_, float j_, float k_): i(i_), j(j_), k(k_) {
+}
+
+void Vector::normalize() {
+    float length = math.sqrt(i*i + j*j + k*k);
+    i = i/length;
+    j = j/length;
+    k = k/length;
+}
+
+float Vector::dotProduct(Vector v) const {
+    return (i * v.i) + (j * v.j) + (k * v.k);
+}
+
+Point::Point(float x_, float y_, float z_): x(x_), y(y_), z(z_) {
+}
+
+Ray::Ray(Point origin_, Vector dir_): origin(origin_), dir(dir_) {
+}
+
+Point Ray::getOrigin() const {
+    return origin;
+}
+
+Vector Ray::getDir() const {
+    return dir;
+}
+
+void Ray::normalize() {
+    float length = math.sqrt(dir.i*dir.i + dir.j*dir.j + dir.k*dir.k);
+    dir.i = dir.i/length;
+    dir.j = dir.j/length;
+    dir.k = dir.k/length;
+}
