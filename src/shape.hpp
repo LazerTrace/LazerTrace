@@ -61,6 +61,6 @@ public:
      */
     Plane(Point center, Vector normal, float index_of_refraction);
     
-    std::pair<Point, float> getIntersection(Ray ray);
+    Ray getIntersection(Ray ray);
 };
 
