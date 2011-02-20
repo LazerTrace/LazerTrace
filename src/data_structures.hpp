@@ -1,3 +1,6 @@
+#ifndef _DATA_STRUCTURES_HPP
+#define _DATA_STRUCTURES_HPP
+
 /**
  * Includes any data structures required for ray-tracing.
  * Currently supports points, rays, and vectors
@@ -93,3 +96,5 @@ public:
      */
     void normalize();
 };
+
+#endif
