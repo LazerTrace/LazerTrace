@@ -6,7 +6,7 @@ ifndef PNGPP
 PNGPP := vendor/png++
 endif
 
-make_cflags := -Wall $(CFLAGS) -I$(PREFIX)/include -I$(PNGPP)
+make_cflags := -Wall -Wextra -pedantic -O -Weffc++ $(CFLAGS) -I$(PREFIX)/include -I$(PNGPP)
 make_ldflags := $(LDFLAGS) -L$(PREFIX)/lib
 
 ifndef NDEBUG
