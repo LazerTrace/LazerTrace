@@ -1,6 +1,9 @@
 #include <set>
 #include <string>
 
+#include "shape.hpp"
+#include "light.hpp"
+
 class Scene {
 
 protected:
