@@ -15,7 +15,7 @@ float Shape::getIndexOfRefraction() const {
 
 
 Sphere::Sphere(Point center_, float radius_, float index_of_refraction_)
-    : Shape(index_of_refraction),
+    : Shape(index_of_refraction_),
     center(center_), radius(radius_)
 {
 }
