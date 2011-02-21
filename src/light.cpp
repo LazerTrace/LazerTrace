@@ -50,8 +50,11 @@ Vector DirectionalLight::getVector() const {
     return vector;
 }
 
-DirectionalLight::DirectionalLight(Color c, float i, Vector v):LightSource(c,i),vector(v){
-};
+DirectionalLight::DirectionalLight(Color c, float i, Vector v)
+    : LightSource(c,i),
+    vector(v)
+{
+}
 
 float SpotLight::getTheta() const {
     return theta;
@@ -61,5 +64,9 @@ Point SpotLight::getPoint() const {
     return point;
 }
 
-SpotLight::SpotLight(Color c, float i, Point p, Vector v, float t):DirectionalLight(c,i,v), point(p), theta(t){
-};
+SpotLight::SpotLight(Color c, float i, Point p, Vector v, float t)
+    : DirectionalLight(c,i,v),
+    theta(t),
+    point(p)
+{
+}
