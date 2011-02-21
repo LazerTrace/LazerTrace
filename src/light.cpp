@@ -1,4 +1,3 @@
-#include "data_structures.hpp"
 #include "light.hpp"
 
 unsigned char LightSource::getRed() const {
@@ -46,7 +45,6 @@ float DirectionalLight::getK() const {
 Vector DirectionalLight::getVector() const {
     return v;
 }
-
 
 float SpotLight::getTheta() const {
     return theta;
