@@ -11,41 +11,45 @@
 
 class LightSource {
 protected:
-    Color c;
+    Color color;
+    float intensity;
 public:
     unsigned char getRed() const;
     unsigned char getGreen() const;
     unsigned char getBlue() const;
     unsigned char getAlpha() const;
     Color getColor() const;
+    LightSource(Color c, float i);
 };
 
 class PointLight : public LightSource {
 protected:
-    Point p;
-    float intensity;
+    Point point;
 public:
     float getIntensity() const;
     Point getPoint() const;
+    PointLight(Color c, float i, Point p);
 };
 
 class DirectionalLight : public LightSource {
 protected:
-    Vector v;
+    Vector vector;
 public:
     float getI() const;
     float getJ() const;
     float getK() const;
     Vector getVector() const;
+    DirectionalLight(Color c, float i, Vector v);
 };
 
 class SpotLight : public DirectionalLight {
 protected:
     float theta;
-    Point p;
+    Point point;
 public:
     float getTheta() const;
     Point getPoint() const;
+    SpotLight(Color c, float i, Point p, Vector v, float t);
 };
 
 #endif
