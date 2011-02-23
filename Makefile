@@ -18,6 +18,7 @@ ifndef LIBPNG_CONFIG
 LIBPNG_CONFIG := libpng-config
 endif
 
+CPATH=src
 
 # Include your subdirectory Makefiles here!
 include src/Makefile
@@ -32,6 +33,8 @@ main_objects := $(main_sources:.cpp=.o)
 test_objects := $(test_sources:.cpp=.o)
 objects := $(shared_objects) $(main_objects) $(test_objects)
 targets := bin/main bin/test
+
+$(shared_objects): make_cflags := $(make_cflags) -Weffc++
 
 all: $(deps) $(targets)
 
