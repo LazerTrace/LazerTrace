@@ -37,7 +37,7 @@ public:
      * @param rhs The vector to add.
      * @return A pointer to the lhs of the equation.
      */
-     & operator+=(const Vector &rhs);
+     Vector& operator+=(const Vector &rhs);
      
     /**
      * Overloaded subtraction-assignment operator.
@@ -46,7 +46,7 @@ public:
      * @param rhs The vector to subtract.
      * @return A pointer to the lhs of the equation.
      */
-     & operator-=(const Vector &rhs);
+     Vector& operator-=(const Vector &rhs);
      
     /**
      * Overloaded addition operator.
@@ -55,7 +55,7 @@ public:
      * @param rhs The vector to add.
      * @return A pointer to the lhs of the equation.
      */
-     & operator+(const Vector &rhs);
+     Vector& operator+(const Vector &rhs);
      
     /**
      * Overloaded subtraction operator.
@@ -64,7 +64,7 @@ public:
      * @param rhs The vector to subtract.
      * @return A pointer to the lhs of the equation.
      */
-     & operator-(const Vector &rhs);
+     Vector& operator-(const Vector &rhs);
      
     /**
      * Overloaded substraction-assignment operator.
