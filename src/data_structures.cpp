@@ -5,6 +5,28 @@
 Vector::Vector(float i_, float j_, float k_): i(i_), j(j_), k(k_) {
 }
 
+Vector& Vector::operator+=(const Vector& rhs) {
+    i += rhs.i;
+    j += rhs.j;
+    k += rhs.k;
+    return *this;
+}
+
+Vector& Vector::operator-=(const Vector& rhs) {
+    i -= rhs.i;
+    j -= rhs.j;
+    k -= rhs.k;
+    return *this;
+}
+
+Vector& Vector::operator+(const Vector& other) {
+    return Vector(*this) += other;
+}
+
+Vector& Vector::operator-(const Vector& other) {
+    return Vector(*this) -= other;
+}
+
 void Vector::normalize() {
     float length = sqrt(i*i + j*j + k*k);
     i = i/length;
