@@ -23,4 +23,10 @@ Scene::Scene(std::string fileName) {
 }
 
 Scene::~Scene() {
+    for(set<Shape>::iterator it = shapes.cbegin(); it != shapes.cend(); i++) {
+        delete *it;
+    }
+    for(set<Sphere>::iterator it = lights.cbegin(); it != shapes.cend(); i++) {
+        delete *it;
+    }
 }
