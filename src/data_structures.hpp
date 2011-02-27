@@ -55,7 +55,7 @@ public:
      * @param rhs The vector to add.
      * @return A pointer to the result.
      */
-     Vector& operator+(const Vector& other);
+     Vector operator+(const Vector& other);
      
     /**
      * Overloaded subtraction operator.
@@ -64,7 +64,7 @@ public:
      * @param rhs The vector to subtract.
      * @return A pointer to the result.
      */
-     Vector& operator-(const Vector& other);
+     Vector operator-(const Vector& other);
      
     /**
      * Overloaded substraction-assignment operator.

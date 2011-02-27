@@ -19,11 +19,11 @@ Vector& Vector::operator-=(const Vector& rhs) {
     return *this;
 }
 
-Vector& Vector::operator+(const Vector& other) {
+Vector Vector::operator+(const Vector& other) {
     return Vector(*this) += other;
 }
 
-Vector& Vector::operator-(const Vector& other) {
+Vector Vector::operator-(const Vector& other) {
     return Vector(*this) -= other;
 }
 
