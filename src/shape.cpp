@@ -29,26 +29,24 @@ Ray* Sphere::getIntersection(const Ray& ray) const {
     if (det < 0) {
         return NULL;
     }
-    float d =  ray.getDir()ray.getDir().dotProduct(c);
+    float d =  ray.dir.dotProduct(c);
     if (det == 0) {
         Point p(ray.dir.i * d, ray.dir.j * d, ray.dir.k * d);
-        Vector v(c.i - p.i, c.j - p.j, c.k - p.k);
+        Vector v(c.i - p.x, c.j - p.y, c.k - p.z);
         return new Ray(p,v);
     }
     // two collisions
     else {
         float sdet = sqrt(det);
-        if (abs(d - sdet) > abs(d + sdet)) {
+        if (fabsf(d - sdet) > fabsf(d + sdet)) {
             float d = d + sdet;
         } else {
             float d = d - sdet;
         }
         
         Point p(ray.dir.i * d, ray.dir.j * d, ray.dir.k * d);
-        Vector v(c.i - p.i, c.j - p.j, c.k - p.k);
+        Vector v(c.i - p.x, c.j - p.y, c.k - p.z);
         return new Ray(p,v);
-
-            
     }
 }
 

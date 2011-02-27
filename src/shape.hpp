@@ -27,7 +27,7 @@ public:
      * @return A unit normal ray at the point of intersection, or FIXME
      * null.
      */
-    virtual Ray getIntersection(const Ray& ray) const = 0;
+    virtual Ray* getIntersection(const Ray& ray) const = 0;
 };
 
 /**
