@@ -8,6 +8,7 @@ unsigned char LightSource::getGreen() const {
     return color.green;
 }
 
+
 unsigned char LightSource::getBlue() const {
     return color.blue;
 }
@@ -23,6 +24,10 @@ Color LightSource::getColor() const {
 LightSource::LightSource(Color c, float i):color(c),intensity(i){
 }
 
+virtual LightSource::~LightSource(){
+    delete color;
+}
+	
 float PointLight::getIntensity() const {
     return intensity;
 }
@@ -34,6 +39,9 @@ Point PointLight::getPoint() const {
 PointLight::PointLight(Color c, float i, Point p):LightSource(c,i),point(p){
 }
 
+PointLight::~PointLight(){
+    delete point
+}
 float DirectionalLight::getI() const {
     return vector.i;
 }
@@ -56,6 +64,10 @@ DirectionalLight::DirectionalLight(Color c, float i, Vector v)
 {
 }
 
+virtual DirectionalLight::~DirectionalLight(){
+    delete vector;
+}
+
 float SpotLight::getTheta() const {
     return theta;
 }
@@ -69,4 +81,8 @@ SpotLight::SpotLight(Color c, float i, Point p, Vector v, float t)
     theta(t),
     point(p)
 {
+}
+
+SpotLight::~SpotLight(){
+    delete point;
 }

@@ -29,6 +29,7 @@ public:
     float getIntensity() const;
     Point getPoint() const;
     PointLight(Color c, float i, Point p);
+    ~PointLight();
 };
 
 class DirectionalLight : public LightSource {
@@ -40,6 +41,7 @@ public:
     float getK() const;
     Vector getVector() const;
     DirectionalLight(Color c, float i, Vector v);
+    ~DirectionalLight();
 };
 
 class SpotLight : public DirectionalLight {
@@ -50,6 +52,7 @@ public:
     float getTheta() const;
     Point getPoint() const;
     SpotLight(Color c, float i, Point p, Vector v, float t);
+    ~SpotLight();
 };
 
 #endif
