@@ -21,7 +21,35 @@ Sphere::Sphere(Point center_, float radius_, float index_of_refraction_)
 }
 
 Ray* Sphere::getIntersection(const Ray& ray) const {
-    // XXX Placeholder
+    Vector c(center.x, center.y, center.z);
+    float det = pow(ray.getDir().dotProduct(c), 2)
+        - ray.getDir().dotProduct(ray.getDir())
+        * (c.dotProduct(c) - pow(radius, 2));
+    
+    if (det < 0) {
+        return NULL;
+    }
+    float d =  ray.getDir()ray.getDir().dotProduct(c);
+    if (det == 0) {
+        Point p(ray.dir.i * d, ray.dir.j * d, ray.dir.k * d);
+        Vector v(c.i - p.i, c.j - p.j, c.k - p.k);
+        return new Ray(p,v);
+    }
+    // two collisions
+    else {
+        float sdet = sqrt(det);
+        if (abs(d - sdet) > abs(d + sdet)) {
+            float d = d + sdet;
+        } else {
+            float d = d - sdet;
+        }
+        
+        Point p(ray.dir.i * d, ray.dir.j * d, ray.dir.k * d);
+        Vector v(c.i - p.i, c.j - p.j, c.k - p.k);
+        return new Ray(p,v);
+
+            
+    }
 }
 
 Plane::Plane(Point center_, Vector normal_, float index_of_refraction_)
@@ -40,9 +68,9 @@ Ray* Plane::getIntersection(const Ray& ray) const {
         Point p(ray.dir.i * d + ray.origin.x,
                 ray.dir.j * d + ray.origin.y,
                 ray.dir.k * d + ray.origin.z);
-        return Ray(p, normal);
+        return new Ray(p, normal);
     } else { // we have no collision
-        // TODO
+        return NULL;
     }
  }
 

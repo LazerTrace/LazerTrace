@@ -48,7 +48,7 @@ public:
      * material of the sphere.
      * 
      * @return a pointer to the Ray normal to the intersection,
-     * or NULL if no intersection.
+     * or NULL if no intersection. Remember to delete the Ray when done!
      */
     Sphere(Point center, float radius, float index_of_refraction);
 
@@ -73,7 +73,7 @@ public:
      * material of the plane.
      *
      * @return a pointer to the Ray normal to the intersection,
-     * or NULL if no intersection.
+     * or NULL if no intersection. Remember to delete the Ray when done!
      */
     Plane(Point center, Vector normal, float index_of_refraction);
 
