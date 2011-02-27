@@ -46,10 +46,13 @@ public:
      * @param radius The radius of the sphere.
      * @param index_of_refraction Index of refraction, specific to the
      * material of the sphere.
+     * 
+     * @return a pointer to the Ray normal to the intersection,
+     * or NULL if no intersection.
      */
     Sphere(Point center, float radius, float index_of_refraction);
 
-    virtual Ray getIntersection(const Ray& ray) const;
+    virtual Ray* getIntersection(const Ray& ray) const;
 };
 
 /**
@@ -68,10 +71,13 @@ public:
      * @param normal The vector normal to the plane.
      * @param index_of_refraction Index of refraction, specific to the
      * material of the plane.
+     *
+     * @return a pointer to the Ray normal to the intersection,
+     * or NULL if no intersection.
      */
     Plane(Point center, Vector normal, float index_of_refraction);
 
-    virtual Ray getIntersection(const Ray& ray) const;
+    virtual Ray* getIntersection(const Ray& ray) const;
 };
 
 #endif

@@ -16,21 +16,21 @@ float Shape::getIndexOfRefraction() const {
 
 Sphere::Sphere(Point center_, float radius_, float index_of_refraction_)
     : Shape(index_of_refraction_),
-    center(center_), radius(radius_)
+      center(center_), radius(radius_)
 {
 }
 
-Ray Sphere::getIntersection(const Ray& ray) const {
+Ray* Sphere::getIntersection(const Ray& ray) const {
     // XXX Placeholder
 }
 
 Plane::Plane(Point center_, Vector normal_, float index_of_refraction_)
     : Shape(index_of_refraction_),
-    center(center_), normal(normal_)
+      center(center_), normal(normal_)
 {
 }
 
-Ray Plane::getIntersection(const Ray& ray) const {
+Ray* Plane::getIntersection(const Ray& ray) const {
     Vector v(center.x - ray.origin.x,
              center.y - ray.origin.y,
              center.z - ray.origin.z);
