@@ -29,6 +29,46 @@ public:
      * @param k The z-direction
      */
     Vector(float i, float j, float k);
+    
+    /**
+     * Overloaded addition-assignment operator.
+     * Performs component based addition-assignment.
+     *
+     * @param rhs The vector to add.
+     * @return A pointer to the lhs of the equation.
+     */
+     Vector& operator+=(const Vector& rhs);
+     
+    /**
+     * Overloaded subtraction-assignment operator.
+     * Performs component based subtraction-assignment.
+     *
+     * @param rhs The vector to subtract.
+     * @return A pointer to the lhs of the equation.
+     */
+     Vector& operator-=(const Vector& rhs);
+     
+    /**
+     * Overloaded addition operator.
+     * Performs component based addition.
+     *
+     * @param rhs The vector to add.
+     * @return A pointer to the result.
+     */
+     Vector operator+(const Vector& other);
+     
+    /**
+     * Overloaded subtraction operator.
+     * Performs component based subtraction.
+     *
+     * @param rhs The vector to subtract.
+     * @return A pointer to the result.
+     */
+     Vector operator-(const Vector& other);
+     
+    /**
+     * Overloaded substraction-assignment operator.
+     */
 
     /**
      * Normalizes the vector to a unit vector.
