@@ -65,10 +65,6 @@ public:
      * @return A pointer to the result.
      */
      Vector operator-(const Vector& other);
-     
-    /**
-     * Overloaded substraction-assignment operator.
-     */
 
     /**
      * Normalizes the vector to a unit vector.
