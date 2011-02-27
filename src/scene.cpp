@@ -4,6 +4,9 @@
 #include <iostream>
 
 #include "scene.hpp"
+#include "light.hpp"
+
+using std::vector;
 
 /*
  * In the case of an empty constructor, Scene will generate a predefined
@@ -23,10 +26,10 @@ Scene::Scene(std::string fileName) {
 }
 
 Scene::~Scene() {
-    for(set<Shape>::iterator it = shapes.cbegin(); it != shapes.cend(); i++) {
+    for(vector<Shape*>::iterator it = shapes.begin(); it != shapes.end(); it++) {
         delete *it;
     }
-    for(set<Sphere>::iterator it = lights.cbegin(); it != shapes.cend(); i++) {
+    for(vector<LightSource*>::iterator it = lights.begin(); it != lights.end(); it++) {
         delete *it;
     }
 }
