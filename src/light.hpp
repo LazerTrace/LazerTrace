@@ -20,6 +20,7 @@ public:
     unsigned char getAlpha() const;
     Color getColor() const;
     LightSource(Color c, float i);
+    virtual ~LightSource();
 };
 
 class PointLight : public LightSource {
@@ -41,7 +42,7 @@ public:
     float getK() const;
     Vector getVector() const;
     DirectionalLight(Color c, float i, Vector v);
-    ~DirectionalLight();
+    virtual ~DirectionalLight();
 };
 
 class SpotLight : public DirectionalLight {

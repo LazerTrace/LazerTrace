@@ -24,8 +24,7 @@ Color LightSource::getColor() const {
 LightSource::LightSource(Color c, float i):color(c),intensity(i){
 }
 
-virtual LightSource::~LightSource(){
-    delete color;
+LightSource::~LightSource(){
 }
 	
 float PointLight::getIntensity() const {
@@ -40,7 +39,6 @@ PointLight::PointLight(Color c, float i, Point p):LightSource(c,i),point(p){
 }
 
 PointLight::~PointLight(){
-    delete point
 }
 float DirectionalLight::getI() const {
     return vector.i;
@@ -64,8 +62,7 @@ DirectionalLight::DirectionalLight(Color c, float i, Vector v)
 {
 }
 
-virtual DirectionalLight::~DirectionalLight(){
-    delete vector;
+DirectionalLight::~DirectionalLight(){
 }
 
 float SpotLight::getTheta() const {
@@ -84,5 +81,4 @@ SpotLight::SpotLight(Color c, float i, Point p, Vector v, float t)
 }
 
 SpotLight::~SpotLight(){
-    delete point;
 }

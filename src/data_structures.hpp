@@ -11,7 +11,9 @@
  */
 class Color{
     public:
-        unsigned char alpha, red, green, blue;
+        unsigned char red, green, blue, alpha;
+        Color(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+        ~Color();
 };
 
 /**

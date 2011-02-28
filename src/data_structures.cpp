@@ -1,6 +1,11 @@
 #include <cmath>
 
 #include "data_structures.hpp"
+Color::Color(unsigned char r, unsigned char g, unsigned char b, unsigned char a):red(r),green(g),blue(b),alpha(a){
+}
+
+Color::~Color(){
+}
 
 Vector::Vector(float i_, float j_, float k_): i(i_), j(j_), k(k_) {
 }
