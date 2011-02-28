@@ -57,7 +57,7 @@ bin/test: $(shared_objects) $(test_objects)
 
 %.dep: %.cpp
 	@g++ -M $(CPPFLAGS) $(make_cflags) $< -o- | \
-	  sed 's#\($*\)\.o[ :]*#\1.o $@ : #g' > $@
+	  sed '1s#[^ ]*.o[ :]*#$*.o: #' > $@
 
 clean-deps:
 	rm -f $(deps)
