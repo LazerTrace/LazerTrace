@@ -1,0 +1,26 @@
+//some pseudocode for phong illumination.
+//once the main raytracing algorithm without lighting is inplace ill convert this to real code and insert it
+
+after finding intersection with ray r at point p
+intensity = 0;
+for each light source(ls){
+    if(ls is directional){
+        cast ray newRay from p backwards along ls.vector to the edge of the scene
+    }else{
+        cast ray newRay from p towards ls.point (aka ls.point-p)
+    }
+    float shade = 1
+    if(ls is spotlight && angle between ray from light to p > theta){
+        shade=0
+    }else{
+        for each object o in scene{
+            if(o intersects newRay){
+                shade=0;
+                break;
+            }
+        }
+    }
+    if(shade>0){
+        intensity = intensity + diffuse * (L.N) + specular * (V.R)n
+    }
+}
