@@ -1,13 +1,9 @@
-ifndef PREFIX
-PREFIX := /opt/local
-endif
-
 ifndef PNGPP
 PNGPP := vendor/png++
 endif
 
-make_cflags := -Wall -Wextra -pedantic -O $(CFLAGS) -I$(PREFIX)/include -I$(PNGPP) -Ivendor/tut
-make_ldflags := $(LDFLAGS) -L$(PREFIX)/lib
+make_cflags := -Wall -Wextra -pedantic -O $(CFLAGS) -I$(PNGPP) -Ivendor/tut
+make_ldflags := $(LDFLAGS)
 
 ifndef NDEBUG
 make_cflags := $(make_cflags) -g
