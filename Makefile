@@ -32,14 +32,17 @@ targets := bin/main bin/test
 
 $(shared_objects): make_cflags := $(make_cflags) -Weffc++
 
-all: $(deps) $(targets)
+all: $(deps) $(targets) check
 
 clean: clean-deps
 	rm -f $(targets) $(objects)
 
 .SUFFIXES:
 
-.PHONY: all clean clean-deps targets deps
+.PHONY: all clean clean-deps targets deps check
+
+check: bin/test
+	bin/test
 
 bin/main: $(shared_objects) $(main_objects)
 	g++ -o $@ $^ $(make_ldflags) `$(LIBPNG_CONFIG) --ldflags`
@@ -48,7 +51,7 @@ bin/test: $(shared_objects) $(test_objects)
 	g++ -o $@ $^ $(make_ldflags) `$(LIBPNG_CONFIG) --ldflags`
 
 %.o: %.cpp
-	g++ -c -o $@ $< $(make_cflags) `$(LIBPNG_CONFIG) --cflags`
+	CPATH=$(CPATH) g++ -c -o $@ $< $(make_cflags) `$(LIBPNG_CONFIG) --cflags`
 
 
 %.dep: %.cpp

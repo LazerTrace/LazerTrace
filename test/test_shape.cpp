@@ -14,7 +14,7 @@ namespace tut {
 }
 
 namespace {
-    tut::factory tf(Sphere test);
+    tut::factory tf("sphere test");
 }
 
 namespace tut {
@@ -23,11 +23,5 @@ namespace tut {
     void object::test<1>() {
         ensure_equals("Sphere returns its index of refraction",
                 the_sphere.getIndexOfRefraction(), 1);
-    }
-
-    template<>
-    template<>
-    void object::test<2>() {
-        ensure(false);
     }
 }
