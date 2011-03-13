@@ -5,7 +5,7 @@
 namespace tut {
     struct Sphere_fixture {
         Sphere the_sphere;
-        Sphere_fixture() : the_sphere(Sphere(Point(0,0,0), 1, Color(0xff, 0x00, 0x00, 0x00), 1))
+        Sphere_fixture() : the_sphere(Sphere(Point(0,0,0), 1, Color(0xff, 0x00, 0x00), 1))
         {
         }
     };
