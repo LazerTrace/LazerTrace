@@ -1,7 +1,7 @@
 #include "light.hpp"
 
 int main(void) {
-    Color c(0x00,0x00,0x00,0x00);
+    Color c(0x00,0x00,0x00);
     Vector v(0,0,0);
     Point p(0,0,0);
     LightSource* ls = new LightSource(c,0);
