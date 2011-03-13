@@ -1,22 +1,5 @@
 #include "light.hpp"
 
-unsigned char LightSource::getRed() const {
-    return color.red;
-}
-
-unsigned char LightSource::getGreen() const {
-    return color.green;
-}
-
-
-unsigned char LightSource::getBlue() const {
-    return color.blue;
-}
-
-unsigned char LightSource::getAlpha() const {
-    return color.alpha;
-}
-
 Color LightSource::getColor() const {
     return color;
 }
