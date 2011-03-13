@@ -4,8 +4,8 @@
 #include "shape.hpp"
 #include "data_structures.hpp"
 
-Shape::Shape(float index_of_refraction_)
-    : index_of_refraction(index_of_refraction_)
+Shape::Shape(Color color_, float index_of_refraction_)
+    : color(color_), index_of_refraction(index_of_refraction_)
 {
 }
 
@@ -13,9 +13,13 @@ float Shape::getIndexOfRefraction() const {
     return index_of_refraction;
 }
 
+Color Shape::getColor() const {
+    return color;
+}
 
-Sphere::Sphere(Point center_, float radius_, float index_of_refraction_)
-    : Shape(index_of_refraction_),
+
+Sphere::Sphere(Point center_, float radius_, Color color_, float index_of_refraction_)
+    : Shape(color_, index_of_refraction_),
       center(center_), radius(radius_)
 {
 }
@@ -50,8 +54,8 @@ Ray* Sphere::getIntersection(const Ray& ray) const {
     }
 }
 
-Plane::Plane(Point center_, Vector normal_, float index_of_refraction_)
-    : Shape(index_of_refraction_),
+Plane::Plane(Point center_, Vector normal_, Color color_, float index_of_refraction_)
+    : Shape(color_, index_of_refraction_),
       center(center_), normal(normal_)
 {
 }

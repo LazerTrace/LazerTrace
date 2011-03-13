@@ -12,13 +12,19 @@
 class Shape {
 protected:
     float index_of_refraction;
+    Color color; // Will need to be replaced with advanced method
     BoundingShape *boundary;
-    Shape(float index_of_refraction);
+    Shape(Color color, float index_of_refraction);
 public:
     /**
      * @return Returns the index of refraction.
      */
     float getIndexOfRefraction() const;
+    
+    /**
+     * @return Returns the color of the shape.
+     */
+    Color getColor() const;
 
     /**
      * Calculates the intersection between a ray and the object.
@@ -50,7 +56,7 @@ public:
      * @return a pointer to the Ray normal to the intersection,
      * or NULL if no intersection. Remember to delete the Ray when done!
      */
-    Sphere(Point center, float radius, float index_of_refraction);
+    Sphere(Point center, float radius, Color color, float index_of_refraction);
 
     virtual Ray* getIntersection(const Ray& ray) const;
 };
@@ -75,7 +81,7 @@ public:
      * @return a pointer to the Ray normal to the intersection,
      * or NULL if no intersection. Remember to delete the Ray when done!
      */
-    Plane(Point center, Vector normal, float index_of_refraction);
+    Plane(Point center, Vector normal, Color color, float index_of_refraction);
 
     virtual Ray* getIntersection(const Ray& ray) const;
 };
