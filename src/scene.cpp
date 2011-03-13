@@ -13,9 +13,9 @@ using std::vector;
  * scene for rendering.
  */
 Scene::Scene() {
-    shapes.push_back(new Sphere(Point(0,0,0), 7.0, 0.0));
-    shapes.push_back(new Sphere(Point(10,10,10), 3.0, 0.7));
-    shapes.push_back(new Plane(Point(10,0,0), Vector(1,0,0), 0.5));
+    shapes.push_back(new Sphere(Point(0,0,0), 7.0, Color(255, 0, 0), 0.0));
+    shapes.push_back(new Sphere(Point(10,10,10), 3.0, Color(0, 255, 0), 0.7));
+    shapes.push_back(new Plane(Point(10,0,0), Vector(1,0,0), Color(0, 0, 255), 0.5));
     // Yet to add default lights.
 }
 
