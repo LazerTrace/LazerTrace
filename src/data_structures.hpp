@@ -11,9 +11,11 @@
  */
 class Color{
     public:
-        unsigned char red, green, blue;
-        Color(unsigned char r, unsigned char g, unsigned char b);
+        unsigned short red, green, blue;
+        Color(unsigned short r, unsigned short g, unsigned short b);
         ~Color();
+        Color& operator* (int scaler);
+        Color& operator* (const Color& c);
 };
 
 /**
