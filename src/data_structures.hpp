@@ -11,11 +11,43 @@
  */
 class Color{
     public:
-        unsigned short red, green, blue;
-        Color(unsigned short r, unsigned short g, unsigned short b);
-        ~Color();
-        Color& operator* (int scalar);
-        Color& operator* (const Color& c);
+    float red, green, blue;
+        
+    /**
+     * Constructor for objects of class Color.
+     *
+     * @param r the color red
+     * @param g the color green
+     * @param b the color blue
+     */
+    Color(float r, float g, float b);
+    ~Color();
+    /**
+     * Overloaded multiplcation-assignment operator.
+     * color * scalar
+     *
+     * @param scalar The scalar to multiply with the color.
+     * @return A pointer to the lhs of the equation.
+     */
+    Color operator* (int scalar);
+    
+    /**
+     * Overloaded multiplcation-assignment operator.
+     * scalar * color
+     *
+     * @param scalar The scalar to multiply.
+     * @param c The color to multiply
+     * @return A pointer to the lhs of the equation.
+     */
+    friend Color operator*(int scalar, Color c);
+    
+    /**
+     * Overloaded multiplcation-assignment operator.
+     *
+     * @param c The color to multiply with the original color.
+     * @return A pointer to the lhs of the equation.
+     */
+    Color operator* (const Color& c);
 };
 
 /**

@@ -1,20 +1,18 @@
 #include <cmath>
 
 #include "data_structures.hpp"
-Color::Color(unsigned short r, unsigned short g, unsigned short b):red(r),green(g),blue(b){
+Color::Color(float r, float g, float b):red(r),green(g),blue(b){
 }
-Color& Color::operator* (const int scaler) {
-    red *= scaler;
-    green *= scaler;
-    blue *= scaler;
-    return *this;
+Color Color::operator* (const int scalar) {
+    return Color(red * scalar, green * scalar, blue * scalar);
 }
 
-Color& Color::operator* (const Color& c) {
-    red *= c.red;
-    green *= c.green;
-    blue *= c.blue;
-    return *this;
+Color operator*(int scalar, Color c){
+    return Color(c.red * scalar, c.green * scalar, c.blue * scalar);
+}
+
+Color Color::operator* (const Color& c) {
+    Color(red * c.red, green * c.green, blue * c.blue);
 }
 
 Color::~Color(){
