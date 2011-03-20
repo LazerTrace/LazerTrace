@@ -11,10 +11,10 @@
  */
 class Shape {
 protected:
-    float index_of_refraction;
+    float index_of_refraction, ambient_coef, diffuse_coef, specular_coef;
     Color color; // Will need to be replaced with advanced method
     BoundingShape *boundary;
-    Shape(Color color, float index_of_refraction);
+    Shape(Color color, float index_of_refraction, float ambient_coef, float diffuse_coef, float specular_coef);
 public:
     /**
      * @return Returns the index of refraction.
