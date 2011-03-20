@@ -13,9 +13,9 @@ using std::vector;
  * scene for rendering.
  */
 Scene::Scene() {
-    Color c_zero(0x00,0x00,0x00);
-    Vector v_zero(0,0,0);
-    Point p_zero(0,0,0);
+    Color c(0x00,0x00,0x00);
+    Vector v(0,0,0);
+    Point p(0,0,0);
 
     shapes.push_back(new Sphere(Point(0,0,0), 7.0,
                 Color(0xff, 0x00, 0x00), 0.0));

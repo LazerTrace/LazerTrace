@@ -2,16 +2,16 @@ ifndef PNGPP
 PNGPP := vendor/png++
 endif
 
-make_cflags := -Wall -Wextra -pedantic -O $(CFLAGS) -I$(PNGPP) -Ivendor/tut
-make_ldflags := $(LDFLAGS)
+ifndef LIBPNG_CONFIG
+LIBPNG_CONFIG = libpng-config
+endif
+
+make_cflags = -Wall -Wextra -pedantic -O $(CFLAGS) -I$(PNGPP) -Ivendor/tut `$(LIBPNG_CONFIG) --cflags`
+make_ldflags = $(LDFLAGS)
 
 ifndef NDEBUG
 make_cflags := $(make_cflags) -g
 make_ldflags := $(make_ldflags) -g
-endif
-
-ifndef LIBPNG_CONFIG
-LIBPNG_CONFIG := libpng-config
 endif
 
 CPATH=src
@@ -51,7 +51,7 @@ bin/test: $(shared_objects) $(test_objects)
 	g++ -o $@ $^ $(make_ldflags) `$(LIBPNG_CONFIG) --ldflags`
 
 %.o: %.cpp
-	CPATH=$(CPATH) g++ -c -o $@ $< $(make_cflags) `$(LIBPNG_CONFIG) --cflags`
+	CPATH=$(CPATH) g++ -c -o $@ $< $(make_cflags)
 
 
 %.dep: %.cpp
