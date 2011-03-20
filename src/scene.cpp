@@ -36,6 +36,12 @@ Scene::Scene(std::string fileName) {
     // We need to figure out what our syntax/grammar is first though.
 }
 
+Color Scene::shade(Shape obj, Ray hit){
+   /* for(vector<Shape*>::iterator it = shapes.begin(); it != shapes.end(); it++) {
+        it->
+    }*/
+}
+
 Scene::~Scene() {
     for(vector<Shape*>::iterator it = shapes.begin(); it != shapes.end(); it++) {
         delete *it;
