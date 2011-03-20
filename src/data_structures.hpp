@@ -14,7 +14,7 @@ class Color{
         unsigned short red, green, blue;
         Color(unsigned short r, unsigned short g, unsigned short b);
         ~Color();
-        Color& operator* (int scaler);
+        Color& operator* (int scalar);
         Color& operator* (const Color& c);
 };
 
