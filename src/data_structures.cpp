@@ -1,7 +1,20 @@
 #include <cmath>
 
 #include "data_structures.hpp"
-Color::Color(unsigned char r, unsigned char g, unsigned char b):red(r),green(g),blue(b){
+Color::Color(unsigned short r, unsigned short g, unsigned short b):red(r),green(g),blue(b){
+}
+Color& Color::operator* (const int scaler) {
+    red *= scaler;
+    green *= scaler;
+    blue *= scaler;
+    return *this;
+}
+
+Color& Color::operator* (const Color& c) {
+    red *= c.red;
+    green *= c.green;
+    blue *= c.blue;
+    return *this;
 }
 
 Color::~Color(){
