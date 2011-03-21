@@ -5,7 +5,7 @@
 #include "data_structures.hpp"
 
 Shape::Shape(Color color, float index_of_refraction)
-    : color(color), index_of_refraction(index_of_refraction)
+    : index_of_refraction(index_of_refraction), color(color)
 {
 }
 
