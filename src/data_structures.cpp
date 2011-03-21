@@ -21,6 +21,12 @@ Color::~Color(){
 Vector::Vector(float i_, float j_, float k_): i(i_), j(j_), k(k_) {
 }
 
+bool Vector::approx_equals(const Vector& other) const {
+    return std::abs(other.i - i) < EPSILON &&
+           std::abs(other.j - j) < EPSILON &&
+           std::abs(other.k - k) < EPSILON;
+}
+
 Vector& Vector::operator+=(const Vector& rhs) {
     i += rhs.i;
     j += rhs.j;
@@ -47,11 +53,24 @@ Vector Vector::operator*(float scalar) const {
     return Vector(i*scalar, j*scalar, k*scalar);
 }
 
+Vector Vector::operator/(float scalar) const {
+    return Vector(i/scalar, j/scalar, k/scalar);
+}
+
+float Vector::magnitude() const {
+    return sqrt(i*i + j*j + k*k);
+}
+
 void Vector::normalize() {
-    float length = sqrt(i*i + j*j + k*k);
-    i = i/length;
-    j = j/length;
-    k = k/length;
+    float length = magnitude();
+
+    i /= length;
+    j /= length;
+    k /= length;
+}
+
+Vector Vector::normalized() const {
+    return *this / magnitude();
 }
 
 float Vector::dotProduct(Vector v) const {

@@ -36,4 +36,10 @@ namespace tut {
         ensure_equals("vector normalize", d.j, e.j);
         ensure_equals("vector normalize", d.k, e.k);
     }
+
+    template<>
+    template<>
+    void object::test<3>() {
+        ensure("vector magnitude", d.normalized().approx_equals(e));
+    }
 }

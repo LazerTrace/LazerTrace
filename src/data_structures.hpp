@@ -50,6 +50,8 @@ class Color{
     Color operator* (const Color& c);
 };
 
+const float EPSILON = 1e-6;
+
 /**
  * Represents a 3-dimensional vector.
  */
@@ -65,6 +67,12 @@ public:
      * @param k The z-direction
      */
     Vector(float i, float j, float k);
+
+    /**
+     * Vector approximate comparison
+     * @return Componentwise comparison to within EPSILON
+     */
+    bool approx_equals(const Vector&) const;
 
     /**
      * Overloaded addition-assignment operator.
@@ -108,9 +116,24 @@ public:
     Vector operator*(float) const;
 
     /**
+     * Vector division by scalar.
+     */
+    Vector operator/(float) const;
+
+    /**
+     * Vector magnitude
+     */
+    float magnitude() const;
+
+    /**
      * Normalizes the vector to a unit vector.
      */
     void normalize();
+
+    /**
+     * Returns a normalized copy of the vector
+     */
+    Vector normalized() const;
 
     /**
      * Compute the dot product when dotted with the given Vector.
