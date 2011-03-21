@@ -97,3 +97,8 @@ void Ray::normalize() {
     dir.j = dir.j/length;
     dir.k = dir.k/length;
 }
+
+static Ray Ray::makeRay(Point origin, Point dest) {
+    Vector dir = Vector(dest.x - origin.x, dest.y - origin.y, dest.z - origin.z);
+    return Ray(origin, dir);
+}
