@@ -13,7 +13,7 @@ using std::vector;
  * scene for rendering.
  */
 Scene::Scene() {
-    Color c(0x00,0x00,0x00);
+    Color c(0x10,0x10,0x10);
     Vector v(0,0,0);
     Point p(0,0,0);
 
@@ -24,10 +24,9 @@ Scene::Scene() {
     shapes.push_back(new Plane(Point(10,0,0), Vector(1,0,0),
                 Color(0x00, 0x00, 0xff), 0.5));
 
-    lights.push_back(new LightSource(c,0));
     lights.push_back(new PointLight(c,0,p));
-    lights.push_back(new DirectionalLight(c,0,v));
-    lights.push_back(new SpotLight(c, 0, p, v, 0));
+    //lights.push_back(new DirectionalLight(c,0,v));
+    //lights.push_back(new SpotLight(c, 0, p, v, 0));
 }
 
 Scene::Scene(std::string fileName) {
@@ -37,9 +36,20 @@ Scene::Scene(std::string fileName) {
 }
 
 Color Scene::shade(Shape obj, Ray hit){
-   /* for(vector<Shape*>::iterator it = shapes.begin(); it != shapes.end(); it++) {
-        it->
-    }*/
+    for(vector<LightSource*>::iterator it = lights.begin(); it != lights.end(); it++) {
+        Ray shadow = Ray::makeRay(hit.getOrigin(), it->getPoint());
+        bool collision = false;
+        
+        // Detect collisions, for now do nothing if there is a collision
+        for(vector<Shape*>::iterator sh = shapes.begin(); sh != shapes.end(); sh++) {
+            if(sh->getIntersection(shadow) != NULL) {
+                collision = true;
+                break;
+            }
+        }
+        
+        // Calculate local illumination
+    }
 }
 
 Scene::~Scene() {
