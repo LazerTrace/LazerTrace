@@ -44,3 +44,7 @@ Scene::~Scene() {
         delete *it;
     }
 }
+
+Ray Scene::get_camera_ray(float x, float y) const {
+    return camera.get_ray(x, y);
+}

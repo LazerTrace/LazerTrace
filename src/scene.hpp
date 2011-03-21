@@ -21,6 +21,12 @@ public:
     Scene(std::string fileName);
     ~Scene();
 
+    /**
+     * Asks the camera for a ray
+     * @return The camera's ray
+     */
+    Ray get_camera_ray(float x, float y) const;
+
 };
 
 #endif
