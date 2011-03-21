@@ -103,6 +103,11 @@ public:
     Vector operator-(const Vector& other);
 
     /**
+     * Vector multiplication by scalar.
+     */
+    Vector operator*(float) const;
+
+    /**
      * Normalizes the vector to a unit vector.
      */
     void normalize();

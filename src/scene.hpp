@@ -6,6 +6,7 @@
 
 #include "shape.hpp"
 #include "light.hpp"
+#include "camera.hpp"
 
 class Scene {
 
@@ -13,6 +14,7 @@ protected:
     // Storage for shapes in scene
     std::vector<Shape*> shapes;
     std::vector<LightSource*> lights;
+    Camera camera;
 
 public:
     Scene();

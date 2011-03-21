@@ -43,6 +43,10 @@ Vector Vector::operator-(const Vector& other) {
     return Vector(*this) -= other;
 }
 
+Vector Vector::operator*(float scalar) const {
+    return Vector(i*scalar, j*scalar, k*scalar);
+}
+
 void Vector::normalize() {
     float length = sqrt(i*i + j*j + k*k);
     i = i/length;
