@@ -18,7 +18,7 @@ Color Color::operator* (const Color& c) {
 Color::~Color(){
 }
 
-Vector::Vector(float i_, float j_, float k_): i(i_), j(j_), k(k_) {
+Vector::Vector(float i, float j, float k): i(i), j(j), k(k) {
 }
 
 bool Vector::approx_equals(const Vector& other) const {
@@ -77,10 +77,10 @@ float Vector::dotProduct(Vector v) const {
     return (i * v.i) + (j * v.j) + (k * v.k);
 }
 
-Point::Point(float x_, float y_, float z_): x(x_), y(y_), z(z_) {
+Point::Point(float x, float y, float z): x(x), y(y), z(z) {
 }
 
-Ray::Ray(Point origin_, Vector dir_): origin(origin_), dir(dir_) {
+Ray::Ray(Point origin, Vector dir): origin(origin), dir(dir) {
 }
 
 Point Ray::getOrigin() const {
