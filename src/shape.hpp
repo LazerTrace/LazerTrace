@@ -20,7 +20,7 @@ public:
      * @return Returns the index of refraction.
      */
     float getIndexOfRefraction() const;
-    
+
     /**
      * @return Returns the color of the shape.
      */
@@ -52,7 +52,7 @@ public:
      * @param radius The radius of the sphere.
      * @param index_of_refraction Index of refraction, specific to the
      * material of the sphere.
-     * 
+     *
      * @return a pointer to the Ray normal to the intersection,
      * or NULL if no intersection. Remember to delete the Ray when done!
      */

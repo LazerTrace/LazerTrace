@@ -29,7 +29,7 @@ Ray* Sphere::getIntersection(const Ray& ray) const {
     float det = pow(ray.getDir().dotProduct(c), 2)
         - ray.getDir().dotProduct(ray.getDir())
         * (c.dotProduct(c) - pow(radius, 2));
-    
+
     if (det < 0) {
         return NULL;
     }
@@ -47,7 +47,7 @@ Ray* Sphere::getIntersection(const Ray& ray) const {
         } else {
             float d = d - sdet;
         }
-        
+
         Point p(ray.dir.i * d, ray.dir.j * d, ray.dir.k * d);
         Vector v(c.i - p.x, c.j - p.y, c.k - p.z);
         return new Ray(p,v);

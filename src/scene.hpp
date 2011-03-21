@@ -23,13 +23,13 @@ public:
      * with a minimal number of objects and lights.
      */
     Scene();
-    
+
     /**
      * Constructor for objects of class Scene().
      * Loads a scene from a file using JSON and OpenCTM file formats.
      */
     Scene(std::string fileName);
-    
+
     /**
      * Given an object and the ray representing the intersection point,
      * returns the expected color given the local illumination calculation.
@@ -39,7 +39,7 @@ public:
      * @return The color at the given point.
      */
     Color shade(Shape obj, Ray hit);
-    
+
     ~Scene();
 
     /**
