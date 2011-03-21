@@ -12,7 +12,7 @@
 class Color{
     public:
     float red, green, blue;
-        
+
     /**
      * Constructor for objects of class Color.
      *
@@ -30,7 +30,7 @@ class Color{
      * @return A pointer to the lhs of the equation.
      */
     Color operator* (int scalar);
-    
+
     /**
      * Overloaded multiplcation-assignment operator.
      * scalar * color
@@ -40,7 +40,7 @@ class Color{
      * @return A pointer to the lhs of the equation.
      */
     friend Color operator*(int scalar, Color c);
-    
+
     /**
      * Overloaded multiplcation-assignment operator.
      *
@@ -65,7 +65,7 @@ public:
      * @param k The z-direction
      */
     Vector(float i, float j, float k);
-    
+
     /**
      * Overloaded addition-assignment operator.
      * Performs component based addition-assignment.
@@ -73,8 +73,8 @@ public:
      * @param rhs The vector to add.
      * @return A pointer to the lhs of the equation.
      */
-     Vector& operator+=(const Vector& rhs);
-     
+    Vector& operator+=(const Vector& rhs);
+
     /**
      * Overloaded subtraction-assignment operator.
      * Performs component based subtraction-assignment.
@@ -82,8 +82,8 @@ public:
      * @param rhs The vector to subtract.
      * @return A pointer to the lhs of the equation.
      */
-     Vector& operator-=(const Vector& rhs);
-     
+    Vector& operator-=(const Vector& rhs);
+
     /**
      * Overloaded addition operator.
      * Performs component based addition.
@@ -91,8 +91,8 @@ public:
      * @param rhs The vector to add.
      * @return A pointer to the result.
      */
-     Vector operator+(const Vector& other);
-     
+    Vector operator+(const Vector& other);
+
     /**
      * Overloaded subtraction operator.
      * Performs component based subtraction.
@@ -100,7 +100,7 @@ public:
      * @param rhs The vector to subtract.
      * @return A pointer to the result.
      */
-     Vector operator-(const Vector& other);
+    Vector operator-(const Vector& other);
 
     /**
      * Normalizes the vector to a unit vector.
