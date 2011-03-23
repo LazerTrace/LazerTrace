@@ -22,6 +22,21 @@ public:
     float getIndexOfRefraction() const;
 
     /**
+     * @return Returns the coefficient for ambient light effects.
+     */
+    float getAmbientCoefficient() const;
+    
+    /**
+     * @return Returns the coefficient for diffuse light effects.
+     */
+    float getDiffuseCoefficient() const;
+    
+    /**
+     * @return Returns the coefficient for specular light effects.
+     */
+    float getSpecularCoefficient() const;
+    
+    /**
      * @return Returns the color of the shape.
      */
     Color getColor() const;

@@ -14,6 +14,18 @@ float Shape::getIndexOfRefraction() const {
     return index_of_refraction;
 }
 
+float getAmbientCoefficient() const {
+    return ambient_coef;
+}
+    
+float getDiffuseCoefficient() const {
+    return diffuse_coef;
+}
+    
+float getSpecularCoefficient() const {
+    return specular_coef;
+}
+
 Color Shape::getColor() const {
     return color;
 }
