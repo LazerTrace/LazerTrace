@@ -17,11 +17,11 @@ float Shape::getIndexOfRefraction() const {
 float getAmbientCoefficient() const {
     return ambient_coef;
 }
-    
+
 float getDiffuseCoefficient() const {
     return diffuse_coef;
 }
-    
+
 float getSpecularCoefficient() const {
     return specular_coef;
 }

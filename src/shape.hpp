@@ -25,17 +25,17 @@ public:
      * @return Returns the coefficient for ambient light effects.
      */
     float getAmbientCoefficient() const;
-    
+
     /**
      * @return Returns the coefficient for diffuse light effects.
      */
     float getDiffuseCoefficient() const;
-    
+
     /**
      * @return Returns the coefficient for specular light effects.
      */
     float getSpecularCoefficient() const;
-    
+
     /**
      * @return Returns the color of the shape.
      */
@@ -70,7 +70,7 @@ public:
      * @param ambient_coef The coefficient for ambient light effects.
      * @param diffuse_coef The coefficient for diffuse light effects.
      * @param specular_coef The coefficient for specular light effects.
-     * 
+     *
      * @return a pointer to the Ray normal to the intersection,
      * or NULL if no intersection. Remember to delete the Ray when done!
      */
