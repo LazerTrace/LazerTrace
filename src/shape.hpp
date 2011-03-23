@@ -52,11 +52,15 @@ public:
      * @param radius The radius of the sphere.
      * @param index_of_refraction Index of refraction, specific to the
      * material of the sphere.
-     *
+     * @param ambient_coef The coefficient for ambient light effects.
+     * @param diffuse_coef The coefficient for diffuse light effects.
+     * @param specular_coef The coefficient for specular light effects.
+     * 
      * @return a pointer to the Ray normal to the intersection,
      * or NULL if no intersection. Remember to delete the Ray when done!
      */
-    Sphere(Point center, float radius, Color color, float index_of_refraction);
+    Sphere(Point center, float radius, Color color, float index_of_refraction,
+           float ambient_coef, float diffuse_coef, float specular_coef);
 
     virtual Ray* getIntersection(const Ray& ray) const;
 };
@@ -77,11 +81,15 @@ public:
      * @param normal The vector normal to the plane.
      * @param index_of_refraction Index of refraction, specific to the
      * material of the plane.
+     * @param ambient_coef The coefficient for ambient light effects.
+     * @param diffuse_coef The coefficient for diffuse light effects.
+     * @param specular_coef The coefficient for specular light effects.
      *
      * @return a pointer to the Ray normal to the intersection,
      * or NULL if no intersection. Remember to delete the Ray when done!
      */
-    Plane(Point center, Vector normal, Color color, float index_of_refraction);
+    Plane(Point center, Vector normal, Color color, float index_of_refraction,
+          float ambient_coef, float diffuse_coef, float specular_coef);
 
     virtual Ray* getIntersection(const Ray& ray) const;
 };
