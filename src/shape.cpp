@@ -4,9 +4,10 @@
 #include "shape.hpp"
 #include "data_structures.hpp"
 
-Shape::Shape(Color color, float index_of_refraction)
-    : index_of_refraction(index_of_refraction), color(color)
-{
+Shape::Shape(Color color, float index_of_refraction, float ambient_coef,
+             float diffuse_coef, float specular_coef)
+    : index_of_refraction(index_of_refraction), color(color), ambient_coef(ambient_coef),
+      diffuse_coef(diffuse_coef), specular_coef(specular_coef) {
 }
 
 float Shape::getIndexOfRefraction() const {
@@ -18,8 +19,9 @@ Color Shape::getColor() const {
 }
 
 
-Sphere::Sphere(Point center, float radius, Color color, float index_of_refraction)
-    : Shape(color, index_of_refraction),
+Sphere::Sphere(Point center, float radius, Color color, float index_of_refraction,
+               float ambient_coef, float diffuse_coef, float specular_coef)
+    : Shape(color, index_of_refraction, ambient_coef, diffuse_coef, specular_coef),
       center(center), radius(radius)
 {
 }
@@ -54,10 +56,10 @@ Ray* Sphere::getIntersection(const Ray& ray) const {
     }
 }
 
-Plane::Plane(Point center, Vector normal, Color color, float index_of_refraction)
-    : Shape(color, index_of_refraction),
-      center(center), normal(normal)
-{
+Plane::Plane(Point center, Vector normal, Color color, float index_of_refraction,
+             float ambient_coef, float diffuse_coef, float specular_coef)
+    : Shape(color, index_of_refraction, ambient_coef, diffuse_coef, specular_coef),
+      center(center), normal(normal) {
 }
 
 Ray* Plane::getIntersection(const Ray& ray) const {

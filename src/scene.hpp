@@ -38,7 +38,7 @@ public:
      * @param hit The ray representing the normal vector and point of intersection.
      * @return The color at the given point.
      */
-    Color shade(Shape obj, Ray hit);
+    Color shade(Shape *obj, Ray hit);
 
     ~Scene();
 
