@@ -54,7 +54,7 @@ Color Scene::shade(Shape *obj, Ray hit){
             hit.normalize();
 
             float cos_theta = (shadow.getDir()).dotProduct(hit.getDir());
-            Color diffuse = cos_theta*obj.getDiffuseCoefficient()*((*it)->getColor());
+            Color diffuse = cos_theta*obj->getDiffuseCoefficient()*((*it)->getColor());
             result = Color(result.red + diffuse.red, result.green + diffuse.green, result.blue + diffuse.blue);
         }
 
