@@ -9,10 +9,6 @@ LightSource::LightSource(Color c, float i):color(c),intensity(i){
 
 LightSource::~LightSource(){
 }
-	
-float PointLight::getIntensity() const {
-    return intensity;
-}
 
 Point PointLight::getPoint() const {
     return point;
@@ -23,6 +19,7 @@ PointLight::PointLight(Color c, float i, Point p):LightSource(c,i),point(p){
 
 PointLight::~PointLight(){
 }
+
 float DirectionalLight::getI() const {
     return vector.i;
 }
@@ -33,6 +30,11 @@ float DirectionalLight::getJ() const {
 
 float DirectionalLight::getK() const {
     return vector.k;
+}
+
+// DON"T YOU FUCKING CALL THIS. DON"T DO IT. I WILL KILL YOU.
+Point PointLight::getPoint() const {
+    return NULL;
 }
 
 Vector DirectionalLight::getVector() const {
