@@ -14,18 +14,16 @@ using std::vector;
  * In the case of an empty constructor, Scene will generate a predefined
  * scene for rendering.
  */
-Scene::Scene(): ambient(Color(0.25, 0.25, 0.25)) {
-    Color c(1, 1, 1);
-    Vector v(0,0,0);
-    Point p(0,0,0);
+Scene::Scene(): ambient(Color(0.25, 0.25, 0.25))
+{
+    shapes.push_back(new Plane(Point(0, -2, 0), Vector(0, 1, 0),
+                Color(0, 1, 0), 1, 0.5, 0.5, 0.5));
+    shapes.push_back(new Sphere(Point(1, -1, 5), 1,
+                Color(1, 0, 0), 1, 0.5, 0.5, 0.5));
+    shapes.push_back(new Sphere(Point(-1, -1, 5), 1,
+                Color(0, 0, 1), 1, 0.5, 0.5, 0.5));
 
-    shapes.push_back(new Sphere(Point(0,0,0), 7.0, Color(1, 0, 0), 0.0, 0.5, 0.5, 0.5));
-    shapes.push_back(new Sphere(Point(10,10,10), 3.0, Color(0, 1, 0), 0.7, 0.5, 0.5, 0.5));
-    shapes.push_back(new Plane(Point(10,0,0), Vector(1,0,0), Color(0, 0, 1), 0.5, 0.5, 0.5, 0.5));
-
-    lights.push_back(new PointLight(c,p));
-    //lights.push_back(new DirectionalLight(c,v));
-    //lights.push_back(new SpotLight(c, p, v, 0));
+    lights.push_back(new PointLight(Color(1, 1, 1), Point(0, 5, 5)));
 }
 
 Scene::Scene(std::string fileName): ambient(Color(0.25, 0.25, 0.25)) {
