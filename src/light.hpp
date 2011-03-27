@@ -19,7 +19,6 @@ public:
      * @return The color of the light as a color object (3-tuple of floats)
      */
     Color getColor() const;
-    Point getPoint() const;
     /**
      * Constructor for objects of class LightSource.  
      * Also not to be used directly.  Simply used for inheritance of other contrsuctors
@@ -27,6 +26,7 @@ public:
      * @param c the color of the light source
      */
     LightSource(Color c);
+    virtual Point getPoint() const;
     virtual ~LightSource();
 };
 

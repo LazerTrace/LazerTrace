@@ -14,7 +14,7 @@ Color operator*(float scalar, Color c){
 }
 
 Color Color::operator* (const Color& c) {
-    Color(red * c.red, green * c.green, blue * c.blue);
+    return Color(red * c.red, green * c.green, blue * c.blue);
 }
 
 Color::~Color(){
@@ -63,6 +63,10 @@ float Vector::magnitude() const {
     return sqrt(i*i + j*j + k*k);
 }
 
+float Vector::magnitude2() const {
+    return i*i + j*j + k*k;
+}
+
 void Vector::normalize() {
     float length = magnitude();
 
@@ -84,6 +88,8 @@ Point::Point(float x, float y, float z): x(x), y(y), z(z) {
 
 Ray::Ray(Point origin, Vector dir): origin(origin), dir(dir) {
 }
+
+Ray::Ray() : origin(0, 0, 0), dir(0, 0, 1) {}
 
 Point Ray::getOrigin() const {
     return origin;

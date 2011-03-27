@@ -32,6 +32,13 @@ public:
     Scene(std::string fileName);
 
     /**
+     * The entry point for the raytracer, and also recursively called
+     * by shade.
+     * @return The raytraced color
+     */
+    Color raytrace(const Ray& camera_ray) const;
+
+    /**
      * Given an object and the ray representing the intersection point,
      * returns the expected color given the local illumination calculation.
      *
@@ -39,7 +46,7 @@ public:
      * @param hit The ray representing the normal vector and point of intersection.
      * @return The color at the given point.
      */
-    Color shade(Shape *obj, Ray hit);
+    Color shade(const Shape *obj, Ray hit) const;
 
     ~Scene();
 
