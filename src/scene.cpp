@@ -22,9 +22,9 @@ Scene::Scene() {
     shapes.push_back(new Sphere(Point(10,10,10), 3.0, Color(0, 0xff, 0), 0.7, 0.5, 0.5, 0.5));
     shapes.push_back(new Plane(Point(10,0,0), Vector(1,0,0), Color(0x00, 0x00, 0xff), 0.5, 0.5, 0.5, 0.5));
 
-    lights.push_back(new PointLight(c,0,p));
-    //lights.push_back(new DirectionalLight(c,0,v));
-    //lights.push_back(new SpotLight(c, 0, p, v, 0));
+    lights.push_back(new PointLight(c,p));
+    //lights.push_back(new DirectionalLight(c,v));
+    //lights.push_back(new SpotLight(c, p, v, 0));
 }
 
 Scene::Scene(std::string fileName) {
