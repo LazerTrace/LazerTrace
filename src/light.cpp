@@ -4,44 +4,29 @@ Color LightSource::getColor() const {
     return color;
 }
 
-LightSource::LightSource(Color c, float i):color(c),intensity(i){
+LightSource::LightSource(Color c):color(c){
 }
 
 LightSource::~LightSource(){
-}
-	
-float PointLight::getIntensity() const {
-    return intensity;
 }
 
 Point PointLight::getPoint() const {
     return point;
 }
 
-PointLight::PointLight(Color c, float i, Point p):LightSource(c,i),point(p){
+PointLight::PointLight(Color c, Point p):LightSource(c),point(p){
 }
 
 PointLight::~PointLight(){
 }
-float DirectionalLight::getI() const {
-    return vector.i;
+
+Vector DirectionalLight::getDirection() const {
+    return direction;
 }
 
-float DirectionalLight::getJ() const {
-    return vector.j;
-}
-
-float DirectionalLight::getK() const {
-    return vector.k;
-}
-
-Vector DirectionalLight::getVector() const {
-    return vector;
-}
-
-DirectionalLight::DirectionalLight(Color c, float i, Vector v)
-    : LightSource(c,i),
-    vector(v)
+DirectionalLight::DirectionalLight(Color c, Vector d)
+    : LightSource(c),
+    direction(d)
 {
 }
 
@@ -56,8 +41,8 @@ Point SpotLight::getPoint() const {
     return point;
 }
 
-SpotLight::SpotLight(Color c, float i, Point p, Vector v, float t)
-    : DirectionalLight(c,i,v),
+SpotLight::SpotLight(Color c, Point p, Vector v, float t)
+    : DirectionalLight(c,v),
     theta(t),
     point(p)
 {

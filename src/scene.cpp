@@ -13,21 +13,21 @@ using std::vector;
  * scene for rendering.
  */
 Scene::Scene() {
-    Color c(0x00,0x00,0x00);
+    Color c(0,0,0);
     Vector v(0,0,0);
     Point p(0,0,0);
 
     shapes.push_back(new Sphere(Point(0,0,0), 7.0,
-                Color(0xff, 0x00, 0x00), 0.0));
+                Color(1, 0, 0), 0.0));
     shapes.push_back(new Sphere(Point(10,10,10), 3.0,
                 Color(0, 0xff, 0), 0.7));
     shapes.push_back(new Plane(Point(10,0,0), Vector(1,0,0),
                 Color(0x00, 0x00, 0xff), 0.5));
 
-    lights.push_back(new LightSource(c,0));
-    lights.push_back(new PointLight(c,0,p));
-    lights.push_back(new DirectionalLight(c,0,v));
-    lights.push_back(new SpotLight(c, 0, p, v, 0));
+    lights.push_back(new LightSource(c));
+    lights.push_back(new PointLight(c,p));
+    lights.push_back(new DirectionalLight(c,v));
+    lights.push_back(new SpotLight(c, p, v, 0));
 }
 
 Scene::Scene(std::string fileName) {
