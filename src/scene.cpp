@@ -13,8 +13,8 @@ using std::vector;
  * In the case of an empty constructor, Scene will generate a predefined
  * scene for rendering.
  */
-Scene::Scene() {
-    Color c(0x10,0x10,0x10);
+Scene::Scene(): ambient(Color(0x40,0x40,0x40)) {
+    Color c(0xff, 0xff, 0xff);
     Vector v(0,0,0);
     Point p(0,0,0);
 
@@ -22,12 +22,12 @@ Scene::Scene() {
     shapes.push_back(new Sphere(Point(10,10,10), 3.0, Color(0, 0xff, 0), 0.7, 0.5, 0.5, 0.5));
     shapes.push_back(new Plane(Point(10,0,0), Vector(1,0,0), Color(0x00, 0x00, 0xff), 0.5, 0.5, 0.5, 0.5));
 
-    lights.push_back(new PointLight(c,0,p));
-    //lights.push_back(new DirectionalLight(c,0,v));
-    //lights.push_back(new SpotLight(c, 0, p, v, 0));
+    lights.push_back(new PointLight(c,p));
+    //lights.push_back(new DirectionalLight(c,v));
+    //lights.push_back(new SpotLight(c, p, v, 0));
 }
 
-Scene::Scene(std::string fileName) {
+Scene::Scene(std::string fileName): ambient(Color(0x40,0x40,0x40)) {
     std::ifstream input_scene (fileName.c_str());
     // Read the file and add specified shapes.
     // We need to figure out what our syntax/grammar is first though.
@@ -36,7 +36,7 @@ Scene::Scene(std::string fileName) {
 Color Scene::shade(Shape *obj, Ray hit){
     for(vector<LightSource*>::iterator it = lights.begin(); it != lights.end(); it++) {
         Ray shadow = Ray::makeRay(hit.getOrigin(), (*it)->getPoint());
-        Color result = Color(c);
+        Color result = Color(ambient);
         bool collision = false;
 
         // Detect collisions, for now do nothing if there is a collision

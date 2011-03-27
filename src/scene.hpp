@@ -14,6 +14,7 @@ protected:
     // Storage for shapes in scene
     std::vector<Shape*> shapes;
     std::vector<LightSource*> lights;
+    Color ambient;
     Camera camera;
 
 public:
