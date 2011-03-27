@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <math.h>
+#include <limits>
 
 #include "scene.hpp"
 #include "light.hpp"
@@ -33,14 +34,41 @@ Scene::Scene(std::string fileName): ambient(Color(0.25, 0.25, 0.25)) {
     // We need to figure out what our syntax/grammar is first though.
 }
 
-Color Scene::shade(Shape *obj, Ray hit){
-    for(vector<LightSource*>::iterator it = lights.begin(); it != lights.end(); it++) {
+Color Scene::raytrace(const Ray& camera_ray) const {
+    const Shape *nearest_shape = NULL;
+    float nearest_distance2 = std::numeric_limits<float>::max();
+    Ray nearest_hit;
+    for (vector<Shape*>::const_iterator it = shapes.begin(); it != shapes.end(); it++) {
+        const Shape *shape = *it;
+        Ray *intersection = shape->getIntersection(camera_ray);
+        if (intersection == NULL) // Didn't hit this shape
+            continue;
+        float int_distance2 = Ray::makeRay(camera_ray.getOrigin(),
+                intersection->getOrigin()).getDir().magnitude2();
+        if (int_distance2 < nearest_distance2) {
+            // Found a closer hit
+            nearest_shape = shape;
+            nearest_distance2 = int_distance2;
+            nearest_hit = *intersection;
+        }
+        delete intersection;
+    }
+    if (nearest_shape == NULL) {
+        // Didn't hit anything
+        return Color(1, 0, 1); // Magenta
+    } else {
+        return shade(nearest_shape, nearest_hit);
+    }
+}
+
+Color Scene::shade(const Shape *obj, Ray hit) const{
+    for(vector<LightSource*>::const_iterator it = lights.begin(); it != lights.end(); it++) {
         Ray shadow = Ray::makeRay(hit.getOrigin(), (*it)->getPoint());
         Color result = Color(ambient);
         bool collision = false;
 
         // Detect collisions, for now do nothing if there is a collision
-        for(vector<Shape*>::iterator sh = shapes.begin(); sh != shapes.end(); sh++) {
+        for(vector<Shape*>::const_iterator sh = shapes.begin(); sh != shapes.end(); sh++) {
             if((*sh)->getIntersection(shadow) != NULL) {
                 collision = true;
                 break;
