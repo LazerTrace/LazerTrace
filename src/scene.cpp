@@ -13,7 +13,10 @@ using std::vector;
  * In the case of an empty constructor, Scene will generate a predefined
  * scene for rendering.
  */
-Scene::Scene(): ambient(Color(0.25, 0.25, 0.25)) {
+Scene::Scene(): shapes(vector<Shape*>()),
+                lights(vector<LightSource*>()),
+                ambient(Color(0.25, 0.25, 0.25)),
+                camera(Camera()) {
     Color c(1, 1, 1);
     Vector v(0,0,0);
     Point p(0,0,0);
@@ -27,7 +30,10 @@ Scene::Scene(): ambient(Color(0.25, 0.25, 0.25)) {
     //lights.push_back(new SpotLight(c, p, v, 0));
 }
 
-Scene::Scene(std::string fileName): ambient(Color(0.25, 0.25, 0.25)) {
+Scene::Scene(std::string fileName): shapes(vector<Shape*>()),
+                                    lights(vector<LightSource*>()),
+                                    ambient(Color(0.25, 0.25, 0.25)),
+                                    camera(Camera()) {
     std::ifstream input_scene (fileName.c_str());
     // Read the file and add specified shapes.
     // We need to figure out what our syntax/grammar is first though.

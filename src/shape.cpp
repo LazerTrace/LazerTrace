@@ -6,7 +6,7 @@
 
 Shape::Shape(Color color, float index_of_refraction, float ambient_coef,
              float diffuse_coef, float specular_coef)
-    : index_of_refraction(index_of_refraction), ambient_coef(ambient_coef), color(color),
+    : index_of_refraction(index_of_refraction), color(color), ambient_coef(ambient_coef),
       diffuse_coef(diffuse_coef), specular_coef(specular_coef) {
 }
 

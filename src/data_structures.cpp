@@ -14,7 +14,7 @@ Color operator*(float scalar, Color c){
 }
 
 Color Color::operator* (const Color& c) {
-    Color(red * c.red, green * c.green, blue * c.blue);
+    return Color(red * c.red, green * c.green, blue * c.blue);
 }
 
 Color::~Color(){
