@@ -12,7 +12,6 @@
 class LightSource {
 protected:
     Color color;
-    float intensity;
 public:
     unsigned char getRed() const;
     unsigned char getGreen() const;
@@ -20,6 +19,7 @@ public:
     unsigned char getAlpha() const;
     Color getColor() const;
     LightSource(Color c, float i);
+    virtual Point getPoint() const;
     virtual ~LightSource();
 };
 
@@ -27,7 +27,6 @@ class PointLight : public LightSource {
 protected:
     Point point;
 public:
-    float getIntensity() const;
     Point getPoint() const;
     PointLight(Color c, float i, Point p);
     ~PointLight();
@@ -40,6 +39,10 @@ public:
     float getI() const;
     float getJ() const;
     float getK() const;
+    /**
+     * This is fake. ?? o.O Sorry but this can't exist.
+     */
+    Point getPoint() const;
     Vector getVector() const;
     DirectionalLight(Color c, float i, Vector v);
     virtual ~DirectionalLight();
@@ -51,6 +54,11 @@ protected:
     Point point;
 public:
     float getTheta() const;
+    /**
+     * Returns the origin of the SpotLight.
+     *
+     * @return The Point representing the origin of the light.
+     */
     Point getPoint() const;
     SpotLight(Color c, float i, Point p, Vector v, float t);
     ~SpotLight();
