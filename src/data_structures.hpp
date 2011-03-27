@@ -126,6 +126,11 @@ public:
     float magnitude() const;
 
     /**
+     * Magnitude squared
+     */
+    float magnitude2() const;
+
+    /**
      * Normalizes the vector to a unit vector.
      */
     void normalize();
@@ -176,6 +181,12 @@ public:
      * @param dir The direction vector of the ray.
      */
     Ray(Point origin, Vector dir);
+
+    /**
+     * Default ray constructor
+     * Lives at <0,0,0> and points at <0,0,1>
+     */
+    Ray();
 
     /**
      * Accessor method for the origin.

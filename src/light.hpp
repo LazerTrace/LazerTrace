@@ -19,7 +19,7 @@ public:
     unsigned char getAlpha() const;
     Color getColor() const;
     LightSource(Color c);
-    Point getPoint() const;
+    virtual Point getPoint() const;
     virtual ~LightSource();
 };
 
