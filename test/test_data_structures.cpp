@@ -42,4 +42,14 @@ namespace tut {
     void object::test<3>() {
         ensure("vector magnitude", d.normalized().approx_equals(e));
     }
+
+    template<>
+    template<>
+    void object::test<4>() {
+        Color c(1,2,3);
+        c = 2.0 * c;
+        ensure("color multiplication", c.red == 2);
+        ensure("color multiplication", c.green == 4);
+        ensure("color multiplication", c.blue == 6);
+    }
 }

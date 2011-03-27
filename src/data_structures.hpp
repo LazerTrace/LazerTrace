@@ -29,17 +29,7 @@ class Color{
      * @param scalar The scalar to multiply with the color.
      * @return A pointer to the lhs of the equation.
      */
-    Color operator* (int scalar);
-
-    /**
-     * Overloaded multiplcation-assignment operator.
-     * scalar * color
-     *
-     * @param scalar The scalar to multiply.
-     * @param c The color to multiply
-     * @return A pointer to the lhs of the equation.
-     */
-    friend Color operator*(int scalar, Color c);
+    Color operator* (float);
 
     /**
      * Overloaded multiplcation-assignment operator.
@@ -47,8 +37,18 @@ class Color{
      * @param c The color to multiply with the original color.
      * @return A pointer to the lhs of the equation.
      */
-    Color operator* (const Color& c);
+    Color operator* (const Color&);
 };
+
+/**
+ * Overloaded multiplcation-assignment operator.
+ * scalar * color
+ *
+ * @param scalar The scalar to multiply.
+ * @param c The color to multiply
+ * @return A pointer to the lhs of the equation.
+ */
+Color operator*(float, Color);
 
 const float EPSILON = 1e-6;
 
