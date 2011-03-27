@@ -18,8 +18,8 @@ public:
     unsigned char getBlue() const;
     unsigned char getAlpha() const;
     Color getColor() const;
-    LightSource(Color c, float i);
-    virtual Point getPoint() const;
+    LightSource(Color c);
+    Point getPoint() const;
     virtual ~LightSource();
 };
 
@@ -28,7 +28,7 @@ protected:
     Point point;
 public:
     Point getPoint() const;
-    PointLight(Color c, float i, Point p);
+    PointLight(Color c, Point p);
     ~PointLight();
 };
 
@@ -39,12 +39,8 @@ public:
     float getI() const;
     float getJ() const;
     float getK() const;
-    /**
-     * This is fake. ?? o.O Sorry but this can't exist.
-     */
-    Point getPoint() const;
     Vector getVector() const;
-    DirectionalLight(Color c, float i, Vector v);
+    DirectionalLight(Color c, Vector v);
     virtual ~DirectionalLight();
 };
 
@@ -60,7 +56,7 @@ public:
      * @return The Point representing the origin of the light.
      */
     Point getPoint() const;
-    SpotLight(Color c, float i, Point p, Vector v, float t);
+    SpotLight(Color c, Point p, Vector v, float t);
     ~SpotLight();
 };
 

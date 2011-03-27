@@ -1,10 +1,17 @@
 #include "light.hpp"
+#include <cassert>
 
 Color LightSource::getColor() const {
     return color;
 }
 
-LightSource::LightSource(Color c, float i):color(c),intensity(i){
+LightSource::LightSource(Color c):color(c) {
+}
+
+Point LightSource::getPoint() const {
+    assert(false); // Ensures this will never reach the return statement.
+    // NOTE: This is a fix for the possibility of a DirectionalLight... need a better soln later.
+    return Point(0, 0, 0);
 }
 
 LightSource::~LightSource(){
@@ -14,7 +21,7 @@ Point PointLight::getPoint() const {
     return point;
 }
 
-PointLight::PointLight(Color c, float i, Point p):LightSource(c,i),point(p){
+PointLight::PointLight(Color c, Point p):LightSource(c),point(p){
 }
 
 PointLight::~PointLight(){
@@ -32,17 +39,12 @@ float DirectionalLight::getK() const {
     return vector.k;
 }
 
-// DON"T YOU FUCKING CALL THIS. DON"T DO IT. I WILL KILL YOU.
-Point PointLight::getPoint() const {
-    return NULL;
-}
-
 Vector DirectionalLight::getVector() const {
     return vector;
 }
 
-DirectionalLight::DirectionalLight(Color c, float i, Vector v)
-    : LightSource(c,i),
+DirectionalLight::DirectionalLight(Color c, Vector v)
+    : LightSource(c),
     vector(v)
 {
 }
@@ -58,8 +60,8 @@ Point SpotLight::getPoint() const {
     return point;
 }
 
-SpotLight::SpotLight(Color c, float i, Point p, Vector v, float t)
-    : DirectionalLight(c,i,v),
+SpotLight::SpotLight(Color c, Point p, Vector v, float t)
+    : DirectionalLight(c,v),
     theta(t),
     point(p)
 {
