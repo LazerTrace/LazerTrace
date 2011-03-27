@@ -1,57 +1,71 @@
-#include "data_structures.hpp"
 #include "light.hpp"
-
-unsigned char LightSource::getRed() const {
-    return c.red;
-}
-
-unsigned char LightSource::getGreen() const {
-    return c.green;
-}
-
-unsigned char LightSource::getBlue() const {
-    return c.blue;
-}
-
-unsigned char LightSource::getAlpha() const {
-    return c.alpha;
-}
+#include <cassert>
 
 Color LightSource::getColor() const {
-    return c;
+    return color;
 }
 
+LightSource::LightSource(Color c):color(c) {
+}
 
-float PointLight::getIntensity() const {
-    return intensity;
+Point LightSource::getPoint() const {
+    assert(false); // Ensures this will never reach the return statement.
+    // NOTE: This is a fix for the possibility of a DirectionalLight... need a better soln later.
+    return Point(0, 0, 0);
+}
+
+LightSource::~LightSource(){
 }
 
 Point PointLight::getPoint() const {
-    return p;
+    return point;
 }
 
+PointLight::PointLight(Color c, Point p):LightSource(c),point(p){
+}
+
+PointLight::~PointLight(){
+}
 
 float DirectionalLight::getI() const {
-    return v.i;
+    return vector.i;
 }
 
 float DirectionalLight::getJ() const {
-    return v.j;
+    return vector.j;
 }
 
 float DirectionalLight::getK() const {
-    return v.k;
+    return vector.k;
 }
 
 Vector DirectionalLight::getVector() const {
-    return v;
+    return vector;
 }
 
+DirectionalLight::DirectionalLight(Color c, Vector v)
+    : LightSource(c),
+    vector(v)
+{
+}
+
+DirectionalLight::~DirectionalLight(){
+}
 
 float SpotLight::getTheta() const {
     return theta;
 }
 
 Point SpotLight::getPoint() const {
-    return p;
+    return point;
+}
+
+SpotLight::SpotLight(Color c, Point p, Vector v, float t)
+    : DirectionalLight(c,v),
+    theta(t),
+    point(p)
+{
+}
+
+SpotLight::~SpotLight(){
 }

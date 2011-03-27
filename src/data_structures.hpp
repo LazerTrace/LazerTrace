@@ -11,8 +11,46 @@
  */
 class Color{
     public:
-        unsigned char alpha, red, green, blue;
+    float red, green, blue;
+
+    /**
+     * Constructor for objects of class Color.
+     *
+     * @param r the color red
+     * @param g the color green
+     * @param b the color blue
+     */
+    Color(float r, float g, float b);
+    ~Color();
+    /**
+     * Overloaded multiplcation-assignment operator.
+     * color * scalar
+     *
+     * @param scalar The scalar to multiply with the color.
+     * @return A pointer to the lhs of the equation.
+     */
+    Color operator* (float);
+
+    /**
+     * Overloaded multiplcation-assignment operator.
+     *
+     * @param c The color to multiply with the original color.
+     * @return A pointer to the lhs of the equation.
+     */
+    Color operator* (const Color&);
 };
+
+/**
+ * Overloaded multiplcation-assignment operator.
+ * scalar * color
+ *
+ * @param scalar The scalar to multiply.
+ * @param c The color to multiply
+ * @return A pointer to the lhs of the equation.
+ */
+Color operator*(float, Color);
+
+const float EPSILON = 1e-6;
 
 /**
  * Represents a 3-dimensional vector.
@@ -31,9 +69,76 @@ public:
     Vector(float i, float j, float k);
 
     /**
+     * Vector approximate comparison
+     * @return Componentwise comparison to within EPSILON
+     */
+    bool approx_equals(const Vector&) const;
+
+    /**
+     * Overloaded addition-assignment operator.
+     * Performs component based addition-assignment.
+     *
+     * @param rhs The vector to add.
+     * @return A pointer to the lhs of the equation.
+     */
+    Vector& operator+=(const Vector& rhs);
+
+    /**
+     * Overloaded subtraction-assignment operator.
+     * Performs component based subtraction-assignment.
+     *
+     * @param rhs The vector to subtract.
+     * @return A pointer to the lhs of the equation.
+     */
+    Vector& operator-=(const Vector& rhs);
+
+    /**
+     * Overloaded addition operator.
+     * Performs component based addition.
+     *
+     * @param rhs The vector to add.
+     * @return A pointer to the result.
+     */
+    Vector operator+(const Vector& other);
+
+    /**
+     * Overloaded subtraction operator.
+     * Performs component based subtraction.
+     *
+     * @param rhs The vector to subtract.
+     * @return A pointer to the result.
+     */
+    Vector operator-(const Vector& other);
+
+    /**
+     * Vector multiplication by scalar.
+     */
+    Vector operator*(float) const;
+
+    /**
+     * Vector division by scalar.
+     */
+    Vector operator/(float) const;
+
+    /**
+     * Vector magnitude
+     */
+    float magnitude() const;
+
+    /**
+     * Magnitude squared
+     */
+    float magnitude2() const;
+
+    /**
      * Normalizes the vector to a unit vector.
      */
     void normalize();
+
+    /**
+     * Returns a normalized copy of the vector
+     */
+    Vector normalized() const;
 
     /**
      * Compute the dot product when dotted with the given Vector.
@@ -78,6 +183,12 @@ public:
     Ray(Point origin, Vector dir);
 
     /**
+     * Default ray constructor
+     * Lives at <0,0,0> and points at <0,0,1>
+     */
+    Ray();
+
+    /**
      * Accessor method for the origin.
      *
      * @return The point representing the origin of the ray.
@@ -95,6 +206,15 @@ public:
      * Normalizes the vector portion to a unit vector.
      */
     void normalize();
+
+    /**
+     * Creates a ray between two points.
+     *
+     * @param origin The starting point for the ray.
+     * @param dest The destination point for the ray.
+     * @return A ray object which starts at origin and passes through dest.
+     */
+    static Ray makeRay(Point origin, Point dest);
 };
 
 #endif

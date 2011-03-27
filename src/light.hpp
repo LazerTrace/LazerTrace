@@ -11,41 +11,53 @@
 
 class LightSource {
 protected:
-    Color c;
+    Color color;
 public:
     unsigned char getRed() const;
     unsigned char getGreen() const;
     unsigned char getBlue() const;
     unsigned char getAlpha() const;
     Color getColor() const;
+    LightSource(Color c);
+    virtual Point getPoint() const;
+    virtual ~LightSource();
 };
 
 class PointLight : public LightSource {
 protected:
-    Point p;
-    float intensity;
+    Point point;
 public:
-    float getIntensity() const;
     Point getPoint() const;
+    PointLight(Color c, Point p);
+    ~PointLight();
 };
 
 class DirectionalLight : public LightSource {
 protected:
-    Vector v;
+    Vector vector;
 public:
     float getI() const;
     float getJ() const;
     float getK() const;
     Vector getVector() const;
+    DirectionalLight(Color c, Vector v);
+    virtual ~DirectionalLight();
 };
 
 class SpotLight : public DirectionalLight {
 protected:
     float theta;
-    Point p;
+    Point point;
 public:
     float getTheta() const;
+    /**
+     * Returns the origin of the SpotLight.
+     *
+     * @return The Point representing the origin of the light.
+     */
     Point getPoint() const;
+    SpotLight(Color c, Point p, Vector v, float t);
+    ~SpotLight();
 };
 
 #endif

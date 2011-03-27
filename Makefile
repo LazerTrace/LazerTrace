@@ -1,23 +1,20 @@
-ifndef PREFIX
-PREFIX := /opt/local
-endif
-
 ifndef PNGPP
 PNGPP := vendor/png++
 endif
 
-make_cflags := -Wall -Wextra -pedantic -O -Weffc++ $(CFLAGS) -I$(PREFIX)/include -I$(PNGPP) -Ivendor/tut
-make_ldflags := $(LDFLAGS) -L$(PREFIX)/lib
+ifndef LIBPNG_CONFIG
+LIBPNG_CONFIG = libpng-config
+endif
+
+make_cflags = -Wall -Wextra -pedantic -O $(CFLAGS) -I$(PNGPP) -Ivendor/tut `$(LIBPNG_CONFIG) --cflags`
+make_ldflags = $(LDFLAGS)
 
 ifndef NDEBUG
 make_cflags := $(make_cflags) -g
 make_ldflags := $(make_ldflags) -g
 endif
 
-ifndef LIBPNG_CONFIG
-LIBPNG_CONFIG := libpng-config
-endif
-
+CPATH=src
 
 # Include your subdirectory Makefiles here!
 include src/Makefile
@@ -33,14 +30,19 @@ test_objects := $(test_sources:.cpp=.o)
 objects := $(shared_objects) $(main_objects) $(test_objects)
 targets := bin/main bin/test
 
-all: $(deps) $(targets)
+$(shared_objects): make_cflags := $(make_cflags) -Weffc++
+
+all: $(deps) $(targets) check
 
 clean: clean-deps
 	rm -f $(targets) $(objects)
 
 .SUFFIXES:
 
-.PHONY: all clean clean-deps targets deps
+.PHONY: all clean clean-deps targets deps check
+
+check: bin/test
+	bin/test
 
 bin/main: $(shared_objects) $(main_objects)
 	g++ -o $@ $^ $(make_ldflags) `$(LIBPNG_CONFIG) --ldflags`
@@ -49,12 +51,12 @@ bin/test: $(shared_objects) $(test_objects)
 	g++ -o $@ $^ $(make_ldflags) `$(LIBPNG_CONFIG) --ldflags`
 
 %.o: %.cpp
-	g++ -c -o $@ $< $(make_cflags) `$(LIBPNG_CONFIG) --cflags`
+	CPATH=$(CPATH) g++ -c -o $@ $< $(make_cflags)
 
 
 %.dep: %.cpp
-	g++ -M $(CPPFLAGS) $(make_cflags) $< -o- | \
-	  sed 's/\($*\)\.o[ :]*/\1.o $@ : /g' > $@
+	@g++ -M $(CPPFLAGS) $(make_cflags) $< -o- | \
+	  sed '1s#[^ ]*.o[ :]*#$*.o: #' > $@
 
 clean-deps:
 	rm -f $(deps)
