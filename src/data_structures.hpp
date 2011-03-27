@@ -195,6 +195,15 @@ public:
      * Normalizes the vector portion to a unit vector.
      */
     void normalize();
+
+    /**
+     * Creates a ray between two points.
+     *
+     * @param origin The starting point for the ray.
+     * @param dest The destination point for the ray.
+     * @return A ray object which starts at origin and passes through dest.
+     */
+    static Ray makeRay(Point origin, Point dest);
 };
 
 #endif

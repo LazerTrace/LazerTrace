@@ -4,13 +4,26 @@
 #include "shape.hpp"
 #include "data_structures.hpp"
 
-Shape::Shape(Color color, float index_of_refraction)
-    : index_of_refraction(index_of_refraction), color(color)
-{
+Shape::Shape(Color color, float index_of_refraction, float ambient_coef,
+             float diffuse_coef, float specular_coef)
+    : index_of_refraction(index_of_refraction), color(color), ambient_coef(ambient_coef),
+      diffuse_coef(diffuse_coef), specular_coef(specular_coef) {
 }
 
 float Shape::getIndexOfRefraction() const {
     return index_of_refraction;
+}
+
+float getAmbientCoefficient() const {
+    return ambient_coef;
+}
+
+float getDiffuseCoefficient() const {
+    return diffuse_coef;
+}
+
+float getSpecularCoefficient() const {
+    return specular_coef;
 }
 
 Color Shape::getColor() const {
@@ -18,8 +31,9 @@ Color Shape::getColor() const {
 }
 
 
-Sphere::Sphere(Point center, float radius, Color color, float index_of_refraction)
-    : Shape(color, index_of_refraction),
+Sphere::Sphere(Point center, float radius, Color color, float index_of_refraction,
+               float ambient_coef, float diffuse_coef, float specular_coef)
+    : Shape(color, index_of_refraction, ambient_coef, diffuse_coef, specular_coef),
       center(center), radius(radius)
 {
 }
@@ -29,7 +43,7 @@ Ray* Sphere::getIntersection(const Ray& ray) const {
     float det = pow(ray.getDir().dotProduct(c), 2)
         - ray.getDir().dotProduct(ray.getDir())
         * (c.dotProduct(c) - pow(radius, 2));
-    
+
     if (det < 0) {
         return NULL;
     }
@@ -47,17 +61,17 @@ Ray* Sphere::getIntersection(const Ray& ray) const {
         } else {
             float d = d - sdet;
         }
-        
+
         Point p(ray.dir.i * d, ray.dir.j * d, ray.dir.k * d);
         Vector v(c.i - p.x, c.j - p.y, c.k - p.z);
         return new Ray(p,v);
     }
 }
 
-Plane::Plane(Point center, Vector normal, Color color, float index_of_refraction)
-    : Shape(color, index_of_refraction),
-      center(center), normal(normal)
-{
+Plane::Plane(Point center, Vector normal, Color color, float index_of_refraction,
+             float ambient_coef, float diffuse_coef, float specular_coef)
+    : Shape(color, index_of_refraction, ambient_coef, diffuse_coef, specular_coef),
+      center(center), normal(normal) {
 }
 
 Ray* Plane::getIntersection(const Ray& ray) const {
