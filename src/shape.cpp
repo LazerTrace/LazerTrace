@@ -6,7 +6,7 @@
 
 Shape::Shape(Color color, float index_of_refraction, float ambient_coef,
              float diffuse_coef, float specular_coef)
-    : index_of_refraction(index_of_refraction), color(color), ambient_coef(ambient_coef),
+    : index_of_refraction(index_of_refraction), ambient_coef(ambient_coef), color(color),
       diffuse_coef(diffuse_coef), specular_coef(specular_coef) {
 }
 
@@ -14,15 +14,15 @@ float Shape::getIndexOfRefraction() const {
     return index_of_refraction;
 }
 
-float getAmbientCoefficient() const {
+float Shape::getAmbientCoefficient() const {
     return ambient_coef;
 }
 
-float getDiffuseCoefficient() const {
+float Shape::getDiffuseCoefficient() const {
     return diffuse_coef;
 }
 
-float getSpecularCoefficient() const {
+float Shape::getSpecularCoefficient() const {
     return specular_coef;
 }
 
