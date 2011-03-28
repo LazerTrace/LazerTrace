@@ -72,8 +72,10 @@ Color Scene::shade(const Shape *obj, Ray hit) const{
 
         // Detect collisions, for now do nothing if there is a collision
         for(vector<Shape*>::const_iterator sh = shapes.begin(); sh != shapes.end(); sh++) {
-            if((*sh)->getIntersection(shadow) != NULL) {
+            Ray *hit = (*sh)->getIntersection(shadow);
+            if (hit != NULL) {
                 collision = true;
+                delete hit;
                 break;
             }
         }
