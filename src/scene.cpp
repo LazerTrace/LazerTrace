@@ -86,10 +86,10 @@ Color Scene::shade(const Shape *obj, Ray hit) const{
 
             float cos_theta = (shadow.getDir()).dotProduct(hit.getDir());
             Color diffuse = cos_theta*obj->getDiffuseCoefficient()*((*it)->getColor());
-            result = Color(result.red + diffuse.red, result.green + diffuse.green, result.blue + diffuse.blue);
+            result = result + diffuse;
         }
 
-        return result; // Should add operator overloader for color addition
+        return result;
     }
 }
 

@@ -35,9 +35,17 @@ class Color{
      * Overloaded multiplcation-assignment operator.
      *
      * @param c The color to multiply with the original color.
-     * @return A pointer to the lhs of the equation.
+     * @return The componentwise product of the colors
      */
     Color operator* (const Color&);
+
+    /**
+     * Overloaded addition operator.
+     *
+     * @param c The color to add with the original color.
+     * @return The sum of the colors
+     */
+    Color operator+ (const Color&);
 };
 
 /**
