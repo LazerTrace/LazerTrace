@@ -103,5 +103,5 @@ Scene::~Scene() {
 }
 
 Ray Scene::get_camera_ray(float x, float y) const {
-    return camera.get_ray(x, y);
+    return camera.get_ray(x, -y);
 }
