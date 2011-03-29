@@ -18,8 +18,10 @@ Scene::Scene() : shapes(vector<Shape*>()),
                  lights(vector<LightSource*>()),
                  ambient(Color(0.25, 0.25, 0.25)),
                  camera(Camera()) {
-    shapes.push_back(new Plane(Point(0, -2, 0), Vector(0, 1, 0),
-                Color(0, 1, 0), 1, 0.5, 0.5, 0.5));
+    shapes.push_back(new Plane(Point(0, -3, 0), Vector(0, 1, 0),
+                Color(0, 1, 1), 1, 0.5, 0.5, 0.5));
+    //shapes.push_back(new Plane(Point(0, 0, 10), Vector(0, 0, 1),
+                //Color(0, 1, 0), 1, 0.5, 0.5, 0.5));
     shapes.push_back(new Sphere(Point(1, -1, 5), 1,
                 Color(1, 0, 0), 1, 0.5, 0.5, 0.5));
     shapes.push_back(new Sphere(Point(-1, -1, 5), 1,

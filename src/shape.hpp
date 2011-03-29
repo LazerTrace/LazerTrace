@@ -105,7 +105,9 @@ public:
      */
     Plane(Point center, Vector normal, Color color, float index_of_refraction,
           float ambient_coef, float diffuse_coef, float specular_coef);
-
+    /*Plane(float distance, Vector normal, Color color, float index_of_refraction,
+          float ambient_coef, float diffuse_coef, float specular_coef);
+*/
     virtual Ray* getIntersection(const Ray& ray) const;
 };
 

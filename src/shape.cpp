@@ -73,8 +73,42 @@ Plane::Plane(Point center, Vector normal, Color color, float index_of_refraction
     : Shape(color, index_of_refraction, ambient_coef, diffuse_coef, specular_coef),
       center(center), normal(normal) {
 }
-
+/*
+Plane::Plane(Point center, Vector normal, Color color, float index_of_refraction,
+             float ambient_coef, float diffuse_coef, float specular_coef)
+    : Shape(color, index_of_refraction, ambient_coef, diffuse_coef, specular_coef),
+      normal(normal) {
+    
+    distance = fabs((float)((normal.i * center.x + normal.j * center.y + normal.k * center.z)/
+                sqrt(normal.i*normal.i+normal.j*normal.j+normal.k*normal.k)));
+}
+*/
 Ray* Plane::getIntersection(const Ray& ray) const {
+    if(normal.dotProduct(ray.dir)==0){  //ray is parallel to the plane
+        //if(normal.dotProduct(center-ray.origin)==0) //ray is directly on the planex
+        if(normal.dotProduct(Vector(center.x-ray.origin.x, center.y-ray.origin.y, center.z-ray.origin.z))==0) //ray is directly on the plane
+            return new Ray(ray.origin,normal);
+        else //ray never intersects with the plane
+            return NULL;
+    }else{ //must intersect with the at one specific point
+        //solve for parametric equation of a line
+        float t = (normal.i*(center.x-ray.origin.x)+
+                    normal.j*(center.y-ray.origin.y)+
+                    normal.k*(center.z-ray.origin.z))/
+                    (normal.i*ray.dir.i+normal.j*ray.dir.j+normal.k*ray.dir.k);
+                    
+        if(t<0)
+            return NULL;
+        else{
+            Point p = Point(ray.origin.x+ray.dir.i*t, ray.origin.y+ray.dir.j*t, ray.origin.z+ray.dir.k*t);
+            return new Ray(p,normal);
+        }
+        //should not reach this
+        return NULL;
+    }
+
+/*
+tyler's old method
     Vector v(center.x - ray.origin.x,
              center.y - ray.origin.y,
              center.z - ray.origin.z);
@@ -88,5 +122,7 @@ Ray* Plane::getIntersection(const Ray& ray) const {
     } else { // we have no collision
         return NULL;
     }
+    
+    */
  }
 

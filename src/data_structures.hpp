@@ -163,7 +163,6 @@ public:
 class Point {
 public:
     float x, y, z;
-
     /**
      * Constructor for objects of class Point.
      *
@@ -172,6 +171,10 @@ public:
      * @param z The z-coordinate
      */
     Point(float x, float y, float z);
+    
+    //this operator overload doesn't really work yet.
+    //it was designed for an operation in plane intersection
+    Vector operator-(const Point& p);
 };
 
 /**

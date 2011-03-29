@@ -90,6 +90,12 @@ float Vector::dotProduct(Vector v) const {
 Point::Point(float x, float y, float z): x(x), y(y), z(z) {
 }
 
+//this operator overload doesn't really work yet.
+//it was designed for an operation in plane intersection
+Vector Point::operator-(const Point& p){
+    return Vector(x-p.x, y-p.y, z-p.z);
+}
+
 Ray::Ray(Point origin, Vector dir): origin(origin), dir(dir) {
 }
 
