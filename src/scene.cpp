@@ -87,14 +87,18 @@ Color Scene::shade(const Shape *obj, Ray hit) const{
             hit.normalize();
 
             float cos_theta = (shadow.getDir()).dotProduct(hit.getDir());
+            
+            if(cos_theta<0)
+                cos_theta=0;
+                
             Color diffuse = cos_theta*obj->getDiffuseCoefficient()*((*it)->getColor());
             result = result + diffuse;
+            result = result * obj->getColor();
         }
 
         return result;
     }
 }
-
 Scene::~Scene() {
     for(vector<Shape*>::iterator it = shapes.begin(); it != shapes.end(); it++) {
         delete *it;
