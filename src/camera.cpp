@@ -3,7 +3,7 @@
 Camera::Camera():
     position(Point(0,0,0)),
     direction(Vector(0,0,1)),
-    right(Vector(1,0,0)),
+    right(Vector(4/3.,0,0)),
     up(Vector(0,1,0)) {}
 
 Camera::Camera(Point position, Vector direction, Vector right, Vector up):
