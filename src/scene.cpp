@@ -2,13 +2,15 @@
 #include <string>
 #include <fstream>
 #include <iostream>
-#include <math.h>
+#include <cmath>
+#include <memory>
 #include <limits>
 
 #include "scene.hpp"
 #include "light.hpp"
 
 using std::vector;
+using std::auto_ptr;
 
 /*
  * In the case of an empty constructor, Scene will generate a predefined
@@ -45,8 +47,8 @@ Color Scene::raytrace(const Ray& camera_ray) const {
     Ray nearest_hit;
     for (vector<Shape*>::const_iterator it = shapes.begin(); it != shapes.end(); it++) {
         const Shape *shape = *it;
-        Ray *intersection = shape->getIntersection(camera_ray);
-        if (intersection == NULL) // Didn't hit this shape
+        auto_ptr<Ray> intersection(shape->getIntersection(camera_ray));
+        if (intersection.get() == NULL) // Didn't hit this shape
             continue;
         float int_distance2 = Ray::makeRay(camera_ray.getOrigin(),
                 intersection->getOrigin()).getDir().magnitude2();
@@ -56,7 +58,6 @@ Color Scene::raytrace(const Ray& camera_ray) const {
             nearest_distance2 = int_distance2;
             nearest_hit = *intersection;
         }
-        delete intersection;
     }
     if (nearest_shape == NULL) {
         // Didn't hit anything
@@ -75,10 +76,10 @@ Color Scene::shade(const Shape *obj, Ray hit) const{
 
         // Detect collisions, for now do nothing if there is a collision
         for(vector<Shape*>::const_iterator sh = shapes.begin(); sh != shapes.end(); sh++) {
-            Ray *hit = (*sh)->getIntersection(shadow);
-            if (hit != NULL) {
+            Shape *shape = *sh;
+            auto_ptr<Ray> hit(shape->getIntersection(shadow));
+            if (hit.get() != NULL) {
                 collision = true;
-                delete hit;
                 break;
             }
         }
