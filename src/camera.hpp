@@ -30,6 +30,17 @@ public:
      * @return The camera ray
      */
     Ray get_ray(float x, float y) const;
+
+
+    /**
+     * changes the position vector of the camera
+     */
+    void set_position(float x, float y, float z);
+    
+    /**
+     * changes the direction in which the camera points.
+     */
+    void set_direction(float i, float j, float k);
 };
 
 #endif

@@ -15,3 +15,11 @@ Ray Camera::get_ray(float x, float y) const {
     value += up * y;
     return Ray(position, value);
 }
+
+void Camera::set_position(float x, float y, float z) {
+    this->position = Point(x,y,z);
+}
+
+void Camera::set_direction(float i, float j, float k) {
+    this->direction = Vector(i,j,k);
+}

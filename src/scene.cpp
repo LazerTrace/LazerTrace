@@ -118,3 +118,8 @@ Scene::~Scene() {
 Ray Scene::get_camera_ray(float x, float y) const {
     return camera.get_ray(x, -y);
 }
+
+void Scene::move_camera(float x, float y, float z, float i, float j, float k) {
+    camera.set_position(x,y,z);
+    camera.set_direction(i,j,k);
+}

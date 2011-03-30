@@ -56,6 +56,14 @@ public:
      */
     Ray get_camera_ray(float x, float y) const;
 
+
+    /**
+     * Moves the camera to the specified location.
+     * x, y, and z are position components
+     * i, j, and k are direction components.
+     */
+    void Scene::move_camera(float x, float y, float z, float i, float j, float k);
+
 };
 
 #endif
