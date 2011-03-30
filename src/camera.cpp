@@ -23,3 +23,17 @@ void Camera::set_position(float x, float y, float z) {
 void Camera::set_direction(float i, float j, float k) {
     this->direction = Vector(i,j,k);
 }
+
+
+void Camera::offset_direction(float i, float j, float k){
+    direction.i += i;
+    direction.j += j;
+    direction.k += k;
+}
+    
+
+void Camera::offset_position(float x, float y, float z) {
+    position.x += x;
+    position.y += y;
+    position.z += z;
+}

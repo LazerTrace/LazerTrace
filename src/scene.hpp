@@ -62,7 +62,14 @@ public:
      * x, y, and z are position components
      * i, j, and k are direction components.
      */
-    void Scene::move_camera(float x, float y, float z, float i, float j, float k);
+    void move_camera(float x, float y, float z, float i, float j, float k);
+
+    /**
+     * Moves the camera by the specified offset for each component.
+     * x, y, and z are position components
+     * i, j, and k are direction components.
+     */
+    void move_camera_offset(float x, float y, float z, float i, float j, float k);
 
 };
 

@@ -123,3 +123,8 @@ void Scene::move_camera(float x, float y, float z, float i, float j, float k) {
     camera.set_position(x,y,z);
     camera.set_direction(i,j,k);
 }
+
+void Scene::move_camera_offset(float x, float y, float z, float i, float j, float k) {
+    camera.offset_direction(i,j,k);
+    camera.offset_position(x,y,z);
+}

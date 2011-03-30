@@ -41,6 +41,17 @@ public:
      * changes the direction in which the camera points.
      */
     void set_direction(float i, float j, float k);
+
+
+    /**
+     * Offsets the direction of the camera by the given amounts.
+     */
+    void offset_direction(float i, float j, float k);
+    
+    /**
+     * Offsets the position of the camera by the given amounts.
+     */
+    void offset_position(float x, float y, float z);
 };
 
 #endif
