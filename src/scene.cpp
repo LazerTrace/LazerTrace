@@ -68,7 +68,8 @@ Color Scene::raytrace(const Ray& camera_ray) const {
 
 Color Scene::shade(const Shape *obj, Ray hit) const{
     for(vector<LightSource*>::const_iterator it = lights.begin(); it != lights.end(); it++) {
-        Ray shadow = Ray::makeRay(hit.getOrigin(), (*it)->getPoint());
+        LightSource *light = *it;
+        Ray shadow = Ray::makeRay(hit.getOrigin(), light->getPoint());
         Color result = Color(ambient);
         bool collision = false;
 
@@ -89,11 +90,14 @@ Color Scene::shade(const Shape *obj, Ray hit) const{
             hit.normalize();
 
             float cos_theta = (shadow.getDir()).dotProduct(hit.getDir());
-            
-            if(cos_theta<0)
-                cos_theta=0;
-                
-            Color diffuse = cos_theta*obj->getDiffuseCoefficient()*((*it)->getColor());
+
+            if(cos_theta < 0)
+                cos_theta = -cos_theta;
+            else
+                cos_theta = 0;
+
+            Color diffuse = cos_theta * obj->getDiffuseCoefficient()
+                * light->getColor();
             result = result + diffuse;
             result = result * obj->getColor();
         }
