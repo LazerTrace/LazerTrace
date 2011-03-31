@@ -73,16 +73,7 @@ Plane::Plane(Point center, Vector normal, Color color, float index_of_refraction
     : Shape(color, index_of_refraction, ambient_coef, diffuse_coef, specular_coef),
       center(center), normal(normal) {
 }
-/*
-Plane::Plane(Point center, Vector normal, Color color, float index_of_refraction,
-             float ambient_coef, float diffuse_coef, float specular_coef)
-    : Shape(color, index_of_refraction, ambient_coef, diffuse_coef, specular_coef),
-      normal(normal) {
-    
-    distance = fabs((float)((normal.i * center.x + normal.j * center.y + normal.k * center.z)/
-                sqrt(normal.i*normal.i+normal.j*normal.j+normal.k*normal.k)));
-}
-*/
+
 Ray* Plane::getIntersection(const Ray& ray) const {
     if(normal.dotProduct(ray.dir)==0){  //ray is parallel to the plane
         //if(normal.dotProduct(center-ray.origin)==0) //ray is directly on the planex
@@ -106,23 +97,5 @@ Ray* Plane::getIntersection(const Ray& ray) const {
         //should not reach this
         return NULL;
     }
-
-/*
-tyler's old method
-    Vector v(center.x - ray.origin.x,
-             center.y - ray.origin.y,
-             center.z - ray.origin.z);
-    float d = normal.dotProduct(v) / normal.dotProduct(ray.dir);
-
-    if (fabsf(d) < 0.0000001) {
-        Point p(ray.dir.i * d + ray.origin.x,
-                ray.dir.j * d + ray.origin.y,
-                ray.dir.k * d + ray.origin.z);
-        return new Ray(p, normal);
-    } else { // we have no collision
-        return NULL;
-    }
-    
-    */
  }
 
