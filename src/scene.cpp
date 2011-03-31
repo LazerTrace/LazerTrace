@@ -23,9 +23,9 @@ Scene::Scene() : shapes(vector<Shape*>()),
     shapes.push_back(new Plane(Point(0, -3, 0), Vector(0, 1, 0),
                 Color(0, 1, 0), 1, 0.5, 0.5, 0.5));
     shapes.push_back(new Sphere(Point(1, -1, 5), 1,
-                Color(1, 0, 0), 1, 0.5, 0.5, 0.5));
+                Color(1, 0, 0), 1, 0.9, 0.5, 0.5));
     shapes.push_back(new Sphere(Point(-1, -1, 5), 1,
-                Color(0, 0, 1), 1, 0.5, 0.5, 0.5));
+                Color(0, 0, 1), 1, 0.3, 0.5, 0.5));
 
     lights.push_back(new PointLight(Color(1, 1, 1), Point(0, 5, 5)));
 }
@@ -69,7 +69,7 @@ Color Scene::shade(const Shape *obj, Ray hit) const{
     for(vector<LightSource*>::const_iterator it = lights.begin(); it != lights.end(); it++) {
         LightSource *light = *it;
         Ray shadow = Ray::makeRay(hit.getOrigin(), light->getPoint());
-        Color result = Color(ambient);
+        Color result = Color(ambient) * obj->getAmbientCoefficient();
         bool collision = false;
 
         // Detect collisions, for now do nothing if there is a collision
@@ -99,6 +99,7 @@ Color Scene::shade(const Shape *obj, Ray hit) const{
                 * light->getColor();
             result = result + diffuse;
         }
+        
         
         result = result * obj->getColor();
         return result;
