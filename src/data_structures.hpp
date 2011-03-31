@@ -104,7 +104,7 @@ public:
      * Overloaded addition operator.
      * Performs component based addition.
      *
-     * @param rhs The vector to add.
+     * @param other The vector to add.
      * @return A pointer to the result.
      */
     Vector operator+(const Vector& other);
@@ -113,7 +113,7 @@ public:
      * Overloaded subtraction operator.
      * Performs component based subtraction.
      *
-     * @param rhs The vector to subtract.
+     * @param other The vector to subtract.
      * @return A pointer to the result.
      */
     Vector operator-(const Vector& other);
@@ -171,6 +171,25 @@ public:
      * @param z The z-coordinate
      */
     Point(float x, float y, float z);
+    
+    /**
+     * Overloaded comparison operator.
+     * Does coordinate based comparison.
+     *
+     * @param p The point to compare with.
+     * @return True if the points are equivalent, false otherwise.
+     */
+    bool operator==(const Point &p) const;
+    
+    
+    /**
+     * Overloaded comparison operator.
+     * Does coordinate based comparison.
+     *
+     * @param p The point to compare with.
+     * @return False if the points are equivalent, true otherwise.
+     */
+    bool operator!=(const Point &p) const;
     
     //this operator overload doesn't really work yet.
     //it was designed for an operation in plane intersection

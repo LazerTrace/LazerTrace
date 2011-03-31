@@ -90,6 +90,17 @@ float Vector::dotProduct(Vector v) const {
 Point::Point(float x, float y, float z): x(x), y(y), z(z) {
 }
 
+bool Point::operator==(const Point &p) const {
+    if(x != p.x)    return false;
+    if(y != p.y)    return false;
+    if(z != p.z)    return false;
+    return true;
+}
+
+bool Point::operator!=(const Point &p) const {
+    return !(*this == p);
+}
+
 //this operator overload doesn't really work yet.
 //it was designed for an operation in plane intersection
 Vector Point::operator-(const Point& p){
