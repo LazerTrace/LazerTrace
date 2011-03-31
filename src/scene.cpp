@@ -76,7 +76,7 @@ Color Scene::shade(const Shape *obj, Ray hit) const{
         for(vector<Shape*>::const_iterator sh = shapes.begin(); sh != shapes.end(); sh++) {
             Shape *shape = *sh;
             auto_ptr<Ray> hit(shape->getIntersection(shadow));
-            if (hit.get() != NULL) {
+            if (hit.get() != NULL && hit->getOrigin() != shadow.getOrigin()) {
                 collision = true;
                 break;
             }
