@@ -24,6 +24,10 @@ public:
     Camera(Point position, Vector direction, Vector right, Vector up);
 
     /**
+     * Constructs a camera from the given point.
+     */
+    Camera(Point position);
+    /**
      * Computes a camera ray.
      * @param x X coordinate in range [-1, 1]
      * @param y Y coordinate in range [-1, 1]
