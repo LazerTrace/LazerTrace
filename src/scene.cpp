@@ -100,8 +100,15 @@ Color Scene::shade(const Shape *obj, Ray hit) const{
             if (shape != obj){
                 auto_ptr<Ray> hit(shape->getIntersection(shadow));
                 if (hit.get() != NULL && hit->getOrigin() != shadow.getOrigin()) {
-                    collision = true;
-                    break;
+                    Vector toHit(hit->getOrigin().x-shadow.getOrigin().x, 
+                        hit->getOrigin().y-shadow.getOrigin().y,
+                        hit->getOrigin().z-shadow.getOrigin().z);
+                    if(fabs(toHit.i) <= fabs(shadow.getDir().i) && 
+                        fabs(toHit.j) <= fabs(shadow.getDir().j) && 
+                        fabs(toHit.k) <= fabs(shadow.getDir().k)){
+                        collision = true;
+                        break;
+                    }
                 }
             }
         }
