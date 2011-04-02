@@ -6,8 +6,8 @@
 int main(void) {
     Scene the_scene;
 
-    const int WIDTH = 400;
-    const int HEIGHT = 300;
+    const int WIDTH = 800;
+    const int HEIGHT = 600;
 
     png::image<png::rgb_pixel> image(WIDTH, HEIGHT);
     for (size_t y = 0; y < image.get_height(); ++y) {

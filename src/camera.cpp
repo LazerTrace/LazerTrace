@@ -14,7 +14,7 @@ Camera::Camera(Point position):
     direction(Vector(0,0,1)),
     right(Vector(4/3.,0,0)),
     up(Vector(0,1,0)) {}
-    
+
 Ray Camera::get_ray(float x, float y) const {
     Vector value = direction;
     value += right * x;

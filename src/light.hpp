@@ -20,7 +20,7 @@ public:
      */
     Color getColor() const;
     /**
-     * Constructor for objects of class LightSource.  
+     * Constructor for objects of class LightSource.
      * Also not to be used directly.  Simply used for inheritance of other contrsuctors
      *
      * @param c the color of the light source
@@ -44,7 +44,7 @@ public:
      */
     Point getPoint() const;
     /**
-     * Constructor for objects of class PointLight.  
+     * Constructor for objects of class PointLight.
      *
      * @param c the color of the light source
      * @param p the point of the origin of the light source
@@ -67,7 +67,7 @@ public:
      */
     Vector getDirection() const;
     /**
-     * Constructor for objects of class DirectionalLight.  
+     * Constructor for objects of class DirectionalLight.
      *
      * @param c the color of the light source
      * @param v the dirction that the light is coming from as a vector
@@ -97,7 +97,7 @@ public:
      */
     Point getPoint() const;
     /**
-     * Constructor for objects of class SpotLight.  
+     * Constructor for objects of class SpotLight.
      *
      * @param c the color of the light source
      * @param p the point of the origin of the light source

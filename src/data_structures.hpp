@@ -171,7 +171,7 @@ public:
      * @param z The z-coordinate
      */
     Point(float x, float y, float z);
-    
+
     /**
      * Overloaded comparison operator.
      * Does coordinate based comparison.
@@ -180,8 +180,8 @@ public:
      * @return True if the points are equivalent, false otherwise.
      */
     bool operator==(const Point &p) const;
-    
-    
+
+
     /**
      * Overloaded comparison operator.
      * Does coordinate based comparison.
@@ -190,10 +190,12 @@ public:
      * @return False if the points are equivalent, true otherwise.
      */
     bool operator!=(const Point &p) const;
-    
+
+    /*
     //this operator overload doesn't really work yet.
     //it was designed for an operation in plane intersection
     Vector operator-(const Point& p);
+    */
 };
 
 /**
