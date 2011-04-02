@@ -48,17 +48,17 @@ Ray* Sphere::getIntersection(const Ray& ray) const {
     v.normalize();
     Point o = ray.getOrigin();
     int a=1;
-    float b = 2 * 
+    float b = 2 *
     (
         v.i * (o.x - center.x) +
-        v.j * (o.y - center.y) + 
+        v.j * (o.y - center.y) +
         v.k * (o.z - center.z)
     );
-    float c = (o.x - center.x) * (o.x - center.x) + 
-        (o.y - center.y) * (o.y - center.y) + 
-        (o.z - center.z) * (o.z - center.z) - 
+    float c = (o.x - center.x) * (o.x - center.x) +
+        (o.y - center.y) * (o.y - center.y) +
+        (o.z - center.z) * (o.z - center.z) -
         radius * radius;
-        
+
     float discriminant = b*b-4*a*c;
     if(discriminant<0)
         return NULL;
@@ -83,27 +83,23 @@ Plane::Plane(Point center, Vector normal, Color color, float index_of_refraction
 }
 
 Ray* Plane::getIntersection(const Ray& ray) const {
-    if(normal.dotProduct(ray.dir)==0){  //ray is parallel to the plane
-        //if(normal.dotProduct(center-ray.origin)==0) //ray is directly on the planex
-        if(normal.dotProduct(Vector(center.x-ray.origin.x, center.y-ray.origin.y, center.z-ray.origin.z))==0) //ray is directly on the plane
-            return new Ray(ray.origin,normal);
-        else //ray never intersects with the plane
+    if (normal.dotProduct(ray.dir) == 0) { // ray is parallel to the plane
+        if (normal.dotProduct(Vector(center.x-ray.origin.x, center.y-ray.origin.y, center.z-ray.origin.z))==0) // ray is directly on the plane
+            return new Ray(ray.origin, normal);
+        else // ray never intersects with the plane
             return NULL;
-    }else{ //must intersect with the at one specific point
-        //solve for parametric equation of a line
+    } else { // must intersect with the at one specific point
+        // solve for parametric equation of a line
         float t = (normal.i*(center.x-ray.origin.x)+
                     normal.j*(center.y-ray.origin.y)+
                     normal.k*(center.z-ray.origin.z))/
                     (normal.i*ray.dir.i+normal.j*ray.dir.j+normal.k*ray.dir.k);
-                    
-        if(t<0)
+        if (t < 0)
             return NULL;
-        else{
+        else {
             Point p = Point(ray.origin.x+ray.dir.i*t, ray.origin.y+ray.dir.j*t, ray.origin.z+ray.dir.k*t);
-            return new Ray(p,normal);
+            return new Ray(p, normal);
         }
-        //should not reach this
-        return NULL;
     }
  }
 

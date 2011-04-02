@@ -21,27 +21,27 @@ Scene::Scene() : shapes(vector<Shape*>()),
                  ambient(Color(0.25, 0.25, 0.25)),
                  camera(Camera())
 {
-    //floor
+    // floor
     shapes.push_back(new Plane(Point(0, -3, 0), Vector(0, 1, 0), Color(0, 1, 0), 1, 0.5, 0.5, 0.5));
-    
-    //back wall
+
+    // back wall
     //shapes.push_back(new Plane(Point(0, 0, 20), Vector(0, 0, -1), Color(1, 1, 0), 1, 0.5, 0.5, 0.5));
-    
-    //left side wall
+
+    // left side wall
     //shapes.push_back(new Plane(Point(-3, 0, 0), Vector(1, 0, 0), Color(0, 1, 1), 1, 0.5, 0.5, 0.5));
-    
-    //right sphere (red)
+
+    // right sphere (red)
     shapes.push_back(new Sphere(Point(3, -1, 5), 2,
                 Color(1, 0, 0), 1, 0.9, 0.5, 0.5));
-                
-    //left sphere (blue)
+
+    // left sphere (blue)
     shapes.push_back(new Sphere(Point(-1, 2, 5), 1,
                 Color(0, 0, 1), 1, 0.3, 0.5, 0.5));
 
-    //light source 1
+    // light source 1
     //lights.push_back(new PointLight(Color(1, 1, 1), Point(0, .001, 2)));
-    
-    //light source 2
+
+    // light source 2
     lights.push_back(new PointLight(Color(1, 1, 1), Point(0, 5, 0)));
 }
 
@@ -81,14 +81,6 @@ Color Scene::raytrace(const Ray& camera_ray) const {
 }
 
 Color Scene::shade(const Shape *obj, Ray hit) const{
-    /*
-    if(hit.getDir().i==0 && hit.getDir().j==1 && hit.getDir().k==0){
-        std::cout << hit.getOrigin().x << "\n";
-        hit.getOrigin().x << ", " << hit.getOrigin().y << ", " << hit.getOrigin() << "\n";
-        //return obj->getColor();
-        
-    }
-    */
     for(vector<LightSource*>::const_iterator it = lights.begin(); it != lights.end(); it++) {
         LightSource *light = *it;
         Ray shadow = Ray::makeRay(hit.getOrigin(), light->getPoint());
@@ -112,32 +104,12 @@ Color Scene::shade(const Shape *obj, Ray hit) const{
             hit.normalize();
 
             float cos_theta = (shadow.getDir()).dotProduct(hit.getDir());
-            /*
-            if(!(hit.getDir().i==0 && hit.getDir().j==1 && hit.getDir().k==0)){
-                //zprint:Vector(hit.getDir());
-                std::cout<< hit.getDir().i << ",";
-                std::cout<< hit.getDir().j << ",";
-                std::cout<< hit.getDir().k << "\n";
-            }
-            */
             if(cos_theta < 0)
                 cos_theta = 0;
-            /*
-            if(hit.getDir().i==0 && hit.getDir().j==1 && hit.getDir().k==0){
-                std::cout<<cos_theta;
-            }
-            */
             Color diffuse = cos_theta * obj->getDiffuseCoefficient()
                 * light->getColor();
             result = result + diffuse;
-        }/*
-        if(hit.getDir().i==0 && hit.getDir().j==1 && hit.getDir().k==0){
-            
-            std::cout<< result.red << ",";
-            std::cout<< result.blue << ",";
-            std::cout<< result.green << "\n";
-            
-        }*/
+        }
         result = result * obj->getColor();
         return result;
     }
@@ -154,10 +126,3 @@ Scene::~Scene() {
 Ray Scene::get_camera_ray(float x, float y) const {
     return camera.get_ray(x, -y);
 }
-class print{
-    static void Vector(Vector v){
-        std::cout<< v.i << ",";
-        std::cout<< v.j << ",";
-        std::cout<< v.k << "\n";
-    }
-};
