@@ -81,14 +81,7 @@ Color Scene::raytrace(const Ray& camera_ray) const {
 }
 
 Color Scene::shade(const Shape *obj, Ray hit) const{
-    /*
-    if(hit.getDir().i==0 && hit.getDir().j==1 && hit.getDir().k==0){
-        std::cout << hit.getOrigin().x << "\n";
-        hit.getOrigin().x << ", " << hit.getOrigin().y << ", " << hit.getOrigin() << "\n";
-        //return obj->getColor();
-        
-    }
-    */
+
     for(vector<LightSource*>::const_iterator it = lights.begin(); it != lights.end(); it++) {
         LightSource *light = *it;
         Ray shadow = Ray::makeRay(hit.getOrigin(), light->getPoint());
@@ -119,32 +112,14 @@ Color Scene::shade(const Shape *obj, Ray hit) const{
             hit.normalize();
 
             float cos_theta = (shadow.getDir()).dotProduct(hit.getDir());
-            /*
-            if(!(hit.getDir().i==0 && hit.getDir().j==1 && hit.getDir().k==0)){
-                //zprint:Vector(hit.getDir());
-                std::cout<< hit.getDir().i << ",";
-                std::cout<< hit.getDir().j << ",";
-                std::cout<< hit.getDir().k << "\n";
-            }
-            */
+
             if(cos_theta < 0)
                 cos_theta = 0;
-            /*
-            if(hit.getDir().i==0 && hit.getDir().j==1 && hit.getDir().k==0){
-                std::cout<<cos_theta;
-            }
-            */
+
             Color diffuse = cos_theta * obj->getDiffuseCoefficient()
                 * light->getColor();
             result = result + diffuse;
-        }/*
-        if(hit.getDir().i==0 && hit.getDir().j==1 && hit.getDir().k==0){
-            
-            std::cout<< result.red << ",";
-            std::cout<< result.blue << ",";
-            std::cout<< result.green << "\n";
-            
-        }*/
+        }
         result = result * obj->getColor();
         return result;
     }
