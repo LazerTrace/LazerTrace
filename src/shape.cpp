@@ -39,33 +39,41 @@ Sphere::Sphere(Point center, float radius, Color color, float index_of_refractio
 }
 
 Ray* Sphere::getIntersection(const Ray& ray) const {
-    Vector c(center.x, center.y, center.z);
-    float det = pow(ray.getDir().dotProduct(c), 2)
-        - ray.getDir().dotProduct(ray.getDir())
-        * (c.dotProduct(c) - pow(radius, 2));
-
-    if (det < 0) {
+   /*
+    *   see http://www.siggraph.org/education/materials/HyperGraph/raytrace/rtinter1.htm
+    *   for detailed description of this algorithm
+    *
+    */
+    Vector v = ray.getDir();
+    v.normalize();
+    Point o = ray.getOrigin();
+    int a=1;
+    float b = 2 * 
+    (
+        v.i * (o.x - center.x) +
+        v.j * (o.y - center.y) + 
+        v.k * (o.z - center.z)
+    );
+    float c = (o.x - center.x) * (o.x - center.x) + 
+        (o.y - center.y) * (o.y - center.y) + 
+        (o.z - center.z) * (o.z - center.z) - 
+        radius * radius;
+        
+    float discriminant = b*b-4*a*c;
+    if(discriminant<0)
         return NULL;
+    float t = (-b - sqrt(discriminant)) / (2*a);
+    if(t<0){
+        t = (-b + sqrt(discriminant)) / (2*a);
     }
-    float d =  ray.dir.dotProduct(c);
-    if (det == 0) {
-        Point p(ray.dir.i * d, ray.dir.j * d, ray.dir.k * d);
-        Vector v(c.i - p.x, c.j - p.y, c.k - p.z);
-        return new Ray(p,v);
-    }
-    // two collisions
-    else {
-        float sdet = sqrt(det);
-        if (fabsf(d - sdet) > fabsf(d + sdet)) {
-            float d = d + sdet;
-        } else {
-            float d = d - sdet;
-        }
-
-        Point p(ray.dir.i * d, ray.dir.j * d, ray.dir.k * d);
-        Vector v(c.i - p.x, c.j - p.y, c.k - p.z);
-        return new Ray(p,v);
-    }
+    Point p
+    (
+        o.x + v.i * t,
+        o.y + v.j * t,
+        o.z + v.k * t
+    );
+    Vector d(p.x-center.x, p.y-center.y, p.z-center.z);
+    return new Ray(p,d);
 }
 
 Plane::Plane(Point center, Vector normal, Color color, float index_of_refraction,
