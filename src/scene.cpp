@@ -25,10 +25,10 @@ Scene::Scene() : shapes(vector<Shape*>()),
     shapes.push_back(new Plane(Point(0, -3, 0), Vector(0, 1, 0), Color(0, 1, 0), 1, 0.5, 0.5, 0.5));
     
     //back wall
-    //shapes.push_back(new Plane(Point(0, 0, 20), Vector(0, 0, -1), Color(1, 1, 0), 1, 0.5, 0.5, 0.5));
+    shapes.push_back(new Plane(Point(0, 0, 15), Vector(0, 0, -1), Color(1, 1, 0), 1, 0.5, 0.5, 0.5));
     
     //left side wall
-    //shapes.push_back(new Plane(Point(-3, 0, 0), Vector(1, 0, 0), Color(0, 1, 1), 1, 0.5, 0.5, 0.5));
+    shapes.push_back(new Plane(Point(-3, 0, 0), Vector(1, 0, 0), Color(0, 1, 1), 1, 0.5, 0.5, 0.5));
     
     //right sphere (red)
     shapes.push_back(new Sphere(Point(3, -1, 5), 2,
