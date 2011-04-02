@@ -22,13 +22,13 @@ Scene::Scene() : shapes(vector<Shape*>()),
                  camera(Camera())
 {
     // floor
-    shapes.push_back(new Plane(Point(0, -3, 0), Vector(0, 1, 0), Color(0, 1, 0), 1, 0.5, 0.5, 0.5));
+    shapes.push_back(new Plane(Point(0, -3, 0), Vector(0, 1, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5));
 
     // back wall
-    shapes.push_back(new Plane(Point(0, 0, 15), Vector(0, 0, -1), Color(1, 1, 0), 1, 0.5, 0.5, 0.5));
+    shapes.push_back(new Plane(Point(0, 0, 15), Vector(0, 0, -1), Color(1, 1, 1), 1, 0.5, 0.5, 0.5));
 
     // left side wall
-    shapes.push_back(new Plane(Point(-3, 0, 0), Vector(1, 0, 0), Color(0, 1, 1), 1, 0.5, 0.5, 0.5));
+    shapes.push_back(new Plane(Point(-3, 0, 0), Vector(1, 0, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5));
 
     // right sphere (red)
     shapes.push_back(new Sphere(Point(3, -1, 5), 2,
@@ -117,6 +117,12 @@ Color Scene::shade(const Shape *obj, Ray hit) const{
                 * light->getColor();
             result = result + diffuse;
         }
+        if(result.red>1)
+            result.red=1;
+        if(result.green>1)
+            result.green=1;
+        if(result.blue>1)
+            result.blue=1;
         result = result * obj->getColor();
         return result;
     }
