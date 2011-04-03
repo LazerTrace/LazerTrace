@@ -2,11 +2,19 @@ ifndef PNGPP
 PNGPP := vendor/png++
 endif
 
+ifndef OPENCTM
+OPENCTM := vendor/OpenCTM/lib
+endif
+
+ifndef JSONCPP
+JSONCPP := vendor/jsoncpp/include
+endif
+
 ifndef LIBPNG_CONFIG
 LIBPNG_CONFIG = libpng-config
 endif
 
-make_cflags = -Wall -Wextra -pedantic -O $(CFLAGS) -I$(PNGPP) -Ivendor/tut `$(LIBPNG_CONFIG) --cflags`
+make_cflags = -Wall -Wextra -pedantic -O $(CFLAGS) -I$(PNGPP) -I$(OPENCTM) -I$(JSONCPP) -Ivendor/tut `$(LIBPNG_CONFIG) --cflags`
 make_ldflags = $(LDFLAGS)
 
 ifndef NDEBUG

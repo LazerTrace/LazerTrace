@@ -48,8 +48,18 @@ namespace tut {
     void object::test<4>() {
         Color c(1,2,3);
         c = 2.0 * c;
-        ensure("color multiplication", c.red == 2);
-        ensure("color multiplication", c.green == 4);
-        ensure("color multiplication", c.blue == 6);
+        ensure_equals("color multiplication", c.red, 2);
+        ensure_equals("color multiplication", c.green, 4);
+        ensure_equals("color multiplication", c.blue, 6);
+    }
+
+    template<>
+    template<>
+    void object::test<5>() {
+        Color c(0.5, -1, 1.5);
+        c = c.clamp();
+        ensure_equals("color clamp", c.red, 0.5);
+        ensure_equals("color clamp", c.green, 0);
+        ensure_equals("color clamp", c.blue, 1);
     }
 }

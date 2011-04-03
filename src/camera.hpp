@@ -15,13 +15,30 @@ public:
      * - direction is z
      * - right is x
      * - up is y
+     *
+     * Takes the width and height of the image and auto-generates the
+     * aspect ratio and such.
      */
-    Camera();
+    Camera(int width, int height);
+    
 
     /**
      * Constructs a camera from the given vectors.
      */
     Camera(Point position, Vector direction, Vector right, Vector up);
+
+    /**
+     * Constructs a camera from the given point.
+     */
+    Camera(Point position);
+
+
+    /**
+     * Constructs a camera from the given point. Auto-generates the
+     * aspect ration from the width and height
+     */
+    Camera(Point position, int width, int height);
+
 
     /**
      * Computes a camera ray.

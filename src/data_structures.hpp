@@ -35,9 +35,23 @@ class Color{
      * Overloaded multiplcation-assignment operator.
      *
      * @param c The color to multiply with the original color.
-     * @return A pointer to the lhs of the equation.
+     * @return The componentwise product of the colors
      */
     Color operator* (const Color&);
+
+    /**
+     * Overloaded addition operator.
+     *
+     * @param c The color to add with the original color.
+     * @return The sum of the colors
+     */
+    Color operator+ (const Color&);
+
+    /**
+     * Limit color values to the range [0, 1]
+     * @return This color with channels constrained
+     */
+    Color clamp() const;
 };
 
 /**
@@ -96,7 +110,7 @@ public:
      * Overloaded addition operator.
      * Performs component based addition.
      *
-     * @param rhs The vector to add.
+     * @param other The vector to add.
      * @return A pointer to the result.
      */
     Vector operator+(const Vector& other);
@@ -105,7 +119,7 @@ public:
      * Overloaded subtraction operator.
      * Performs component based subtraction.
      *
-     * @param rhs The vector to subtract.
+     * @param other The vector to subtract.
      * @return A pointer to the result.
      */
     Vector operator-(const Vector& other);
@@ -155,7 +169,6 @@ public:
 class Point {
 public:
     float x, y, z;
-
     /**
      * Constructor for objects of class Point.
      *
@@ -164,6 +177,31 @@ public:
      * @param z The z-coordinate
      */
     Point(float x, float y, float z);
+
+    /**
+     * Overloaded comparison operator.
+     * Does coordinate based comparison.
+     *
+     * @param p The point to compare with.
+     * @return True if the points are equivalent, false otherwise.
+     */
+    bool operator==(const Point &p) const;
+
+
+    /**
+     * Overloaded comparison operator.
+     * Does coordinate based comparison.
+     *
+     * @param p The point to compare with.
+     * @return False if the points are equivalent, true otherwise.
+     */
+    bool operator!=(const Point &p) const;
+
+    /*
+    //this operator overload doesn't really work yet.
+    //it was designed for an operation in plane intersection
+    Vector operator-(const Point& p);
+    */
 };
 
 /**

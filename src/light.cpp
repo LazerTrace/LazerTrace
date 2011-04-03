@@ -27,25 +27,13 @@ PointLight::PointLight(Color c, Point p):LightSource(c),point(p){
 PointLight::~PointLight(){
 }
 
-float DirectionalLight::getI() const {
-    return vector.i;
+Vector DirectionalLight::getDirection() const {
+    return direction;
 }
 
-float DirectionalLight::getJ() const {
-    return vector.j;
-}
-
-float DirectionalLight::getK() const {
-    return vector.k;
-}
-
-Vector DirectionalLight::getVector() const {
-    return vector;
-}
-
-DirectionalLight::DirectionalLight(Color c, Vector v)
+DirectionalLight::DirectionalLight(Color c, Vector d)
     : LightSource(c),
-    vector(v)
+    direction(d)
 {
 }
 
