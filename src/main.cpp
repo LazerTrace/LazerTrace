@@ -1,5 +1,5 @@
 #include <png.hpp>
-#include <json.h>
+#include <json/json.h>
 
 #include "scene.hpp"
 #include "light.hpp"
