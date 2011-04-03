@@ -79,7 +79,7 @@ Ray* Sphere::getIntersection(const Ray& ray) const {
         this method should probably be rewritten to avoid this case.
         for now, i just moved the threshold to .01
     */
-    if(t<=.01)
+    if(t<=0)
         return NULL;
 
     Point p

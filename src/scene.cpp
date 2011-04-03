@@ -83,7 +83,6 @@ Color Scene::raytrace(const Ray& camera_ray, int level) const {
         * We should always check the current level before attempting
         * to enter a new level of raytracing.
         */
-        std::cout<<"level:"<<level<<"\n";
         return Color(1,1,1);
     }
 
@@ -97,6 +96,10 @@ Color Scene::raytrace(const Ray& camera_ray, int level) const {
             continue;
         float int_distance2 = Ray::makeRay(camera_ray.getOrigin(),
                 intersection->getOrigin()).getDir().magnitude2();
+        if (int_distance2 < 1e-6){
+            // Too close! We must move forwards a little.
+            continue;
+        }
         if (int_distance2 < nearest_distance2) {
             // Found a closer hit
             nearest_shape = shape;
