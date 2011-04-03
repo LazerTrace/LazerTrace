@@ -62,7 +62,9 @@ Scene::Scene() : shapes(vector<Shape*>()),
 }
 
 Scene::Scene(std::string sceneName): shapes(vector<Shape*>()),
-                                    lights(vector<LightSource*>())
+                                    lights(vector<LightSource*>()),
+                                    ambient(Color(0.25, 0.25, 0.25)),
+                                    camera(Camera()) 
 {
     std::ifstream input_scene (sceneName.c_str());
     // Read the file and add specified shapes.
