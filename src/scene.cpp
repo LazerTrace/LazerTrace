@@ -19,7 +19,7 @@ using std::auto_ptr;
 Scene::Scene() : shapes(vector<Shape*>()),
                  lights(vector<LightSource*>()),
                  ambient(Color(0.25, 0.25, 0.25)),
-                 camera(Camera())
+                 camera(Camera(Point(0,2,-5)))
 {
     // floor
     shapes.push_back(new Plane(Point(0, -3, 0), Vector(0, 1, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5));
@@ -30,18 +30,22 @@ Scene::Scene() : shapes(vector<Shape*>()),
     // left side wall
     shapes.push_back(new Plane(Point(-3, 0, 0), Vector(1, 0, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5));
 
-    // right sphere (red)
+    // red sphere
     shapes.push_back(new Sphere(Point(3, -1, 5), 2,
                 Color(1, 0, 0), 1, 0.9, 0.5, 0.5));
 
-    // left sphere (blue)
+    // blue sphere
     shapes.push_back(new Sphere(Point(-1, 2, 5), 1,
                 Color(0, 0, 1), 1, 0.3, 0.5, 0.5));
+    
+    //green sphere
+        shapes.push_back(new Sphere(Point(-4, 0, 4), 2,
+                Color(0, 1, 0), 1, 0.3, 0.5, 0.5));
+                
+    // light source 1 (blueish)
+    lights.push_back(new PointLight(Color(.5, .5, 4), Point(0, 0, 2)));
 
-    // light source 1
-    lights.push_back(new PointLight(Color(.5, .5, 1), Point(0, 0, 2)));
-
-    // light source 2
+    // light source 2 (redish)
     lights.push_back(new PointLight(Color(1, .5, .5), Point(0, 5, 0)));
     
 }
