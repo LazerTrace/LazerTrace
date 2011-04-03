@@ -19,5 +19,6 @@ Ray Camera::get_ray(float x, float y) const {
     Vector value = direction;
     value += right * x;
     value += up * y;
+    value.normalize();
     return Ray(position, value);
 }

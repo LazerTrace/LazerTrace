@@ -22,17 +22,17 @@ Scene::Scene() : shapes(vector<Shape*>()),
                  camera(Camera(Point(0,2,-5)))
 {
     // floor
-    shapes.push_back(new Plane(Point(0, -3, 0), Vector(0, 1, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5));
+    shapes.push_back(new Plane(Point(0, -3, 0), Vector(0, 1, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.1));
 
     // back wall
-    shapes.push_back(new Plane(Point(0, 0, 15), Vector(0, 0, -1), Color(1, 1, 1), 1, 0.5, 0.5, 0.5));
+    shapes.push_back(new Plane(Point(0, 0, 15), Vector(0, 0, -1), Color(1, 1, 1), 1, 0.5, 0.5, 0.1));
 
     // left side wall
-    shapes.push_back(new Plane(Point(-3, 0, 0), Vector(1, 0, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5));
+    shapes.push_back(new Plane(Point(-3, 0, 0), Vector(1, 0, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.1));
 
     // red sphere
     shapes.push_back(new Sphere(Point(3, -1, 5), 2,
-                Color(1, 0, 0), 1, 0.9, 0.5, 0.5));
+                Color(1, 0, 0), 1, 0.3, 0.5, 0.5));
 
     // blue sphere
     shapes.push_back(new Sphere(Point(-1, 2, 5), 1,
@@ -43,7 +43,7 @@ Scene::Scene() : shapes(vector<Shape*>()),
                 Color(0, 1, 0), 1, 0.3, 0.5, 0.5));
                 
     // light source 1 (blueish)
-    lights.push_back(new PointLight(Color(.5, .5, 4), Point(0, 0, 2)));
+    lights.push_back(new PointLight(Color(.5, .5, 1), Point(0, 0, 2)));
 
     // light source 2 (redish)
     lights.push_back(new PointLight(Color(1, .5, .5), Point(0, 5, 0)));
@@ -81,11 +81,11 @@ Color Scene::raytrace(const Ray& camera_ray) const {
         // Didn't hit anything
         return Color(1, 0, 1); // Magenta
     } else {
-        return shade(nearest_shape, nearest_hit);
+        return shade(nearest_shape, nearest_hit, camera_ray);
     }
 }
 
-Color Scene::shade(const Shape *obj, Ray hit) const{
+Color Scene::shade(const Shape *obj, Ray hit, const Ray& camera_ray) const{
     Color result = Color(ambient) * obj->getAmbientCoefficient();
     for(vector<LightSource*>::const_iterator it = lights.begin(); it != lights.end(); it++) {
         LightSource *light = *it;
@@ -116,12 +116,29 @@ Color Scene::shade(const Shape *obj, Ray hit) const{
             shadow.normalize();
             hit.normalize();
             
-            float cos_theta = (shadow.getDir()).dotProduct(hit.getDir());
-            if(cos_theta < 0)
-                cos_theta = 0;
-            Color diffuse = cos_theta * obj->getDiffuseCoefficient()
-                * light->getColor();
-            result = result + diffuse;
+            //diffuse lighting
+            if(obj->getDiffuseCoefficient()>0){
+                float cos_theta = (shadow.getDir()).dotProduct(hit.getDir());
+                if(cos_theta > 0){
+                    Color diffuse = cos_theta * obj->getDiffuseCoefficient()
+                        * light->getColor();
+                    result = result + diffuse;
+                }
+            }
+            
+            Ray reflection(hit.getOrigin(),
+                shadow.getDir()-hit.getDir()*2*shadow.getDir().dotProduct(hit.getDir()));
+                
+            //specular lighting
+            if(obj->getSpecularCoefficient()>0){
+                float cos_theta = camera_ray.getDir().dotProduct(reflection.getDir());
+                if(cos_theta > 0){
+                    Color spec = powf( cos_theta, 20 ) * 
+                        obj->getSpecularCoefficient() *
+                        light->getColor();
+                    result = result + spec;
+                }
+            }
         }        
     }
     if(result.red>1)

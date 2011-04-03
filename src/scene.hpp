@@ -46,7 +46,7 @@ public:
      * @param hit The ray representing the normal vector and point of intersection.
      * @return The color at the given point.
      */
-    Color shade(const Shape *obj, Ray hit) const;
+    Color shade(const Shape *obj, Ray hit, const Ray &camera_ray) const;
 
     ~Scene();
 
