@@ -173,12 +173,7 @@ Color Scene::shade(const Shape *obj, Ray hit, const Ray& camera_ray, int level) 
         result = result + refl;
     }
 
-    if(result.red>1)
-        result.red=1;
-    if(result.green>1)
-        result.green=1;
-    if(result.blue>1)
-        result.blue=1;
+    result = result.clamp();
     return result;
 }
 

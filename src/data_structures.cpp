@@ -21,6 +21,23 @@ Color Color::operator+(const Color& c){
     return Color(red + c.red, green + c.green, blue + c.blue);
 }
 
+Color Color::clamp() const {
+    Color result(*this);
+    if(red>1)
+        result.red=1;
+    if(green>1)
+        result.green=1;
+    if(blue>1)
+        result.blue=1;
+    if(red<0)
+        result.red=0;
+    if(green<0)
+        result.green=0;
+    if(blue<0)
+        result.blue=0;
+    return result;
+}
+
 Color::~Color(){
 }
 

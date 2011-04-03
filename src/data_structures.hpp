@@ -46,6 +46,12 @@ class Color{
      * @return The sum of the colors
      */
     Color operator+ (const Color&);
+
+    /**
+     * Limit color values to the range [0, 1]
+     * @return This color with channels constrained
+     */
+    Color clamp() const;
 };
 
 /**
