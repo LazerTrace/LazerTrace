@@ -61,11 +61,10 @@ Scene::Scene() : shapes(vector<Shape*>()),
 
 }
 
-Scene::Scene(std::string fileName): shapes(vector<Shape*>()),
-                                    lights(vector<LightSource*>()),
-                                    ambient(Color(0.25, 0.25, 0.25)),
-                                    camera(Camera()) {
-    std::ifstream input_scene (fileName.c_str());
+Scene::Scene(std::string sceneName): shapes(vector<Shape*>()),
+                                    lights(vector<LightSource*>())
+{
+    std::ifstream input_scene (sceneName.c_str());
     // Read the file and add specified shapes.
     // We need to figure out what our syntax/grammar is first though.
 }

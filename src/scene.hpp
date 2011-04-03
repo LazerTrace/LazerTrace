@@ -28,8 +28,11 @@ public:
     /**
      * Constructor for objects of class Scene().
      * Loads a scene from a file using JSON and OpenCTM file formats.
+     * Scenes are currently stored in the directory ../scene
+     *
+     * @param sceneName The name of the scene you wish to load.
      */
-    Scene(std::string fileName);
+    Scene(std::string sceneName);
 
     /**
      * The entry point for the raytracer, and also recursively called
