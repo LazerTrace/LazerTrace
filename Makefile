@@ -7,7 +7,7 @@ OPENCTM := vendor/OpenCTM/lib
 endif
 
 ifndef JSONCPP
-JSONCPP := vendor/jsoncpp/include/json
+JSONCPP := vendor/jsoncpp/include
 endif
 
 ifndef LIBPNG_CONFIG
