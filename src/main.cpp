@@ -4,10 +4,11 @@
 #include "light.hpp"
 
 int main(void) {
-    Scene the_scene;
 
-    const int WIDTH = 1600;
-    const int HEIGHT = 1200;
+    const int WIDTH = 1440;
+    const int HEIGHT = 900;
+
+    Scene the_scene(WIDTH, HEIGHT);
 
     png::image<png::rgb_pixel> image(WIDTH, HEIGHT);
     for (size_t y = 0; y < image.get_height(); ++y) {
@@ -17,7 +18,10 @@ int main(void) {
             Ray camera_ray = the_scene.get_camera_ray(scaled_x, scaled_y);
             Color color = the_scene.raytrace(camera_ray, 1);
             image[y][x] = png::rgb_pixel(
-                    color.red * 255, color.green * 255, color.blue * 255);
+                                         color.red * 255, 
+                                         color.green * 255, 
+                                         color.blue * 255
+                                         );
         }
     }
     image.write("output.png");

@@ -22,14 +22,16 @@ public:
      * Default constructor for objects of class Scene().
      * Creates a default scene layout for testing purposes,
      * with a minimal number of objects and lights.
+     * Auto-generates aspect ratio from width and height.
      */
-    Scene();
+    Scene(int width, int height);
 
     /**
      * Constructor for objects of class Scene().
      * Loads a scene from a file using JSON and OpenCTM file formats.
+     * Auto-generates aspect ratio from width and height.
      */
-    Scene(std::string fileName);
+    Scene(std::string fileName, int width, int height);
 
     /**
      * The entry point for the raytracer, and also recursively called

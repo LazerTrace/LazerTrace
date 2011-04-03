@@ -17,11 +17,14 @@ using std::auto_ptr;
 /*
  * In the case of an empty constructor, Scene will generate a predefined
  * scene for rendering.
+ * 
+ * @param width : The width of the scene
+ * @param height : The height of the scene
  */
-Scene::Scene() : shapes(vector<Shape*>()),
+Scene::Scene(int width, int height) : shapes(vector<Shape*>()),
                  lights(vector<LightSource*>()),
                  ambient(Color(0.25, 0.25, 0.25)),
-                 camera(Camera(Point(0,2,-5)))
+                 camera(Camera(Point(0,2,-5), width, height))
 {
     // floor
     shapes.push_back(new Plane(Point(0, -3, 0), Vector(0, 1, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0));
@@ -61,10 +64,10 @@ Scene::Scene() : shapes(vector<Shape*>()),
 
 }
 
-Scene::Scene(std::string fileName): shapes(vector<Shape*>()),
+Scene::Scene(std::string fileName, int width, int height): shapes(vector<Shape*>()),
                                     lights(vector<LightSource*>()),
                                     ambient(Color(0.25, 0.25, 0.25)),
-                                    camera(Camera()) {
+                                    camera(Camera(width, height)) {
     std::ifstream input_scene (fileName.c_str());
     // Read the file and add specified shapes.
     // We need to figure out what our syntax/grammar is first though.
