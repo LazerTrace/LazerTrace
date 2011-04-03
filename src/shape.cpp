@@ -63,9 +63,11 @@ Ray* Sphere::getIntersection(const Ray& ray) const {
     if(discriminant<0)
         return NULL;
     float t = (-b - sqrt(discriminant)) / (2*a);
-    if(t<0){
+    if(t<0)
         t = (-b + sqrt(discriminant)) / (2*a);
-    }
+    if(t<0)
+        return NULL;
+    
     Point p
     (
         o.x + v.i * t,
