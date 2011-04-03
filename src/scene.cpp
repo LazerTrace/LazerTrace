@@ -39,10 +39,11 @@ Scene::Scene() : shapes(vector<Shape*>()),
                 Color(0, 0, 1), 1, 0.3, 0.5, 0.5));
 
     // light source 1
-    //lights.push_back(new PointLight(Color(1, 1, 1), Point(0, .001, 2)));
+    lights.push_back(new PointLight(Color(.5, .5, 1), Point(0, 0, 2)));
 
     // light source 2
-    lights.push_back(new PointLight(Color(1, 1, 1), Point(0, 5, 0)));
+    lights.push_back(new PointLight(Color(1, .5, .5), Point(0, 5, 0)));
+    
 }
 
 Scene::Scene(std::string fileName): shapes(vector<Shape*>()),
@@ -81,10 +82,10 @@ Color Scene::raytrace(const Ray& camera_ray) const {
 }
 
 Color Scene::shade(const Shape *obj, Ray hit) const{
+    Color result = Color(ambient) * obj->getAmbientCoefficient();
     for(vector<LightSource*>::const_iterator it = lights.begin(); it != lights.end(); it++) {
         LightSource *light = *it;
         Ray shadow = Ray::makeRay(hit.getOrigin(), light->getPoint());
-        Color result = Color(ambient) * obj->getAmbientCoefficient();
         bool collision = false;
         // Detect collisions, for now do nothing if there is a collision
         for(vector<Shape*>::const_iterator sh = shapes.begin(); sh != shapes.end(); sh++) {
@@ -104,28 +105,29 @@ Color Scene::shade(const Shape *obj, Ray hit) const{
                 }
             }
         }
+        
         // Calculate local illumination
         if(!collision) {
             // Normalize the direction vectors before calculations
             shadow.normalize();
             hit.normalize();
-
+            
             float cos_theta = (shadow.getDir()).dotProduct(hit.getDir());
             if(cos_theta < 0)
                 cos_theta = 0;
             Color diffuse = cos_theta * obj->getDiffuseCoefficient()
                 * light->getColor();
             result = result + diffuse;
-        }
-        if(result.red>1)
-            result.red=1;
-        if(result.green>1)
-            result.green=1;
-        if(result.blue>1)
-            result.blue=1;
-        result = result * obj->getColor();
-        return result;
+        }        
     }
+    if(result.red>1)
+        result.red=1;
+    if(result.green>1)
+        result.green=1;
+    if(result.blue>1)
+        result.blue=1;
+    result = result * obj->getColor();
+    return result;
 }
 Scene::~Scene() {
     for(vector<Shape*>::iterator it = shapes.begin(); it != shapes.end(); it++) {
