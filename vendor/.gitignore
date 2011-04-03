@@ -3,3 +3,5 @@ jsoncpp/buildscons
 jsoncpp/dist
 jsoncpp/libs
 openctm/tools
+openctm/lib/libopenctm.a
+openctm/lib/openctm.dll
