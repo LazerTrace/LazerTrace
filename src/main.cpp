@@ -15,7 +15,7 @@ int main(void) {
             float scaled_x = 2 * x / (float) WIDTH - 1;
             float scaled_y = 2 * y / (float) HEIGHT - 1;
             Ray camera_ray = the_scene.get_camera_ray(scaled_x, scaled_y);
-            Color color = the_scene.raytrace(camera_ray);
+            Color color = the_scene.raytrace(camera_ray, 1);
             image[y][x] = png::rgb_pixel(
                     color.red * 255, color.green * 255, color.blue * 255);
         }

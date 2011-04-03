@@ -9,6 +9,8 @@
 #include "scene.hpp"
 #include "light.hpp"
 
+#define MAX_LEVEL 2
+
 using std::vector;
 using std::auto_ptr;
 
@@ -22,25 +24,34 @@ Scene::Scene() : shapes(vector<Shape*>()),
                  camera(Camera(Point(0,2,-5)))
 {
     // floor
-    shapes.push_back(new Plane(Point(0, -3, 0), Vector(0, 1, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.1));
+    shapes.push_back(new Plane(Point(0, -3, 0), Vector(0, 1, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0));
 
     // back wall
-    shapes.push_back(new Plane(Point(0, 0, 15), Vector(0, 0, -1), Color(1, 1, 1), 1, 0.5, 0.5, 0.1));
+    shapes.push_back(new Plane(Point(0, 0, 7), Vector(0, 0, -1), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0));
 
     // left side wall
-    shapes.push_back(new Plane(Point(-3, 0, 0), Vector(1, 0, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.1));
+    shapes.push_back(new Plane(Point(-3, 0, 0), Vector(1, 0, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0));
+    
+    // ceiling
+    shapes.push_back(new Plane(Point(0, 10, 0), Vector(0, -1, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0));
+    
+    // wall behind camera
+    shapes.push_back(new Plane(Point(0, 0, -10), Vector(0, 0, 1), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0));
+    
+    // right wall
+    shapes.push_back(new Plane(Point(15, 0, 0), Vector(-1, 0, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0));
 
     // red sphere
     shapes.push_back(new Sphere(Point(3, -1, 5), 2,
-                Color(1, 0, 0), 1, 0.3, 0.5, 0.5));
+                Color(1, 0, 0), 1, .3, 0, 1, 1));
 
     // blue sphere
     shapes.push_back(new Sphere(Point(-1, 2, 5), 1,
-                Color(0, 0, 1), 1, 0.3, 0.5, 0.5));
+                Color(0, 0, 1), 1, 0.3, 0.5, 0.5, 0));
     
     //green sphere
         shapes.push_back(new Sphere(Point(-4, 0, 4), 2,
-                Color(0, 1, 0), 1, 0.3, 0.5, 0.5));
+                Color(0, 1, 0), 1, 0.3, 0.5, 0.5, 0));
                 
     // light source 1 (blueish)
     lights.push_back(new PointLight(Color(.5, .5, 1), Point(0, 0, 2)));
@@ -59,7 +70,17 @@ Scene::Scene(std::string fileName): shapes(vector<Shape*>()),
     // We need to figure out what our syntax/grammar is first though.
 }
 
-Color Scene::raytrace(const Ray& camera_ray) const {
+Color Scene::raytrace(const Ray& camera_ray, int level) const {
+    if(level>MAX_LEVEL){
+       /**
+        * I'm not really sure if this is the correct return for this case
+        * but in theory, this shouldn't trigger anyway.
+        * We should always check the current level before attempting
+        * to enter a new level of raytracing.
+        */
+        std::cout<<"level:"<<level<<"\n";
+        return Color(1,1,1);
+    }
     const Shape *nearest_shape = NULL;
     float nearest_distance2 = std::numeric_limits<float>::max();
     Ray nearest_hit;
@@ -81,11 +102,11 @@ Color Scene::raytrace(const Ray& camera_ray) const {
         // Didn't hit anything
         return Color(1, 0, 1); // Magenta
     } else {
-        return shade(nearest_shape, nearest_hit, camera_ray);
+        return shade(nearest_shape, nearest_hit, camera_ray, level);
     }
 }
 
-Color Scene::shade(const Shape *obj, Ray hit, const Ray& camera_ray) const{
+Color Scene::shade(const Shape *obj, Ray hit, const Ray& camera_ray, int level) const{
     Color result = Color(ambient) * obj->getAmbientCoefficient();
     for(vector<LightSource*>::const_iterator it = lights.begin(); it != lights.end(); it++) {
         LightSource *light = *it;
@@ -121,17 +142,17 @@ Color Scene::shade(const Shape *obj, Ray hit, const Ray& camera_ray) const{
                 float cos_theta = (shadow.getDir()).dotProduct(hit.getDir());
                 if(cos_theta > 0){
                     Color diffuse = cos_theta * obj->getDiffuseCoefficient()
-                        * light->getColor();
+                        * light->getColor() * obj->getColor();
                     result = result + diffuse;
                 }
             }
-            
-            Ray reflection(hit.getOrigin(),
-                shadow.getDir()-hit.getDir()*2*shadow.getDir().dotProduct(hit.getDir()));
-                
+        
             //specular lighting
             if(obj->getSpecularCoefficient()>0){
-                float cos_theta = camera_ray.getDir().dotProduct(reflection.getDir());
+                Ray lightReflection(hit.getOrigin(), shadow.getDir()-
+                    hit.getDir()*2*shadow.getDir().dotProduct(hit.getDir()));
+                float cos_theta = 
+                    camera_ray.getDir().dotProduct(lightReflection.getDir());
                 if(cos_theta > 0){
                     Color spec = powf( cos_theta, 20 ) * 
                         obj->getSpecularCoefficient() *
@@ -141,13 +162,19 @@ Color Scene::shade(const Shape *obj, Ray hit, const Ray& camera_ray) const{
             }
         }        
     }
+    if(obj->getReflectionCoefficient()>0 && level < MAX_LEVEL){
+        Ray reflection(hit.getOrigin(), camera_ray.getDir()-
+                    hit.getDir()*2*camera_ray.getDir().dotProduct(hit.getDir()));
+        Color refl = raytrace(reflection, level) *
+            obj->getReflectionCoefficient() * obj->getColor();
+        result = result + refl;
+    }
     if(result.red>1)
         result.red=1;
     if(result.green>1)
         result.green=1;
     if(result.blue>1)
         result.blue=1;
-    result = result * obj->getColor();
     return result;
 }
 Scene::~Scene() {

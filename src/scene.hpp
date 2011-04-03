@@ -36,7 +36,7 @@ public:
      * by shade.
      * @return The raytraced color
      */
-    Color raytrace(const Ray& camera_ray) const;
+    Color raytrace(const Ray& camera_ray, int level) const;
 
     /**
      * Given an object and the ray representing the intersection point,
@@ -46,7 +46,7 @@ public:
      * @param hit The ray representing the normal vector and point of intersection.
      * @return The color at the given point.
      */
-    Color shade(const Shape *obj, Ray hit, const Ray &camera_ray) const;
+    Color shade(const Shape *obj, Ray hit, const Ray &camera_ray, int level) const;
 
     ~Scene();
 
