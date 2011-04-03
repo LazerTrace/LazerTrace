@@ -31,13 +31,13 @@ Scene::Scene() : shapes(vector<Shape*>()),
 
     // left side wall
     shapes.push_back(new Plane(Point(-3, 0, 0), Vector(1, 0, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0));
-    
+
     // ceiling
     shapes.push_back(new Plane(Point(0, 10, 0), Vector(0, -1, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0));
-    
+
     // wall behind camera
     shapes.push_back(new Plane(Point(0, 0, -10), Vector(0, 0, 1), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0));
-    
+
     // right wall
     shapes.push_back(new Plane(Point(15, 0, 0), Vector(-1, 0, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0));
 
@@ -48,17 +48,17 @@ Scene::Scene() : shapes(vector<Shape*>()),
     // blue sphere
     shapes.push_back(new Sphere(Point(-1, 2, 5), 1,
                 Color(0, 0, 1), 1, 0.3, 0.5, 0.5, 0));
-    
+
     //green sphere
         shapes.push_back(new Sphere(Point(-4, 0, 4), 2,
                 Color(0, 1, 0), 1, 0.3, 0.5, 0.5, 0));
-                
+
     // light source 1 (blueish)
     lights.push_back(new PointLight(Color(.5, .5, 1), Point(0, 0, 2)));
 
     // light source 2 (redish)
     lights.push_back(new PointLight(Color(1, .5, .5), Point(0, 5, 0)));
-    
+
 }
 
 Scene::Scene(std::string fileName): shapes(vector<Shape*>()),
@@ -71,7 +71,7 @@ Scene::Scene(std::string fileName): shapes(vector<Shape*>()),
 }
 
 Color Scene::raytrace(const Ray& camera_ray, int level) const {
-    if(level>MAX_LEVEL){
+    if(level>MAX_LEVEL) {
        /**
         * I'm not really sure if this is the correct return for this case
         * but in theory, this shouldn't trigger anyway.
@@ -81,6 +81,7 @@ Color Scene::raytrace(const Ray& camera_ray, int level) const {
         std::cout<<"level:"<<level<<"\n";
         return Color(1,1,1);
     }
+
     const Shape *nearest_shape = NULL;
     float nearest_distance2 = std::numeric_limits<float>::max();
     Ray nearest_hit;
@@ -98,6 +99,7 @@ Color Scene::raytrace(const Ray& camera_ray, int level) const {
             nearest_hit = *intersection;
         }
     }
+
     if (nearest_shape == NULL) {
         // Didn't hit anything
         return Color(1, 0, 1); // Magenta
@@ -106,7 +108,7 @@ Color Scene::raytrace(const Ray& camera_ray, int level) const {
     }
 }
 
-Color Scene::shade(const Shape *obj, Ray hit, const Ray& camera_ray, int level) const{
+Color Scene::shade(const Shape *obj, Ray hit, const Ray& camera_ray, int level) const {
     Color result = Color(ambient) * obj->getAmbientCoefficient();
     for(vector<LightSource*>::const_iterator it = lights.begin(); it != lights.end(); it++) {
         LightSource *light = *it;
@@ -115,7 +117,7 @@ Color Scene::shade(const Shape *obj, Ray hit, const Ray& camera_ray, int level) 
         // Detect collisions, for now do nothing if there is a collision
         for(vector<Shape*>::const_iterator sh = shapes.begin(); sh != shapes.end(); sh++) {
             Shape *shape = *sh;
-            if (shape != obj){
+            if (shape != obj) {
                 auto_ptr<Ray> hit(shape->getIntersection(shadow));
                 if (hit.get() != NULL && hit->getOrigin() != shadow.getOrigin()) {
                     Vector toHit(hit->getOrigin().x-shadow.getOrigin().x, 
@@ -130,15 +132,15 @@ Color Scene::shade(const Shape *obj, Ray hit, const Ray& camera_ray, int level) 
                 }
             }
         }
-        
+
         // Calculate local illumination
         if(!collision) {
             // Normalize the direction vectors before calculations
             shadow.normalize();
             hit.normalize();
-            
+
             //diffuse lighting
-            if(obj->getDiffuseCoefficient()>0){
+            if(obj->getDiffuseCoefficient()>0) {
                 float cos_theta = (shadow.getDir()).dotProduct(hit.getDir());
                 if(cos_theta > 0){
                     Color diffuse = cos_theta * obj->getDiffuseCoefficient()
@@ -146,14 +148,14 @@ Color Scene::shade(const Shape *obj, Ray hit, const Ray& camera_ray, int level) 
                     result = result + diffuse;
                 }
             }
-        
+
             //specular lighting
-            if(obj->getSpecularCoefficient()>0){
+            if(obj->getSpecularCoefficient()>0) {
                 Ray lightReflection(hit.getOrigin(), shadow.getDir()-
                     hit.getDir()*2*shadow.getDir().dotProduct(hit.getDir()));
                 float cos_theta = 
                     camera_ray.getDir().dotProduct(lightReflection.getDir());
-                if(cos_theta > 0){
+                if(cos_theta > 0) {
                     Color spec = powf( cos_theta, 20 ) * 
                         obj->getSpecularCoefficient() *
                         light->getColor();
@@ -162,13 +164,15 @@ Color Scene::shade(const Shape *obj, Ray hit, const Ray& camera_ray, int level) 
             }
         }        
     }
-    if(obj->getReflectionCoefficient()>0 && level < MAX_LEVEL){
+
+    if(obj->getReflectionCoefficient()>0 && level < MAX_LEVEL) {
         Ray reflection(hit.getOrigin(), camera_ray.getDir()-
                     hit.getDir()*2*camera_ray.getDir().dotProduct(hit.getDir()));
         Color refl = raytrace(reflection, level) *
             obj->getReflectionCoefficient() * obj->getColor();
         result = result + refl;
     }
+
     if(result.red>1)
         result.red=1;
     if(result.green>1)
@@ -177,6 +181,7 @@ Color Scene::shade(const Shape *obj, Ray hit, const Ray& camera_ray, int level) 
         result.blue=1;
     return result;
 }
+
 Scene::~Scene() {
     for(vector<Shape*>::iterator it = shapes.begin(); it != shapes.end(); it++) {
         delete *it;
