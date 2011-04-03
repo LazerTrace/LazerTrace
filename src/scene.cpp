@@ -9,7 +9,7 @@
 #include "scene.hpp"
 #include "light.hpp"
 
-#define MAX_LEVEL 2
+#define MAX_LEVEL 5
 
 using std::vector;
 using std::auto_ptr;
