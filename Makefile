@@ -53,7 +53,7 @@ check: bin/test
 	bin/test
 
 bin/main: $(shared_objects) $(main_objects)
-	g++ -o $@ $^ $(make_ldflags) `$(LIBPNG_CONFIG) --ldflags`
+	g++ -o $@ $^ $(make_ldflags) -lpthread `$(LIBPNG_CONFIG) --ldflags`
 
 bin/test: $(shared_objects) $(test_objects)
 	g++ -o $@ $^ $(make_ldflags) `$(LIBPNG_CONFIG) --ldflags`
