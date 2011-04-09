@@ -5,10 +5,11 @@
 #include "data_structures.hpp"
 
 Shape::Shape(Color color, float index_of_refraction, float ambient_coef,
-             float diffuse_coef, float specular_coef, float reflection_coef)
-    : index_of_refraction(index_of_refraction), color(color), ambient_coef(ambient_coef),
-      diffuse_coef(diffuse_coef), specular_coef(specular_coef),
-      reflection_coef(reflection_coef) {
+    float diffuse_coef, float specular_coef, float reflection_coef,
+    float transparency_coef) : index_of_refraction(index_of_refraction),
+    color(color), ambient_coef(ambient_coef), diffuse_coef(diffuse_coef), 
+    specular_coef(specular_coef), reflection_coef(reflection_coef),
+    transparency_coef(transparency_coef){
 }
 
 float Shape::getIndexOfRefraction() const {
@@ -31,15 +32,21 @@ float Shape::getReflectionCoefficient() const {
     return reflection_coef;
 }
 
+float Shape::getTransparencyCoefficient() const {
+    return transparency_coef;
+}
+
 Color Shape::getColor() const {
     return color;
 }
 
 
-Sphere::Sphere(Point center, float radius, Color color, float index_of_refraction,
-               float ambient_coef, float diffuse_coef, float specular_coef, float reflection_coef)
-    : Shape(color, index_of_refraction, ambient_coef, diffuse_coef, specular_coef, reflection_coef),
-      center(center), radius(radius)
+Sphere::Sphere(Point center, float radius, Color color, 
+    float index_of_refraction, float ambient_coef, float diffuse_coef, 
+    float specular_coef, float reflection_coef, float transparency_coef)
+    : Shape(color, index_of_refraction, ambient_coef, diffuse_coef, 
+        specular_coef, reflection_coef, transparency_coef),
+    center(center), radius(radius)
 {
 }
 
@@ -92,10 +99,12 @@ Ray* Sphere::getIntersection(const Ray& ray) const {
     return new Ray(p,d);
 }
 
-Plane::Plane(Point center, Vector normal, Color color, float index_of_refraction,
-             float ambient_coef, float diffuse_coef, float specular_coef, float reflection_coef)
-    : Shape(color, index_of_refraction, ambient_coef, diffuse_coef, specular_coef, reflection_coef),
-      center(center), normal(normal) {
+Plane::Plane(Point center, Vector normal, Color color, 
+    float index_of_refraction, float ambient_coef, float diffuse_coef, 
+    float specular_coef, float reflection_coef, float transparency_coef)
+    : Shape(color, index_of_refraction, ambient_coef, diffuse_coef, 
+        specular_coef, reflection_coef, transparency_coef),
+    center(center), normal(normal) {
 }
 
 Ray* Plane::getIntersection(const Ray& ray) const {
