@@ -27,34 +27,36 @@ Scene::Scene(int width, int height) : shapes(vector<Shape*>()),
                  camera(Camera(Point(0,2,-5), width, height))
 {
     // floor
-    shapes.push_back(new Plane(Point(0, -3, 0), Vector(0, 1, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0));
+    shapes.push_back(new Plane(Point(0, -3, 0), Vector(0, 1, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0, 0));
 
     // back wall
-    shapes.push_back(new Plane(Point(0, 0, 7), Vector(0, 0, -1), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0));
+    shapes.push_back(new Plane(Point(0, 0, 7), Vector(0, 0, -1), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0, 0));
 
     // left side wall
-    shapes.push_back(new Plane(Point(-3, 0, 0), Vector(1, 0, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0));
+    shapes.push_back(new Plane(Point(-3, 0, 0), Vector(1, 0, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0, 0));
 
     // ceiling
-    shapes.push_back(new Plane(Point(0, 10, 0), Vector(0, -1, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0));
+    shapes.push_back(new Plane(Point(0, 10, 0), Vector(0, -1, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0, 0));
 
     // wall behind camera
-    shapes.push_back(new Plane(Point(0, 0, -10), Vector(0, 0, 1), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0));
+    shapes.push_back(new Plane(Point(0, 0, -10), Vector(0, 0, 1), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0, 0));
 
     // right wall
-    shapes.push_back(new Plane(Point(15, 0, 0), Vector(-1, 0, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0));
+    shapes.push_back(new Plane(Point(15, 0, 0), Vector(-1, 0, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0, 0));
 
     // red sphere
+    //shapes.push_back(new Sphere(Point(3, -1, 5), 2,
+                //Color(1, 0, 0), 1, .3, 0, 1, 1, 0));
     shapes.push_back(new Sphere(Point(3, -1, 5), 2,
-                Color(1, 0, 0), 1, .3, 0, 1, 1));
+                Color(1, 1, 1), 1, .3, 0, 0, 0, 1));
 
     // blue sphere
     shapes.push_back(new Sphere(Point(-1, 2, 5), 1,
-                Color(0, 0, 1), 1, 0.3, 0.5, 0.5, 0));
+                Color(0, 0, 1), 1, 0.3, 0.5, 0.5, 0, 0));
 
     //green sphere
         shapes.push_back(new Sphere(Point(-4, 0, 4), 2,
-                Color(0, 1, 0), 1, 0.3, 0.5, 0.5, 0));
+                Color(0, 1, 0), 1.5, 0.3, 0.5, 0.5, 0, 0));
 
     // light source 1 (blueish)
     lights.push_back(new PointLight(Color(.5, .5, 1), Point(0, 0, 2)));
@@ -96,7 +98,7 @@ Color Scene::raytrace(const Ray& camera_ray, int level) const {
             continue;
         float int_distance2 = Ray::makeRay(camera_ray.getOrigin(),
                 intersection->getOrigin()).getDir().magnitude2();
-        if (int_distance2 < 1e-6){
+        if (int_distance2 < 1e-2){
             // Too close! We must move forwards a little.
             continue;
         }
@@ -170,15 +172,54 @@ Color Scene::shade(const Shape *obj, Ray hit, const Ray& camera_ray, int level) 
                     result = result + spec;
                 }
             }
-        }        
+        }
     }
 
     if(obj->getReflectionCoefficient()>0 && level < MAX_LEVEL) {
         Ray reflection(hit.getOrigin(), camera_ray.getDir()-
                     hit.getDir()*2*camera_ray.getDir().dotProduct(hit.getDir()));
-        Color refl = raytrace(reflection, level) *
+        Color reflColor = raytrace(reflection, level+1) *
             obj->getReflectionCoefficient() * obj->getColor();
-        result = result + refl;
+        result = result + reflColor;
+    }
+    if(obj->getTransparencyCoefficient()>0 && level < MAX_LEVEL){
+        float rIndex = obj->getIndexOfRefraction();
+        float n = 1/rIndex;
+        Vector N = hit.getDir();
+        Vector negNorm(-hit.getDir().i,-hit.getDir().j,-hit.getDir().k);
+        float cosT = camera_ray.getDir().dotProduct(negNorm);
+        if(cosT<0)//exiting the object
+            N = N*-1;
+        float cosI = -(N.dotProduct(camera_ray.getDir()));
+        float cosT2 = 1-n*n*(1-cosI*cosI);
+        if(cosT2>0){
+            Vector T = (camera_ray.getDir() * n) + N * (n * cosI - sqrtf(cosT2));
+            Ray refraction(hit.getOrigin(), T);
+            Color rcol = raytrace(refraction, level+1);
+            result = result + rcol;
+            
+        
+        }
+    
+    
+    /*
+        
+        //float theta = acos(cosT);
+        //float sinT = sin(theta);
+        Vector nCam(camera_ray.getDir());
+        nCam.normalize();
+        Vector refr = negNorm-nCam;
+        if(cosT<0) //inside the object coming out
+            refr = -(refr*obj->getIndexOfRefraction());
+        else // outside the object coming in
+            refr = refr*(1-obj->getIndexOfRefraction());
+        refr = (negNorm)-refr;
+        Ray refraction(hit.getOrigin(), refr);
+        Color refrColor = raytrace(refraction, level+1) *
+            obj->getTransparencyCoefficient() * obj->getColor();
+        result = result + refrColor;
+        */
+        
     }
 
     result = result.clamp();

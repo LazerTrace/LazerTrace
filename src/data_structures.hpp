@@ -187,6 +187,14 @@ public:
      */
     bool operator==(const Point &p) const;
 
+    /**
+     * Overloaded subtraction operator.
+     * Performs component based subtraction.
+     *
+     * @param other The Point to subtract.
+     * @return A pointer to the result.
+     */
+    Vector operator-(const Point& other);
 
     /**
      * Overloaded comparison operator.
