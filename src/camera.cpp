@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "camera.hpp"
 
 
@@ -15,6 +17,18 @@ Camera::Camera(Point position, int width, int height):
     direction(Vector(0,0,1)),
     right(Vector((float)width/(float)height,0,0)),
     up(Vector(0,1,0)) {}
+
+Camera Camera::lookAt(Point position, Vector sky, Point look_at, float angle, int width, int height) {
+    float right_length = width / (float) height;
+    float direction_length = 0.5 * right_length / tan(angle / 2);
+
+    Vector direction(Ray::makeRay(position, look_at).getDir()
+        .normalized() * direction_length);
+    Vector right(sky.crossProduct(direction).normalized() * right_length);
+    Vector up(direction.crossProduct(right).normalized());
+
+    return Camera(position, direction, right, up);
+}
 
 Ray Camera::get_ray(float x, float y) const {
     Vector value = direction;

@@ -24,7 +24,9 @@ using std::auto_ptr;
 Scene::Scene(int width, int height) : shapes(vector<Shape*>()),
                  lights(vector<LightSource*>()),
                  ambient(Color(0.25, 0.25, 0.25)),
-                 camera(Camera(Point(0,2,-5), width, height))
+                 camera(Camera::lookAt(Point(0,2,-5), Vector(0, 1, 0),
+                             Point(0, 0, 0), degrees(60),
+                             width, height))
 {
     // floor
     shapes.push_back(new Plane(Point(0, -3, 0), Vector(0, 1, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0, 0));
