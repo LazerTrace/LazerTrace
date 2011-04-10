@@ -22,21 +22,26 @@ public:
      * Default constructor for objects of class Scene().
      * Creates a default scene layout for testing purposes,
      * with a minimal number of objects and lights.
+     * Auto-generates aspect ratio from width and height.
      */
-    Scene();
+    Scene(int width, int height);
 
     /**
      * Constructor for objects of class Scene().
      * Loads a scene from a file using JSON and OpenCTM file formats.
+     * Scenes are currently stored in the directory ../scene
+     *
+     * @param sceneName The name of the scene you wish to load.
+     * Auto-generates aspect ratio from width and height.
      */
-    Scene(std::string fileName);
+    Scene(std::string sceneName, int width, int height);
 
     /**
      * The entry point for the raytracer, and also recursively called
      * by shade.
      * @return The raytraced color
      */
-    Color raytrace(const Ray& camera_ray) const;
+    Color raytrace(const Ray& camera_ray, int level) const;
 
     /**
      * Given an object and the ray representing the intersection point,
@@ -46,7 +51,7 @@ public:
      * @param hit The ray representing the normal vector and point of intersection.
      * @return The color at the given point.
      */
-    Color shade(const Shape *obj, Ray hit) const;
+    Color shade(const Shape *obj, Ray hit, const Ray &camera_ray, int level) const;
 
     ~Scene();
 

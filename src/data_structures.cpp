@@ -21,6 +21,23 @@ Color Color::operator+(const Color& c){
     return Color(red + c.red, green + c.green, blue + c.blue);
 }
 
+Color Color::clamp() const {
+    Color result(*this);
+    if(red>1)
+        result.red=1;
+    if(green>1)
+        result.green=1;
+    if(blue>1)
+        result.blue=1;
+    if(red<0)
+        result.red=0;
+    if(green<0)
+        result.green=0;
+    if(blue<0)
+        result.blue=0;
+    return result;
+}
+
 Color::~Color(){
 }
 
@@ -87,13 +104,28 @@ float Vector::dotProduct(Vector v) const {
     return (i * v.i) + (j * v.j) + (k * v.k);
 }
 
+Vector Vector::crossProduct(Vector v) const {
+    return Vector(j*v.k - k*v.j,
+                  k*v.i - i*v.k,
+                  i*v.j - j*v.i);
+}
+
 Point::Point(float x, float y, float z): x(x), y(y), z(z) {
 }
 
-//this operator overload doesn't really work yet.
-//it was designed for an operation in plane intersection
-Vector Point::operator-(const Point& p){
-    return Vector(x-p.x, y-p.y, z-p.z);
+bool Point::operator==(const Point &p) const {
+    if(x != p.x)    return false;
+    if(y != p.y)    return false;
+    if(z != p.z)    return false;
+    return true;
+}
+
+bool Point::operator!=(const Point &p) const {
+    return !(*this == p);
+}
+
+Vector Point::operator-(const Point& rhs) {
+    return Vector(x-rhs.x, y-rhs.y, z-rhs.z);
 }
 
 Ray::Ray(Point origin, Vector dir): origin(origin), dir(dir) {
@@ -119,4 +151,8 @@ void Ray::normalize() {
 Ray Ray::makeRay(Point origin, Point dest) {
     Vector dir = Vector(dest.x - origin.x, dest.y - origin.y, dest.z - origin.z);
     return Ray(origin, dir);
+}
+
+float degrees(float degrees) {
+    return degrees * M_PI / 180;
 }

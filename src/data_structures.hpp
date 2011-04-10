@@ -46,6 +46,12 @@ class Color{
      * @return The sum of the colors
      */
     Color operator+ (const Color&);
+
+    /**
+     * Limit color values to the range [0, 1]
+     * @return This color with channels constrained
+     */
+    Color clamp() const;
 };
 
 /**
@@ -58,7 +64,7 @@ class Color{
  */
 Color operator*(float, Color);
 
-const float EPSILON = 1e-6;
+const float EPSILON = 1e-4;
 
 /**
  * Represents a 3-dimensional vector.
@@ -104,7 +110,7 @@ public:
      * Overloaded addition operator.
      * Performs component based addition.
      *
-     * @param rhs The vector to add.
+     * @param other The vector to add.
      * @return A pointer to the result.
      */
     Vector operator+(const Vector& other);
@@ -113,7 +119,7 @@ public:
      * Overloaded subtraction operator.
      * Performs component based subtraction.
      *
-     * @param rhs The vector to subtract.
+     * @param other The vector to subtract.
      * @return A pointer to the result.
      */
     Vector operator-(const Vector& other);
@@ -155,6 +161,11 @@ public:
      * @return the dot product of this vector with v.
      */
     float dotProduct(Vector v) const;
+
+    /**
+     * Vector cross product
+     */
+    Vector crossProduct(Vector) const;
 };
 
 /**
@@ -171,10 +182,39 @@ public:
      * @param z The z-coordinate
      */
     Point(float x, float y, float z);
-    
+
+    /**
+     * Overloaded comparison operator.
+     * Does coordinate based comparison.
+     *
+     * @param p The point to compare with.
+     * @return True if the points are equivalent, false otherwise.
+     */
+    bool operator==(const Point &p) const;
+
+    /**
+     * Overloaded subtraction operator.
+     * Performs component based subtraction.
+     *
+     * @param other The Point to subtract.
+     * @return A pointer to the result.
+     */
+    Vector operator-(const Point& other);
+
+    /**
+     * Overloaded comparison operator.
+     * Does coordinate based comparison.
+     *
+     * @param p The point to compare with.
+     * @return False if the points are equivalent, true otherwise.
+     */
+    bool operator!=(const Point &p) const;
+
+    /*
     //this operator overload doesn't really work yet.
     //it was designed for an operation in plane intersection
     Vector operator-(const Point& p);
+    */
 };
 
 /**
@@ -227,5 +267,7 @@ public:
      */
     static Ray makeRay(Point origin, Point dest);
 };
+
+float degrees(float);
 
 #endif

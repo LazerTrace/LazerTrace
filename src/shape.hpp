@@ -11,10 +11,12 @@
  */
 class Shape {
 protected:
-    float index_of_refraction, ambient_coef, diffuse_coef, specular_coef;
+    float index_of_refraction, ambient_coef, diffuse_coef, specular_coef, reflection_coef, transparency_coef;
     Color color; // Will need to be replaced with advanced method
     BoundingShape *boundary;
-    Shape(Color color, float index_of_refraction, float ambient_coef, float diffuse_coef, float specular_coef);
+    Shape(Color color, float index_of_refraction, float ambient_coef, 
+            float diffuse_coef, float specular_coef, float reflection_coef,
+            float transparency_coef);
 public:
     /**
      * @return Returns the index of refraction.
@@ -35,7 +37,17 @@ public:
      * @return Returns the coefficient for specular light effects.
      */
     float getSpecularCoefficient() const;
-
+    
+    /**
+     * @return Returns the coefficient for reflection effects.
+     */
+    float getReflectionCoefficient() const;
+    
+    /**
+     * @return Returns the coefficient for transparency effects.
+     */
+    float getTransparencyCoefficient() const;
+    
     /**
      * @return Returns the color of the shape.
      */
@@ -75,7 +87,8 @@ public:
      * or NULL if no intersection. Remember to delete the Ray when done!
      */
     Sphere(Point center, float radius, Color color, float index_of_refraction,
-           float ambient_coef, float diffuse_coef, float specular_coef);
+           float ambient_coef, float diffuse_coef, float specular_coef,
+           float reflection_coef, float transparency_coef);
 
     virtual Ray* getIntersection(const Ray& ray) const;
 };
@@ -104,10 +117,8 @@ public:
      * or NULL if no intersection. Remember to delete the Ray when done!
      */
     Plane(Point center, Vector normal, Color color, float index_of_refraction,
-          float ambient_coef, float diffuse_coef, float specular_coef);
-    /*Plane(float distance, Vector normal, Color color, float index_of_refraction,
-          float ambient_coef, float diffuse_coef, float specular_coef);
-*/
+          float ambient_coef, float diffuse_coef, float specular_coef,
+          float reflection_coef, float transparency_coef);
     virtual Ray* getIntersection(const Ray& ray) const;
 };
 
