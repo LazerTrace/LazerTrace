@@ -1,12 +1,9 @@
 #include <png.hpp>
-#include <string.h>
-#include <math.h>
+#include <cmath>
+#include <sstream>
 
 #include "scene.hpp"
 #include "light.hpp"
-
-#define PI 3.14159265
-
 
 int main(void) {
     Scene the_scene;
@@ -30,10 +27,10 @@ int main(void) {
                                              color.blue * 255);
             }
         }
-        
-        char buffer [50];
-        sprintf(buffer, "output%d.png", i);
-        image.write(buffer);
+
+        ostringstream filename;
+        filename << "output" << i << ".png";
+        image.write(filename.str().c_str());
         the_scene.move_camera_offset(1, 0, 1, .1, 0, .1);
     }
     return 0;
