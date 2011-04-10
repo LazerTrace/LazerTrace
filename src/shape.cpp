@@ -75,7 +75,7 @@ Ray* Sphere::getIntersection(const Ray& ray) const {
     if(discriminant<0)
         return NULL;
     float t = (-b - sqrt(discriminant)) / (2*a);
-    if(t<=0)
+    if(t<=EPSILON)
         t = (-b + sqrt(discriminant)) / (2*a);
     /*
         the if statement below should really be if(t<=0).
@@ -84,9 +84,9 @@ Ray* Sphere::getIntersection(const Ray& ray) const {
         these case should always return null, but unfortunately, rounding errors
         sometimes cause a number that should be 0 to be slightly > 0.
         this method should probably be rewritten to avoid this case.
-        for now, i just moved the threshold to .01
+        for now, i just moved the threshold to EPSILON
     */
-    if(t<=0)
+    if(t<=EPSILON)
         return NULL;
 
     Point p

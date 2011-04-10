@@ -6,8 +6,8 @@
 
 int main(void) {
 
-    const int WIDTH = 800;
-    const int HEIGHT = 600;
+    const int WIDTH = 1600;
+    const int HEIGHT = 1200;
 
     Scene the_scene(WIDTH, HEIGHT);
 

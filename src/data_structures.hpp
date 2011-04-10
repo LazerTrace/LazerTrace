@@ -64,7 +64,7 @@ class Color{
  */
 Color operator*(float, Color);
 
-const float EPSILON = 1e-6;
+const float EPSILON = 1e-4;
 
 /**
  * Represents a 3-dimensional vector.
