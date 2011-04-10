@@ -8,7 +8,6 @@
 #include "light.hpp"
 
 
-
 const int WIDTH = 1440;
 const int HEIGHT = 900;
 

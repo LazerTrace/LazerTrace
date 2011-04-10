@@ -118,6 +118,10 @@ bool Point::operator!=(const Point &p) const {
     return !(*this == p);
 }
 
+Vector Point::operator-(const Point& rhs) {
+    return Vector(x-rhs.x, y-rhs.y, z-rhs.z);
+}
+
 Ray::Ray(Point origin, Vector dir): origin(origin), dir(dir) {
 }
 
