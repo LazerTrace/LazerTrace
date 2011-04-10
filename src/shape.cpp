@@ -119,7 +119,7 @@ Ray* Plane::getIntersection(const Ray& ray) const {
                     normal.j*(center.y-ray.origin.y)+
                     normal.k*(center.z-ray.origin.z))/
                     (normal.i*ray.dir.i+normal.j*ray.dir.j+normal.k*ray.dir.k);
-        if (t <= 0)
+        if (t <= EPSILON)
             return NULL;
         else {
             Point p = Point(ray.origin.x+ray.dir.i*t, ray.origin.y+ray.dir.j*t, ray.origin.z+ray.dir.k*t);

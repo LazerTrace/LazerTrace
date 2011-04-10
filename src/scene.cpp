@@ -124,7 +124,7 @@ Color Scene::shade(const Shape *obj, Ray hit, const Ray& camera_ray, int level) 
     for(vector<LightSource*>::const_iterator it = lights.begin(); it != lights.end(); it++) {
         LightSource *light = *it;
         Ray shadow = Ray::makeRay(hit.getOrigin(), light->getPoint());
-        bool collision = false;
+        float lightAmount = 1;
         // Detect collisions, for now do nothing if there is a collision
         for(vector<Shape*>::const_iterator sh = shapes.begin(); sh != shapes.end(); sh++) {
             Shape *shape = *sh;
@@ -137,24 +137,31 @@ Color Scene::shade(const Shape *obj, Ray hit, const Ray& camera_ray, int level) 
                     if(fabs(toHit.i) < fabs(shadow.getDir().i) && 
                         fabs(toHit.j) < fabs(shadow.getDir().j) && 
                         fabs(toHit.k) < fabs(shadow.getDir().k)){
-                        collision = true;
-                        break;
+                        if(shape->getTransparencyCoefficient()==0){
+                            //if object is opaque then full shadow
+                            lightAmount=0;
+                            break;
+                        }
+                        //if object is transparent, add a percent of the shadow
+                        lightAmount *= shape->getTransparencyCoefficient();
                     }
                 }
             }
         }       
-        if(!collision) {
-        //if(true){
+        if(lightAmount>0) {
+            
             // Normalize the direction vectors before calculations
             shadow.normalize();
             hit.normalize();
+            //shade the lightColor appropriately
+            Color lightColor = light->getColor() * lightAmount;
 
             //diffuse lighting
             if(obj->getDiffuseCoefficient()>0) {
                 float cos_theta = (shadow.getDir()).dotProduct(hit.getDir());
                 if(cos_theta > 0){
                     Color diffuse = cos_theta * obj->getDiffuseCoefficient()
-                        * light->getColor() * obj->getColor();
+                        * lightColor * obj->getColor();
                     result = result + diffuse;
                 }
             }
@@ -168,13 +175,15 @@ Color Scene::shade(const Shape *obj, Ray hit, const Ray& camera_ray, int level) 
                 if(cos_theta > 0) {
                     Color spec = powf( cos_theta, 20 ) * 
                         obj->getSpecularCoefficient() *
-                        light->getColor();
+                        lightColor;
                     result = result + spec;
                 }
             }
+            
         }
     }
 
+    //reflection
     if(obj->getReflectionCoefficient()>0 && level < MAX_LEVEL){
         Ray reflection(hit.getOrigin(), camera_ray.getDir()-
                     hit.getDir()*2*camera_ray.getDir().dotProduct(hit.getDir()));
@@ -183,8 +192,8 @@ Color Scene::shade(const Shape *obj, Ray hit, const Ray& camera_ray, int level) 
         result = result + reflColor;
     }
     
-    //if(obj->getTransparencyCoefficient()>0 && level < MAX_LEVEL){
-    if(obj->getTransparencyCoefficient()>0){
+    //refraction
+    if(obj->getTransparencyCoefficient()>0 && level < MAX_LEVEL){
         float rIndex = obj->getIndexOfRefraction();
         float n = 1/rIndex;
         Vector N = hit.getDir();
@@ -206,7 +215,6 @@ Color Scene::shade(const Shape *obj, Ray hit, const Ray& camera_ray, int level) 
         }
         
     }
-
     result = result.clamp();
     return result;
 }
