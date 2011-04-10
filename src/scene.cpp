@@ -27,34 +27,41 @@ Scene::Scene(int width, int height) : shapes(vector<Shape*>()),
                  camera(Camera(Point(0,2,-5), width, height))
 {
     // floor
-    shapes.push_back(new Plane(Point(0, -3, 0), Vector(0, 1, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0));
+    shapes.push_back(new Plane(Point(0, -3, 0), Vector(0, 1, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0, 0));
 
     // back wall
-    shapes.push_back(new Plane(Point(0, 0, 7), Vector(0, 0, -1), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0));
+    shapes.push_back(new Plane(Point(0, 0, 7), Vector(0, 0, -1), Color(1, 1, 0), 1, 0.5, 0.5, 0.5, 0, 0));
 
     // left side wall
-    shapes.push_back(new Plane(Point(-3, 0, 0), Vector(1, 0, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0));
+    shapes.push_back(new Plane(Point(-3, 0, 0), Vector(1, 0, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0, 0));
 
     // ceiling
-    shapes.push_back(new Plane(Point(0, 10, 0), Vector(0, -1, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0));
+    shapes.push_back(new Plane(Point(0, 10, 0), Vector(0, -1, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0, 0));
 
     // wall behind camera
-    shapes.push_back(new Plane(Point(0, 0, -10), Vector(0, 0, 1), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0));
+    shapes.push_back(new Plane(Point(0, 0, -10), Vector(0, 0, 1), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0, 0));
 
     // right wall
-    shapes.push_back(new Plane(Point(15, 0, 0), Vector(-1, 0, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0));
+    shapes.push_back(new Plane(Point(15, 0, 0), Vector(-1, 0, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0, 0));
+    
+    //teal sphere (transparent)
+    shapes.push_back(new Sphere(Point(4, .5, 2), 2,
+                Color(0, 1, 1), 1.1, .3, .5, 0, 0, .9));
+                
+    //red sphere in the middle
+    shapes.push_back(new Sphere(Point(4, .5, 2), .75,
+                Color(1, 0, 0), 1, .3, .5, .5, 0, 0));
 
-    // red sphere
+    // red sphere (shiny)
     shapes.push_back(new Sphere(Point(3, -1, 5), 2,
-                Color(1, 0, 0), 1, .3, 0, 1, 1));
-
+                Color(1, 0, 0), 1, .3, 0, 1, 1, 0));
     // blue sphere
     shapes.push_back(new Sphere(Point(-1, 2, 5), 1,
-                Color(0, 0, 1), 1, 0.3, 0.5, 0.5, 0));
+                Color(0, 0, 1), 1, 0.3, 0.5, 0.5, 0, 0));
 
     //green sphere
         shapes.push_back(new Sphere(Point(-4, 0, 4), 2,
-                Color(0, 1, 0), 1, 0.3, 0.5, 0.5, 0));
+                Color(0, 1, 0), 1, 0.3, 0.5, 0.5, 0, 0));
 
     // light source 1 (blueish)
     lights.push_back(new PointLight(Color(.5, .5, 1), Point(0, 0, 2)));
@@ -96,10 +103,6 @@ Color Scene::raytrace(const Ray& camera_ray, int level) const {
             continue;
         float int_distance2 = Ray::makeRay(camera_ray.getOrigin(),
                 intersection->getOrigin()).getDir().magnitude2();
-        if (int_distance2 < 1e-6){
-            // Too close! We must move forwards a little.
-            continue;
-        }
         if (int_distance2 < nearest_distance2) {
             // Found a closer hit
             nearest_shape = shape;
@@ -121,7 +124,7 @@ Color Scene::shade(const Shape *obj, Ray hit, const Ray& camera_ray, int level) 
     for(vector<LightSource*>::const_iterator it = lights.begin(); it != lights.end(); it++) {
         LightSource *light = *it;
         Ray shadow = Ray::makeRay(hit.getOrigin(), light->getPoint());
-        bool collision = false;
+        float lightAmount = 1;
         // Detect collisions, for now do nothing if there is a collision
         for(vector<Shape*>::const_iterator sh = shapes.begin(); sh != shapes.end(); sh++) {
             Shape *shape = *sh;
@@ -131,28 +134,34 @@ Color Scene::shade(const Shape *obj, Ray hit, const Ray& camera_ray, int level) 
                     Vector toHit(hit->getOrigin().x-shadow.getOrigin().x, 
                         hit->getOrigin().y-shadow.getOrigin().y,
                         hit->getOrigin().z-shadow.getOrigin().z);
-                    if(fabs(toHit.i) <= fabs(shadow.getDir().i) && 
-                        fabs(toHit.j) <= fabs(shadow.getDir().j) && 
-                        fabs(toHit.k) <= fabs(shadow.getDir().k)){
-                        collision = true;
-                        break;
+                    if(fabs(toHit.i) < fabs(shadow.getDir().i) && 
+                        fabs(toHit.j) < fabs(shadow.getDir().j) && 
+                        fabs(toHit.k) < fabs(shadow.getDir().k)){
+                        if(shape->getTransparencyCoefficient()==0){
+                            //if object is opaque then full shadow
+                            lightAmount=0;
+                            break;
+                        }
+                        //if object is transparent, add a percent of the shadow
+                        lightAmount *= shape->getTransparencyCoefficient();
                     }
                 }
             }
-        }
-
-        // Calculate local illumination
-        if(!collision) {
+        }       
+        if(lightAmount>0) {
+            
             // Normalize the direction vectors before calculations
             shadow.normalize();
             hit.normalize();
+            //shade the lightColor appropriately
+            Color lightColor = light->getColor() * lightAmount;
 
             //diffuse lighting
             if(obj->getDiffuseCoefficient()>0) {
                 float cos_theta = (shadow.getDir()).dotProduct(hit.getDir());
                 if(cos_theta > 0){
                     Color diffuse = cos_theta * obj->getDiffuseCoefficient()
-                        * light->getColor() * obj->getColor();
+                        * lightColor * obj->getColor();
                     result = result + diffuse;
                 }
             }
@@ -166,21 +175,46 @@ Color Scene::shade(const Shape *obj, Ray hit, const Ray& camera_ray, int level) 
                 if(cos_theta > 0) {
                     Color spec = powf( cos_theta, 20 ) * 
                         obj->getSpecularCoefficient() *
-                        light->getColor();
+                        lightColor;
                     result = result + spec;
                 }
             }
-        }        
+            
+        }
     }
 
-    if(obj->getReflectionCoefficient()>0 && level < MAX_LEVEL) {
+    //reflection
+    if(obj->getReflectionCoefficient()>0 && level < MAX_LEVEL){
         Ray reflection(hit.getOrigin(), camera_ray.getDir()-
                     hit.getDir()*2*camera_ray.getDir().dotProduct(hit.getDir()));
-        Color refl = raytrace(reflection, level) *
+        Color reflColor = raytrace(reflection, level+1) *
             obj->getReflectionCoefficient() * obj->getColor();
-        result = result + refl;
+        result = result + reflColor;
     }
-
+    
+    //refraction
+    if(obj->getTransparencyCoefficient()>0 && level < MAX_LEVEL){
+        float rIndex = obj->getIndexOfRefraction();
+        float n = 1/rIndex;
+        Vector N = hit.getDir();
+        Vector negNorm(-hit.getDir().i,-hit.getDir().j,-hit.getDir().k);
+        float cosT = camera_ray.getDir().dotProduct(negNorm);
+        
+        if(cosT<0){//hitting the edge from inside of the object
+            N = N*-1;
+        }
+        float cosI = -(N.dotProduct(camera_ray.getDir()));
+        float cosT2 = 1-n*n*(1-cosI*cosI);
+        if(cosT2>0){
+            Vector T = (camera_ray.getDir() * n) + N * (n * cosI - sqrtf(cosT2));
+            Ray refraction(hit.getOrigin(), T);
+            Color rcol = raytrace(refraction, level+1) *
+                obj->getTransparencyCoefficient();
+            result = result + rcol;
+            
+        }
+        
+    }
     result = result.clamp();
     return result;
 }
