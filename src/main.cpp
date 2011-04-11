@@ -11,7 +11,7 @@
 const int WIDTH = 1440;
 const int HEIGHT = 900;
 
-const int NUM_WORKERS = 1;
+const int NUM_WORKERS = 2;
 
 Scene the_scene(WIDTH, HEIGHT);
 png::image<png::rgb_pixel> image(WIDTH, HEIGHT);
@@ -61,9 +61,6 @@ int main(void) {
     //Creating a set of attributes to send to the threads
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
-
-    int wdivisor = NUM_WORKERS == 0 ? 0 : WIDTH / NUM_WORKERS;
-    int hdivisor = NUM_WORKERS == 0 ? 0 : HEIGHT / NUM_WORKERS;
 
     for (int i = 0; i < NUM_WORKERS; i++) {
         box_allocator[i].x1 = 0;
