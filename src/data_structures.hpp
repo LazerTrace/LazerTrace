@@ -161,6 +161,11 @@ public:
      * @return the dot product of this vector with v.
      */
     float dotProduct(Vector v) const;
+
+    /**
+     * Vector cross product
+     */
+    Vector crossProduct(Vector) const;
 };
 
 /**
@@ -262,5 +267,7 @@ public:
      */
     static Ray makeRay(Point origin, Point dest);
 };
+
+float degrees(float);
 
 #endif
