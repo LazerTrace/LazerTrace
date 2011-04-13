@@ -10,11 +10,15 @@ ifndef BOOST
 BOOST := vendor/boost/
 endif
 
+ifndef YAML
+YAML := vendor/yaml/include/yaml-cpp
+endif
+
 ifndef LIBPNG_CONFIG
 LIBPNG_CONFIG = libpng-config
 endif
 
-make_cflags = -Wall -Wextra -pedantic -O $(CFLAGS) -I$(PNGPP) -I$(OPENCTM) -I$(BOOST) -Ivendor/tut `$(LIBPNG_CONFIG) --cflags`
+make_cflags = -Wall -Wextra -pedantic -O $(CFLAGS) -I$(PNGPP) -I$(OPENCTM) -I$(BOOST) -I$(YAML) -Ivendor/tut `$(LIBPNG_CONFIG) --cflags`
 make_ldflags = $(LDFLAGS)
 
 ifndef NDEBUG
