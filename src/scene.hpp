@@ -8,6 +8,10 @@
 #include "light.hpp"
 #include "camera.hpp"
 
+/**
+ * This class serves two purposes: Maintaining the set of shapes and
+ * light sources, and running the raytracing and shading algorithms.
+ */
 class Scene {
 
 protected:
@@ -19,22 +23,11 @@ protected:
 
 public:
     /**
-     * Default constructor for objects of class Scene().
-     * Creates a default scene layout for testing purposes,
-     * with a minimal number of objects and lights.
+     * Default constructor:  Creates a default scene layout for
+     * testing purposes, with a minimal number of objects and lights.
      * Auto-generates aspect ratio from width and height.
      */
     Scene(int width, int height);
-
-    /**
-     * Constructor for objects of class Scene().
-     * Loads a scene from a file using JSON and OpenCTM file formats.
-     * Scenes are currently stored in the directory ../scene
-     *
-     * @param sceneName The name of the scene you wish to load.
-     * Auto-generates aspect ratio from width and height.
-     */
-    Scene(std::string sceneName, int width, int height);
 
     /**
      * The entry point for the raytracer, and also recursively called
@@ -56,7 +49,10 @@ public:
     ~Scene();
 
     /**
-     * Asks the camera for a ray
+     * Asks the camera for a ray.
+     *
+     * \param x Increases from -1 to 1 across the image
+     * \param y Increases from -1 to 1 down the image
      * @return The camera's ray
      */
     Ray get_camera_ray(float x, float y) const;
