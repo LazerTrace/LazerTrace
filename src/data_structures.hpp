@@ -2,12 +2,11 @@
 #define _DATA_STRUCTURES_HPP
 
 /**
- * Includes any data structures required for ray-tracing.
- * Currently supports points, rays, and vectors
- */
-
-/**
- * Represents a color in RGBA format
+ * Represents a color as a triple (R,G,B) of floats from 0 to 1
+ * representing the full range of intensity. Values above 1 are
+ * considered to be at full intensity for output purposes, and values
+ * below 0 are considered to be at no intensity (implemented by
+ * clamp()).
  */
 class Color{
     public:
@@ -23,44 +22,46 @@ class Color{
     Color(float r, float g, float b);
     ~Color();
     /**
-     * Overloaded multiplcation-assignment operator.
-     * color * scalar
+     * Multiplication of a color by a scalar.
+     * Each component of the color is multiplied by the scalar
      *
      * @param scalar The scalar to multiply with the color.
-     * @return A pointer to the lhs of the equation.
+     * @return A new color (R*scalar, G*scalar, B*scalar)
      */
     Color operator* (float);
 
     /**
-     * Overloaded multiplcation-assignment operator.
+     * Multiplication of a color by a color.  Each component of this
+     * color is multiplied by the corresponding component of the
+     * parameter.
      *
      * @param c The color to multiply with the original color.
-     * @return The componentwise product of the colors
+     * @return A new color (R1*R2, G1*G2, B1*B2).
      */
     Color operator* (const Color&);
 
     /**
-     * Overloaded addition operator.
+     * Addition of a color to a color.  Each component of this
+     * color is added to the corresponding component of the
+     * parameter.
      *
      * @param c The color to add with the original color.
-     * @return The sum of the colors
+     * @return A new color (R1+R2, G1+G2, B1+B2).
      */
     Color operator+ (const Color&);
 
     /**
-     * Limit color values to the range [0, 1]
-     * @return This color with channels constrained
+     * Limit color values to the range [0, 1].
+     * @return A copy of this color with channels constrained.
      */
     Color clamp() const;
 };
 
 /**
- * Overloaded multiplcation-assignment operator.
- * scalar * color
+ * \relates Color
+ * Multiplication of a scalar by a color, with arguments reversed.
  *
- * @param scalar The scalar to multiply.
- * @param c The color to multiply
- * @return A pointer to the lhs of the equation.
+ * @return Delegates to Color::operator*(Color,float)
  */
 Color operator*(float, Color);
 
