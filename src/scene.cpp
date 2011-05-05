@@ -73,20 +73,9 @@ Scene::Scene(int width, int height) : shapes(vector<Shape*>()),
 
 }
 
-Scene::Scene(std::string fileName, int width, int height): shapes(vector<Shape*>()),
-                                    lights(vector<LightSource*>()),
-                                    ambient(Color(0.25, 0.25, 0.25)),
-                                    camera(Camera(width, height)) {
-
-    std::ifstream input_scene (fileName.c_str());
-
-    // Read the file and add specified shapes.
-    // We need to figure out what our syntax/grammar is first though.
-}
-
 Color Scene::raytrace(const Ray& camera_ray, int level) const {
     if(level>MAX_LEVEL) {
-       /**
+       /*
         * I'm not really sure if this is the correct return for this case
         * but in theory, this shouldn't trigger anyway.
         * We should always check the current level before attempting

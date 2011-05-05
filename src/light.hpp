@@ -4,9 +4,7 @@
 #include "data_structures.hpp"
 
 /**
- * Main light source class
- * Not to actually be implemented
- * Instead used derived classes below
+ * Abstract base class for light sources.
  */
 
 class LightSource {
