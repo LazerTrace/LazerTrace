@@ -153,7 +153,7 @@ Scene::Scene(std::string fileName, int width, int height): shapes(vector<Shape*>
 
 Color Scene::raytrace(const Ray& camera_ray, int level) const {
     if(level>MAX_LEVEL) {
-       /**
+       /*
         * I'm not really sure if this is the correct return for this case
         * but in theory, this shouldn't trigger anyway.
         * We should always check the current level before attempting

@@ -51,7 +51,7 @@ clean: clean-deps
 
 .SUFFIXES:
 
-.PHONY: all clean clean-deps targets deps check
+.PHONY: all clean clean-deps targets deps check doc
 
 check: bin/test
 	bin/test
@@ -72,5 +72,9 @@ bin/test: $(shared_objects) $(test_objects)
 
 clean-deps:
 	rm -f $(deps)
+
+doc:
+	doxygen
+	cd doc/latex && make
 
 -include $(deps)
