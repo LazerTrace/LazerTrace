@@ -54,9 +54,9 @@ Scene::Scene(int width, int height) : shapes(vector<Shape*>()),
     shapes.push_back(new Sphere(Point(4, .5, 2), .75,
                 Color(1, 0, 0), 1, .3, .5, .5, 0, 0));
 
-    // red sphere (shiny)
+    // sphere (shiny)
     shapes.push_back(new Sphere(Point(3, -1, 5), 2,
-                Color(1, 0, 0), 1, .3, 0, 1, 1, 0));
+                Color(1, 1, 1), 1, .3, 0, 1, 1, 0));
     // blue sphere
     shapes.push_back(new Sphere(Point(-1, 2, 5), 1,
                 Color(0, 0, 1), 1, 0.3, 0.5, 0.5, 0, 0));
@@ -67,10 +67,17 @@ Scene::Scene(int width, int height) : shapes(vector<Shape*>()),
 
     // light source 1 (blueish)
     lights.push_back(new PointLight(Color(.5, .5, 1), Point(0, 0, 2)));
+    
+    //ball around light 1
+    shapes.push_back(new Sphere(Point(0, 0, 2), .1,
+                Color(1, 1, 1), 1, 0, 0, 1, 0, 1));
 
     // light source 2 (redish)
-    lights.push_back(new PointLight(Color(1, .5, .5), Point(0, 5, 0)));
+    lights.push_back(new PointLight(Color(1, .5, .5), Point(0, 5, 1)));
 
+    //ball around light 2
+    shapes.push_back(new Sphere(Point(0, 0, 2), .1,
+                Color(1, 1, 1), 1, 0, 0, 1, 0, 1));
 }
 
 Scene::Scene(std::string fileName, int width, int height): shapes(vector<Shape*>()),
