@@ -15,10 +15,27 @@
 class Scene {
 
 protected:
-    // Storage for shapes in scene
+
+    /**
+     * Storage for the shapes in the scene
+     */
     std::vector<Shape*> shapes;
+
+    /**
+     * Storage for the light sources in the scene
+     */
     std::vector<LightSource*> lights;
+
+    /**
+     * Multiplier for the ambient light in the scene.
+     * Ambient shading is computed by multipling this value by an
+     * object's ambient value.
+     */
     Color ambient;
+
+    /**
+     * The Camera for the scene.
+     */
     Camera camera;
 
 public:
@@ -32,7 +49,9 @@ public:
     /**
      * The entry point for the raytracer, and also recursively called
      * by shade.
-     * @return The raytraced color
+     * @param camera_ray The ray to be traced.
+     * @param level Recursion levels remaining.
+     * @return The raytraced color.
      */
     Color raytrace(const Ray& camera_ray, int level) const;
 
@@ -42,6 +61,8 @@ public:
      *
      * @param obj The object which a ray intersected.
      * @param hit The ray representing the normal vector and point of intersection.
+     * @param camera_ray The camera ray which produced the hit.
+     * @param level Recursion levels remaining.
      * @return The color at the given point.
      */
     Color shade(const Shape *obj, Ray hit, const Ray &camera_ray, int level) const;
