@@ -1,7 +1,4 @@
-jsoncpp/bin
-jsoncpp/buildscons
-jsoncpp/dist
-jsoncpp/libs
+boost/
 openctm/tools
 openctm/lib/libopenctm.a
 openctm/lib/openctm.dll

@@ -20,7 +20,6 @@ public:
      * aspect ratio and such.
      */
     Camera(int width, int height);
-    
 
     /**
      * Constructs a camera from the given vectors.
@@ -32,13 +31,16 @@ public:
      */
     Camera(Point position);
 
-
     /**
      * Constructs a camera from the given point. Auto-generates the
      * aspect ration from the width and height
      */
     Camera(Point position, int width, int height);
 
+    /**
+     * Computes a camera based on the given parameters.
+     */
+    static Camera lookAt(Point position, Vector sky, Point look_at, float angle, int width, int height);
 
     /**
      * Computes a camera ray.
