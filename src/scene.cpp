@@ -23,31 +23,28 @@ using std::auto_ptr;
  */
 Scene::Scene(int width, int height) : shapes(vector<Shape*>()),
                  lights(vector<LightSource*>()),
-                 ambient(Color(0.25, 0.25, 0.25)),
-                 camera(Camera::lookAt(Point(0,2,-5), Vector(0.1, 1, 0),
-                             Point(0, 1, 0), degrees(60),
-                             width, height))
+                 ambient(Color(0.25, 0.25, 0.25)),camera(Camera(Point(0,1.5,-5.5), width, height))
 {
     // floor
-    shapes.push_back(new Plane(Point(0, -3, 0), Vector(0, 1, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0, 0));
+    shapes.push_back(new Plane(Point(0, -3, 0), Vector(0, 1, 0), Color(1, 1, 1), 1, 1.2, 0.3, 0.5, 0, 0));
 
     // back wall
-    shapes.push_back(new Plane(Point(0, 0, 7), Vector(0, 0, -1), Color(1, 1, 0), 1, 0.5, 0.5, 0.5, 0, 0));
+    shapes.push_back(new Plane(Point(0, 0, 7), Vector(0, 0, -1), Color(1, 1, 1), 1, 1.2, 0.3, 0.5, 0, 0));
 
     // left side wall
-    shapes.push_back(new Plane(Point(-3, 0, 0), Vector(1, 0, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0, 0));
+    shapes.push_back(new Plane(Point(-3, 0, 0), Vector(1, 0, 0), Color(1, 1, 1), 1, 1.2, 0.3, 0.5, 0, 0));
 
     // ceiling
-    shapes.push_back(new Plane(Point(0, 10, 0), Vector(0, -1, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0, 0));
+    shapes.push_back(new Plane(Point(0, 5.5, 0), Vector(0, -1, 0), Color(1, 1, 1), 1, 1.2, 0.3, 0.5, 0, 0));
 
     // wall behind camera
-    shapes.push_back(new Plane(Point(0, 0, -10), Vector(0, 0, 1), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0, 0));
+    shapes.push_back(new Plane(Point(0, 0, -6), Vector(0, 0, 1), Color(1, 0, 1), 1, 1.2, 0.3, 0.5, 0, 0));
 
     // right wall
-    shapes.push_back(new Plane(Point(15, 0, 0), Vector(-1, 0, 0), Color(1, 1, 1), 1, 0.5, 0.5, 0.5, 0, 0));
+    shapes.push_back(new Plane(Point(6, 0, 0), Vector(-1, 0, 0), Color(1, 1, 1), 1, 1.2, 0.5, 0.5, 0, 0));
     
     //teal sphere (transparent)
-    shapes.push_back(new Sphere(Point(4, .5, 2), 2,
+    shapes.push_back(new Sphere(Point(4.5, .5, 2), 1.5,
                 Color(0, 1, 1), 1.1, .3, .5, 0, 0, .9));
                 
     //red sphere in the middle
@@ -66,20 +63,83 @@ Scene::Scene(int width, int height) : shapes(vector<Shape*>()),
                 Color(0, 1, 0), 1, 0.3, 0.5, 0.5, 0, 0));
 
     // light source 1 (blueish)
-    lights.push_back(new PointLight(Color(.5, .5, 1), Point(0, 0, 2)));
+    lights.push_back(new PointLight(Color(.5, .5, 1), Point(0, -2.5, 2)));
     
     //ball around light 1
-    shapes.push_back(new Sphere(Point(0, 0, 2), .1,
+    shapes.push_back(new Sphere(Point(0, -2.5, 2), .1,
                 Color(1, 1, 1), 1, 0, 0, 1, 0, 1));
 
     // light source 2 (redish)
-    lights.push_back(new PointLight(Color(1, .5, .5), Point(0, 5, 1)));
+    lights.push_back(new PointLight(Color(1, .5, .5), Point(0, 5, 0)));
 
     //ball around light 2
-    shapes.push_back(new Sphere(Point(0, 0, 2), .1,
+    shapes.push_back(new Sphere(Point(0, 5, 0), .1,
                 Color(1, 1, 1), 1, 0, 0, 1, 0, 1));
-}
 
+
+    //origin (black)
+    shapes.push_back(new Sphere(Point(0, 0, 0), .1,
+                Color(.1, .1, .1), 1, .3, 1, 0, 0, 0));
+                
+    shapes.push_back(new Sphere(Point(2, 0, 0), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1));                 
+    shapes.push_back(new Sphere(Point(0, 2, 0), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1));                 
+    shapes.push_back(new Sphere(Point(0, 0, 2), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1));
+                
+    shapes.push_back(new Sphere(Point(-2, 0, 0), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1));                 
+    shapes.push_back(new Sphere(Point(0, -2, 0), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1));                 
+    shapes.push_back(new Sphere(Point(0, 0, -2), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1));   
+                             
+    shapes.push_back(new Sphere(Point(2, 2, 0), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1));                 
+    shapes.push_back(new Sphere(Point(2, 0, 2), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1));                 
+    shapes.push_back(new Sphere(Point(0, 2, 2), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1));  
+                
+    shapes.push_back(new Sphere(Point(-2, 2, 0), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1));                 
+    shapes.push_back(new Sphere(Point(-2, 0, 2), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1));                 
+    shapes.push_back(new Sphere(Point(0, -2, 2), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1)); 
+
+    shapes.push_back(new Sphere(Point(2, -2, 0), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1));                 
+    shapes.push_back(new Sphere(Point(2, 0, -2), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1));                 
+    shapes.push_back(new Sphere(Point(0, 2, -2), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1)); 
+                
+    shapes.push_back(new Sphere(Point(-2, -2, 0), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1));                 
+    shapes.push_back(new Sphere(Point(-2, 0, -2), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1));                 
+    shapes.push_back(new Sphere(Point(0, -2, -2), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1)); 
+                              
+    shapes.push_back(new Sphere(Point(2, 2, 2), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1));                              
+    shapes.push_back(new Sphere(Point(-2, 2, 2), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1));                               
+    shapes.push_back(new Sphere(Point(2, -2, 2), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1));                               
+    shapes.push_back(new Sphere(Point(2, 2, -2), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1));                               
+    shapes.push_back(new Sphere(Point(-2, -2, 2), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1));                               
+    shapes.push_back(new Sphere(Point(-2, 2, -2), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1));                               
+    shapes.push_back(new Sphere(Point(2, -2, -2), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1));                               
+    shapes.push_back(new Sphere(Point(-2, -2, -2), .1,
+                Color(1, 0, 1), 1, .3, 1, 0, 0, 1));  
+}            
 Scene::Scene(std::string fileName, int width, int height): shapes(vector<Shape*>()),
                                     lights(vector<LightSource*>()),
                                     ambient(Color(0.25, 0.25, 0.25)),
