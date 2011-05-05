@@ -65,6 +65,9 @@ class Color{
  */
 Color operator*(float, Color);
 
+/**
+ * Value used to compare vectors for approximate equality.
+ */
 const float EPSILON = 1e-4;
 
 /**
@@ -84,7 +87,10 @@ public:
     Vector(float i, float j, float k);
 
     /**
-     * Vector approximate comparison
+     * Vector approximate comparison. If corresponding elements of the
+     * vectors differ by less than EPSILON, the vectors are
+     * approximately equal.
+     * @param other The vector to compare to.
      * @return Componentwise comparison to within EPSILON
      */
     bool approx_equals(const Vector&) const;
@@ -93,28 +99,28 @@ public:
      * Overloaded addition-assignment operator.
      * Performs component based addition-assignment.
      *
-     * @param rhs The vector to add.
-     * @return A pointer to the lhs of the equation.
+     * @param other The vector to add.
+     * @return The updated vector
      */
-    Vector& operator+=(const Vector& rhs);
+    Vector& operator+=(const Vector&);
 
     /**
      * Overloaded subtraction-assignment operator.
      * Performs component based subtraction-assignment.
      *
-     * @param rhs The vector to subtract.
-     * @return A pointer to the lhs of the equation.
+     * @param other The vector to subtract.
+     * @return The updated vector
      */
-    Vector& operator-=(const Vector& rhs);
+    Vector& operator-=(const Vector&);
 
     /**
      * Overloaded addition operator.
      * Performs component based addition.
      *
      * @param other The vector to add.
-     * @return A pointer to the result.
+     * @return The result
      */
-    Vector operator+(const Vector& other);
+    Vector operator+(const Vector&);
 
     /**
      * Overloaded subtraction operator.
@@ -123,48 +129,60 @@ public:
      * @param other The vector to subtract.
      * @return A pointer to the result.
      */
-    Vector operator-(const Vector& other);
+    Vector operator-(const Vector&);
 
     /**
      * Vector multiplication by scalar.
+     * @return <i*c, j*c, k*c>
      */
     Vector operator*(float) const;
 
     /**
      * Vector division by scalar.
+     * @return <i/c, j/c, k/c>
      */
     Vector operator/(float) const;
 
     /**
      * Vector magnitude
+     * @return The magnitude, computed by \f$ i^2 + j^2 + k^2 \f$
      */
     float magnitude() const;
 
     /**
      * Magnitude squared
+     * @return The square of the magnitude, computed by
+     * \f$ i^2 + j^2 + k^2 \f$
      */
     float magnitude2() const;
 
     /**
      * Normalizes the vector to a unit vector.
+     * Divides each component of the vector by the magnitude.
+     * The resultant vector has unit magnitude.
      */
     void normalize();
 
     /**
      * Returns a normalized copy of the vector
+     * Divides each component of the vector by the magnitude.
+     * @return A vector with the same direction and unit magnitude.
      */
     Vector normalized() const;
 
     /**
      * Compute the dot product when dotted with the given Vector.
      *
-     * @param v a normalized vector.
-     * @return the dot product of this vector with v.
+     * @param v A vector.
+     * @return the dot product of this vector with v, computed by
+     * \f$ i_1i_2 + j_1j_2 = k_1k_2 \f$
      */
     float dotProduct(Vector v) const;
 
     /**
      * Vector cross product
+     * @return The cross product, orthogonal to this vector and the
+     * other.
      */
     Vector crossProduct(Vector) const;
 };
@@ -194,11 +212,10 @@ public:
     bool operator==(const Point &p) const;
 
     /**
-     * Overloaded subtraction operator.
-     * Performs component based subtraction.
+     * Subtracting two points yields the vector between them.
      *
      * @param other The Point to subtract.
-     * @return A pointer to the result.
+     * @return A vector pointing from other to this.
      */
     Vector operator-(const Point& other);
 
@@ -210,12 +227,6 @@ public:
      * @return False if the points are equivalent, true otherwise.
      */
     bool operator!=(const Point &p) const;
-
-    /*
-    //this operator overload doesn't really work yet.
-    //it was designed for an operation in plane intersection
-    Vector operator-(const Point& p);
-    */
 };
 
 /**
@@ -269,6 +280,12 @@ public:
     static Ray makeRay(Point origin, Point dest);
 };
 
-float degrees(float);
+/** \relatesalso Camera
+ * Utility function to convert degrees to radians.
+ * Useful for Camera::lookAt().
+ * @param d An angle in degrees
+ * @return \f$ \pi d / 180 \f$
+ */
+float degrees(float d);
 
 #endif
