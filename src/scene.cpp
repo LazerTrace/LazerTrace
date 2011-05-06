@@ -140,16 +140,6 @@ Scene::Scene(int width, int height) : shapes(vector<Shape*>()),
     shapes.push_back(new Sphere(Point(-2, -2, -2), .1,
                 Color(1, 0, 1), 1, .3, 1, 0, 0, 1));  
 }            
-Scene::Scene(std::string fileName, int width, int height): shapes(vector<Shape*>()),
-                                    lights(vector<LightSource*>()),
-                                    ambient(Color(0.25, 0.25, 0.25)),
-                                    camera(Camera(width, height)) {
-
-    std::ifstream input_scene (fileName.c_str());
-
-    // Read the file and add specified shapes.
-    // We need to figure out what our syntax/grammar is first though.
-}
 
 Color Scene::raytrace(const Ray& camera_ray, int level) const {
     if(level>MAX_LEVEL) {
